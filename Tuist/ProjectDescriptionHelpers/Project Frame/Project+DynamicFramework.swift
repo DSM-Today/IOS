@@ -24,6 +24,7 @@ extension Project {
                     ),
                     infoPlist: infoplist,
                     sources: ["Sources/**"],
+                    scripts: [.swiftlint],
                     dependencies: dependencies
                 )
             ]

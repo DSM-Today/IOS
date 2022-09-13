@@ -14,8 +14,7 @@ extension Project {
             targets: [
                 Target(
                     name: name,
-                    platform: platform
-                    ,
+                    platform: platform,
                     product: .app,
                     bundleId: "\(todayOrganizationName).\(name)",
                     deploymentTarget: .iOS(
@@ -25,7 +24,7 @@ extension Project {
                     infoPlist: .file(path: Path("SupportingFiles/Info.plist")),
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
-                    scripts: [.swiftlint],
+                    scripts: [.swiftLintScript],
                     dependencies: dependencies
                     )
             ]

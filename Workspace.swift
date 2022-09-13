@@ -4,6 +4,6 @@ let workspace = Workspace(
     name: "Today",
     projects: [
         "iOS",
-        "PackageManager",
+        "PackageLibrary",
         "Service"
     ])

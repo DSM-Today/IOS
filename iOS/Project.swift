@@ -2,9 +2,10 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.excutable(
-    name: "Today-iOS",
+    name: "iOS",
     platform: .iOS,
     dependencies: [
-        .project(target: "Service", path: "../Service")
+        .project(target: "Service", path: "../Service"),
+        .project(target: "PackageLibrary", path: "../PackageLibrary")
     ]
 )

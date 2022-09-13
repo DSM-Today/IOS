@@ -4,6 +4,12 @@ import ProjectDescriptionHelpers
 let project = Project.dynamicFramework(
     name: "PackageLibrary",
     platform: .iOS,
-    infoplist: .default,
-    dependencies: []
+    dependencies: [
+        .SPM.RxSwift,
+        .SPM.RxCocoa,
+        .SPM.RxMoya,
+        .SPM.Moya,
+        .SPM.SnapKit,
+        .SPM.Then
+    ]
 )

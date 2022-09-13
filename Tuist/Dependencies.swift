@@ -16,5 +16,12 @@ let depencies = Dependencies(
         .remote(
             url: "https://github.com/devxoul/Then.git",
             requirement: .upToNextMajor(from: "3.0.0")
+        ),
+        // Moya
+        .remote(
+            url: "https://github.com/Moya/Moya.git",
+            requirement: .upToNextMajor(from: "15.0.0")
         )
-    ]), platforms: [.iOS])
+    ]),
+    platforms: [.iOS]
+)

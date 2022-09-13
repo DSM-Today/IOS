@@ -4,13 +4,16 @@ extension Project {
 
     public static func dynamicFramework(
         name: String,
+        packages: [Package] = [],
         platform: Platform,
-        infoplist: InfoPlist,
-        dependencies: [TargetDependency]
+        infoplist: InfoPlist = .default,
+        dependencies: [TargetDependency] = [
+            .project(target: "PackageLibrary", path: "../PackageLibrary")
+        ]
     ) -> Project {
         return Project(
             name: name,
-            organizationName: todayOrganizationName,
+            packages: packages,
             settings: nil,
             targets: [
                 Target(
@@ -24,7 +27,10 @@ extension Project {
                     ),
                     infoPlist: infoplist,
                     sources: ["Sources/**"],
-                    scripts: [.swiftlint],
+                    scripts: [
+                        .swiftLintScript,
+                        .removeStaticFrameworksScripts
+                    ],
                     dependencies: dependencies
                 )
             ]

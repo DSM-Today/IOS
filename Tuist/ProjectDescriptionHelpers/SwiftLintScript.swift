@@ -19,6 +19,7 @@ extension TargetScript {
                     echo "No lintable files to check, skipping Swiftlint"
                 fi
                 """,
-        name: "SwiftLint"
+        name: "SwiftLint",
+        basedOnDependencyAnalysis: false
     )
 }

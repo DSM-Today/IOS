@@ -15,6 +15,7 @@ extension TargetScript {
                     fi
                 done
                 """,
-        name: "RemoveStaticFrameworksScripts"
+        name: "RemoveStaticFrameworksScripts",
+        basedOnDependencyAnalysis: false
     )
 }

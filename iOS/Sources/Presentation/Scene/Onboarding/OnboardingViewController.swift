@@ -73,7 +73,8 @@ extension OnboardingViewController {
 
     func makeSubviewConstraints() {
         logoImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().inset(200)
+            $0.centerX.equalToSuperview()
         }
         googleImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()

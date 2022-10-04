@@ -9,6 +9,7 @@ extension UIColor {
     static let blue5 = UIColor(named: "Blue5")!
     static let blue6 = UIColor(named: "Blue6")!
     static let blue7 = UIColor(named: "Blue7")!
+    static let blue8 = UIColor(named: "Blue8")!
     static let green1 = UIColor(named: "Green1")!
     static let yellow1 = UIColor(named: "Yellow1")!
     static let yellow2 = UIColor(named: "Yellow2")!

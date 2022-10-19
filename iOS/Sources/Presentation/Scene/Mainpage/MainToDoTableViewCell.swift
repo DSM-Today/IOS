@@ -5,14 +5,15 @@ import Then
 
 class MainToDoTableViewCell: UITableViewCell {
 
+    // MARK: - Life Cycle
     let toDoLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 17, family: .regular)
     }
 
+    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }

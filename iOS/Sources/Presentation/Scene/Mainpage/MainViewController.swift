@@ -5,7 +5,7 @@ import Then
 
 class MainViewController: UIViewController {
 
-    // MARK: - Layout
+    // MARK: - UI
     private let scrollView = UIScrollView().then {
         $0.showsHorizontalScrollIndicator = false
     }

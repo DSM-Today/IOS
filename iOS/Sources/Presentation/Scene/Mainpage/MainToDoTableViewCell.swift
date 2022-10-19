@@ -1,24 +1,39 @@
-//
-//  MainToDoTableViewCell.swift
-//  Today
-//
-//  Created by kimsian on 2022/10/12.
-//  Copyright © 2022 com.DSM-Today. All rights reserved.
-//
-
 import UIKit
+
+import SnapKit
+import Then
 
 class MainToDoTableViewCell: UITableViewCell {
 
+    let toDoLabel = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 17, family: .regular)
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addSubviews()
+        self.backgroundColor = .gray1
+        self.contentView.backgroundColor = .white
+        self.contentView.layer.cornerRadius = 5
+        self.contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
     }
 
+}
+
+extension MainToDoTableViewCell {
+    private func addSubviews() {
+        self.contentView.addSubview(toDoLabel)
+
+        toDoLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
+        }
+    }
 }

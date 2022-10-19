@@ -24,11 +24,9 @@ class MyPageTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.borderColor = UIColor.black.cgColor
@@ -39,21 +37,18 @@ class MyPageTableViewCell: UITableViewCell {
         addSubview()
         makeSubviewConstraints()
     }
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+// MARK: - Layout
 extension MyPageTableViewCell {
     private func addSubview() {
-        [categorieTitle,
-         favoritesTitle,
-         favoriteCount].forEach { self.contentView.addSubview($0) }
+        [categorieTitle, favoritesTitle, favoriteCount].forEach { self.contentView.addSubview($0) }
     }
     private func makeSubviewConstraints() {
         categorieTitle.snp.makeConstraints {

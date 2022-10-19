@@ -46,35 +46,34 @@ class MyPageViewController: UIViewController {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray3.cgColor
     }
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
         setButton()
         setDemoData()
-        configure()
+        setTableView()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation()
     }
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
     }
-    private func configure() {
+
+    // MARK: - TableView
+    private func setTableView() {
         favoriteTableView.dataSource = self
         favoriteTableView.rowHeight = 110
     }
+    // MARK: - Navigation
     private func setNavigation() {
         self.title = "마이페이지"
     }
-    private func setDemoData() {
-        self.profileImageView.image = UIImage(systemName: "person.fill")
-        self.userName.text = "김기영"
-        self.birthText.text = "2005.05.30"
-        self.introduceText.text = "THE MASTER OF  KIM  HERO\n심장을 공격하는 인천의 야수를 거느리는 남자"
-        self.introduceText.numberOfLines = 2
-    }
+    // MARK: - Button
     private func setButton() {
         editProfileButton.rx.tap
             .asObservable()
@@ -82,6 +81,13 @@ class MyPageViewController: UIViewController {
                 self?.pushViewController(EditProfileViewController())
             })
             .disposed(by: disposeBag)
+    }
+    private func setDemoData() {
+        self.profileImageView.image = UIImage(systemName: "person.fill")
+        self.userName.text = "김기영"
+        self.birthText.text = "2005.05.30"
+        self.introduceText.text = "THE MASTER OF  KIM  HERO\n심장을 공격하는 인천의 야수를 거느리는 남자"
+        self.introduceText.numberOfLines = 2
     }
 }
 

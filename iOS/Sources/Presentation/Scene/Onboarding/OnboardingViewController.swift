@@ -55,25 +55,7 @@ class OnboardingViewController: UIViewController {
         makeSubviewConstraints()
     }
 }
-extension UIButton.Configuration {
-    func setConfiguration(
-        backgroundColor: UIColor,
-        foregroundColor: UIColor,
-        buttonTitle: String,
-        image: UIImage
-    ) -> UIButton.Configuration {
-        var config = UIButton.Configuration.filled()
-        var text = AttributedString.init(buttonTitle)
-        text.font = .notoSansFont(ofSize: 20, family: .regular)
-        config.baseBackgroundColor = backgroundColor
-        config.baseForegroundColor = foregroundColor
-        config.attributedTitle = text
-        config.image = image
-        config.imagePadding = 11
-        config.imagePlacement = .leading
-        return config
-    }
-}
+
 // MARK: - Layout
 extension OnboardingViewController {
     func addSubviews() {

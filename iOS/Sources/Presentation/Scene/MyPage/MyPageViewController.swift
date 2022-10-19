@@ -59,6 +59,7 @@ class MyPageViewController: UIViewController {
         setNavigation()
     }
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
     }

@@ -67,7 +67,6 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray1
-        setButton()
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -81,15 +80,6 @@ class EditProfileViewController: UIViewController {
     // MARK: - Navigation
     private func setNavigation() {
         self.title = "내 정보 수정"
-    }
-    // MARK: - Button
-    private func setButton() {
-        completeButton.rx.tap
-            .asObservable()
-            .subscribe(onNext: { [weak self] in
-                self?.popViewController()
-            })
-            .disposed(by: disposeBag)
     }
     private func setDemoData() {
         self.profileImgView.image = UIImage(systemName: "person.circle.fill")

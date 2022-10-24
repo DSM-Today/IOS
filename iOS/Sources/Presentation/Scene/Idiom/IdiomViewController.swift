@@ -94,8 +94,11 @@ class IdiomViewController: UIViewController {
     }
     private func setLayout() {
         [firstIdiomLabel, secondIdiomLabel, thirdIdiomLabel, fourthIdiomLabel,
-        meanTextView, underView, cafeCategoryView, quizCategoryView]
+        meanTextView, cafeCategoryView, quizCategoryView]
             .forEach { $0.clipsToBounds = true }
+        underView.layer.shadowColor = UIColor.black.cgColor
+        underView.layer.shadowOpacity = 0.1
+        underView.layer.shadowRadius = 41
     }
     private func setDemoData() {
         firstIdiomLabel.text = "전"
@@ -164,7 +167,7 @@ extension IdiomViewController {
         }
         otherCategoryLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
-            $0.leading.equalToSuperview().inset(23)
+            $0.centerX.equalToSuperview()
         }
         categoryStackView.snp.makeConstraints {
             $0.top.equalTo(otherCategoryLabel.snp.bottom).offset(10)

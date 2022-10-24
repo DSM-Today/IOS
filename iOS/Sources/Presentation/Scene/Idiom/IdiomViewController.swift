@@ -38,6 +38,7 @@ class IdiomViewController: UIViewController {
     }
     private let meanTextView = UITextView().then {
         $0.font = .notoSansFont(ofSize: 20, family: .regular)
+        $0.textContainerInset = UIEdgeInsets(top: 13, left: 30, bottom: 13, right: 30)
         $0.layer.cornerRadius = 20
     }
     private let underView = UIView().then {
@@ -48,6 +49,9 @@ class IdiomViewController: UIViewController {
     private let otherCategoryLabel = UILabel().then {
         $0.text = "다른 카테고리 보러가기"
         $0.font = .notoSansFont(ofSize: 20, family: .regular)
+    }
+    private let categoryStackView = UIStackView().then {
+        $0.axis = .horizontal
     }
     private let cafeCategoryView = UIImageView().then {
         $0.contentMode = .scaleToFill
@@ -115,7 +119,8 @@ extension IdiomViewController {
             .forEach { view.addSubview($0) }
         [firstIdiomLabel, secondIdiomLabel, thirdIdiomLabel, fourthIdiomLabel]
             .forEach { stackView.addSubview($0) }
-        [otherCategoryLabel, cafeCategoryView, quizCategoryView].forEach { underView.addSubview($0) }
+        [cafeCategoryView, quizCategoryView].forEach { categoryStackView.addSubview($0) }
+        [otherCategoryLabel, categoryStackView].forEach { underView.addSubview($0) }
         cafeCategoryView.addSubview(cafeCategoryLabel)
         quizCategoryView.addSubview(quizCategoryLabel)
     }
@@ -161,21 +166,23 @@ extension IdiomViewController {
             $0.top.equalToSuperview().inset(13)
             $0.leading.equalToSuperview().inset(23)
         }
-        cafeCategoryView.snp.makeConstraints {
+        categoryStackView.snp.makeConstraints {
             $0.top.equalTo(otherCategoryLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(10)
-            $0.width.equalTo(165)
-            $0.height.equalTo(155)
+            $0.centerX.equalToSuperview()
+        }
+        cafeCategoryView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
+            $0.width.height.equalTo(165)
         }
         cafeCategoryLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
         quizCategoryView.snp.makeConstraints {
-            $0.top.equalTo(cafeCategoryView.snp.top)
+            $0.top.equalToSuperview()
             $0.leading.equalTo(cafeCategoryView.snp.trailing).offset(20)
-            $0.width.equalTo(165)
-            $0.height.equalTo(155)
+            $0.trailing.equalToSuperview()
+            $0.width.height.equalTo(165)
         }
         quizCategoryLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)

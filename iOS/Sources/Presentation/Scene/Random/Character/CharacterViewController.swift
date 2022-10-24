@@ -46,7 +46,8 @@ class CharacterViewController: UIViewController {
     private let anotherCategoryTitle = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
     }
-    // MARK: - LifeCycle
+
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
@@ -60,6 +61,8 @@ class CharacterViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
+
+    // MARK: - Navigation
     private func setNavigation() {
         self.title = "오늘의 인물"
         if  let navigationBar = navigationController?.navigationBar {
@@ -81,7 +84,7 @@ class CharacterViewController: UIViewController {
     }
 }
 
-// MARK: - LayOut
+// MARK: - Layout
 extension CharacterViewController {
     private func addSubviews() {
         [userProfileImg,

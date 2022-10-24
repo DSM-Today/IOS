@@ -6,7 +6,6 @@ import RxSwift
 import RxCocoa
 
 class EditProfileViewController: UIViewController {
-    private var disposeBag = DisposeBag()
 
     // MARK: - UI
     private let profileImgView = UIImageView().then {

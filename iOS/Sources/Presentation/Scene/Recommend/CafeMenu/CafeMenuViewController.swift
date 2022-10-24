@@ -63,6 +63,7 @@ class CafeMenuViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
+    // MARK: - Navigation
     private func setNavigation() {
         self.title = "오늘의 카페 메뉴"
         if  let navigationBar = navigationController?.navigationBar {
@@ -85,7 +86,6 @@ class CafeMenuViewController: UIViewController {
 }
 
 // MARK: - LayOut
-
 extension CafeMenuViewController {
     private func addSubviews() {
         [todayDrinkLabel,

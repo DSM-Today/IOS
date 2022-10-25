@@ -27,24 +27,24 @@ class CategoryTableViewCell: UITableViewCell {
         $0.layer.cornerRadius = 8
     }
 
+    // MARK: - Life Cycle
     override func layoutSubviews() {
         super.layoutSubviews()
         addSubview()
         makeSubviewConstraints()
+        self.backgroundColor = .gray1
         self.contentView.layer.cornerRadius = 5
         self.contentView.backgroundColor = .white
         contentView.frame = contentView.frame.inset(
-            by: UIEdgeInsets(top: 0, left: 0, bottom: 19, right: 0)
+            by: UIEdgeInsets(top: 19, left: 0, bottom: 0, right: 0)
         )
         self.contentView.layer.shadowColor = UIColor.black.cgColor
         self.contentView.layer.shadowOpacity = 0.1
-        self.contentView.layer.shadowRadius = 10
+        self.contentView.layer.shadowOffset = .init(width: 0, height: 5)
     }
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }

@@ -76,6 +76,7 @@ class EditProfileViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
+
     // MARK: - Navigation
     private func setNavigation() {
         self.title = "내 정보 수정"
@@ -85,7 +86,7 @@ class EditProfileViewController: UIViewController {
     }
 }
 
-// MARK: - LayOut
+// MARK: - Layout
 extension EditProfileViewController {
     private func addSubviews() {
         [profileImgView,
@@ -119,7 +120,7 @@ extension EditProfileViewController {
         }
         nicknameText.snp.makeConstraints {
             $0.top.equalTo(line.snp.bottom).offset(32)
-            $0.leading.equalToSuperview().inset(44)
+            $0.leading.equalToSuperview().inset(55)
         }
         nicknameTextField.snp.makeConstraints {
             $0.width.equalTo(226)
@@ -129,7 +130,7 @@ extension EditProfileViewController {
         }
         introduceText.snp.makeConstraints {
             $0.top.equalTo(nicknameText.snp.bottom).offset(26)
-            $0.leading.equalToSuperview().inset(35)
+            $0.leading.equalToSuperview().inset(43)
         }
         introduceTextField.snp.makeConstraints {
             $0.width.equalTo(226)
@@ -139,11 +140,11 @@ extension EditProfileViewController {
         }
         birthText.snp.makeConstraints {
             $0.top.equalTo(introduceText.snp.bottom).offset(35)
-            $0.leading.equalToSuperview().inset(35)
+            $0.leading.equalToSuperview().inset(41)
         }
         birthPicker.snp.makeConstraints {
             $0.top.equalTo(birthText.snp.bottom).offset(9)
-            $0.leading.equalToSuperview().inset(35)
+            $0.leading.equalToSuperview().inset(41)
         }
         completeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()

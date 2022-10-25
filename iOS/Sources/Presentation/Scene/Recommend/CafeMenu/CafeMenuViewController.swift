@@ -63,6 +63,7 @@ class CafeMenuViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
+    
     // MARK: - Navigation
     private func setNavigation() {
         self.title = "오늘의 카페 메뉴"
@@ -78,14 +79,14 @@ class CafeMenuViewController: UIViewController {
         self.cafeName.text = "A Twosome Place"
         self.cafeName.textColor = .red1
         self.cafeMenuName.text = "스트로베리 초콜릿 라떼"
-        self.otherCategoryImg.image = UIImage(systemName: "figure.stand")
+        self.otherCategoryImg.image = UIImage(systemName: "person.fill")
         self.otherCategoryTitle.text = "오늘의 인물"
-        self.anotherCategoryImg.image = UIImage(systemName: "figure.wave")
+        self.anotherCategoryImg.image = UIImage(systemName: "person.fill")
         self.anotherCategoryTitle.text = "오늘의 노래"
     }
 }
 
-// MARK: - LayOut
+// MARK: - Layout
 extension CafeMenuViewController {
     private func addSubviews() {
         [todayDrinkLabel,
@@ -111,7 +112,7 @@ extension CafeMenuViewController {
             $0.width.equalTo(180)
         }
         cafeName.snp.makeConstraints {
-            $0.top.equalTo(drinkImage.snp.bottom).offset(10)
+            $0.top.equalTo(drinkImage.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
         }
         cafeMenuName.snp.makeConstraints {
@@ -128,23 +129,21 @@ extension CafeMenuViewController {
         }
         otherCategoryImg.snp.makeConstraints {
             $0.top.equalTo(categoryTitle.snp.bottom).offset(15)
-            $0.leading.equalToSuperview().offset(15)
-            $0.width.equalTo(165)
-            $0.height.equalTo(155)
+            $0.leading.equalToSuperview().offset(30)
+            $0.width.height.equalTo(165)
         }
         otherCategoryTitle.snp.makeConstraints {
             $0.top.equalTo(otherCategoryImg).inset(5)
-            $0.leading.equalToSuperview().inset(26)
+            $0.leading.equalTo(otherCategoryImg.snp.leading).inset(33)
         }
         anotherCategoryImg.snp.makeConstraints {
             $0.centerY.equalTo(otherCategoryImg.snp.centerY)
-            $0.trailing.equalToSuperview().inset(15)
-            $0.width.equalTo(165)
-            $0.height.equalTo(155)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.width.height.equalTo(165)
         }
         anotherCategoryTitle.snp.makeConstraints {
             $0.centerY.equalTo(otherCategoryTitle.snp.centerY)
-            $0.trailing.equalToSuperview().inset(71)
+            $0.trailing.equalToSuperview().inset(64)
         }
     }
 }

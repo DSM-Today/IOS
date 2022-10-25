@@ -11,12 +11,16 @@ class CategoryViewController: UIViewController {
     // MARK: - UI
     private let categoryTableView = UITableView().then {
         $0.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        $0.backgroundColor = .gray1
+        $0.rowHeight = 110
+        $0.separatorStyle = .none
     }
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
-        setTableView()
+        self.categoryTableView.dataSource = self
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation()
@@ -25,14 +29,6 @@ class CategoryViewController: UIViewController {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
-    }
-
-    // MARK: - TableView
-    private func setTableView() {
-        categoryTableView.dataSource = self
-        categoryTableView.rowHeight = 110
-        categoryTableView.separatorStyle = .none
-        categoryTableView.backgroundColor = .gray1
     }
 
     // MARK: - Navigation
@@ -47,9 +43,10 @@ class CategoryViewController: UIViewController {
     }
 }
 
+// MARK: - Layout
 extension CategoryViewController {
     private func addSubviews() {
-        [categoryTableView].forEach { view.addSubview($0) }
+        view.addSubview(categoryTableView)
     }
     private func makeSubviewConstraints() {
         categoryTableView.snp.makeConstraints {

@@ -24,7 +24,7 @@ class FortuneViewController: UIViewController {
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     private let explainTextView = UITextView().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.font = .notoSansFont(ofSize: 20, family: .regular)
     }
 
     // MARK: - Life Cycle

@@ -48,7 +48,8 @@ class MyPageTableViewCell: UITableViewCell {
 // MARK: - Layout
 extension MyPageTableViewCell {
     private func addSubview() {
-        [categorieTitle, favoritesTitle, favoriteCount].forEach { self.contentView.addSubview($0) }
+        [categorieTitle, favoritesTitle, favoriteCount]
+            .forEach { self.contentView.addSubview($0) }
     }
     private func makeSubviewConstraints() {
         categorieTitle.snp.makeConstraints {

@@ -69,10 +69,12 @@ class MyPageViewController: UIViewController {
         favoriteTableView.dataSource = self
         favoriteTableView.rowHeight = 110
     }
+
     // MARK: - Navigation
     private func setNavigation() {
         self.title = "마이페이지"
     }
+
     // MARK: - Button
     private func setButton() {
         editProfileButton.rx.tap
@@ -105,16 +107,16 @@ extension MyPageViewController {
     }
     private func makeSubviewConstraints() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(90)
+            $0.top.equalToSuperview().inset(100)
             $0.leading.equalToSuperview().inset(18)
             $0.width.height.equalTo(62)
         }
         userName.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(98)
+            $0.top.equalToSuperview().inset(108)
             $0.leading.equalTo(profileImageView.snp.trailing).offset(6.75)
         }
         birthText.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
+            $0.centerY.equalTo(userName.snp.centerY)
             $0.leading.equalTo(userName.snp.trailing).offset(7)
         }
         editProfileButton.snp.makeConstraints {

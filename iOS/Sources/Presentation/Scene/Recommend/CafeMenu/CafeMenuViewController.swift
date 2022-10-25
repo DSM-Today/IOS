@@ -63,7 +63,7 @@ class CafeMenuViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
-    
+
     // MARK: - Navigation
     private func setNavigation() {
         self.title = "오늘의 카페 메뉴"

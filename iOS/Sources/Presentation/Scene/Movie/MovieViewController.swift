@@ -99,7 +99,7 @@ extension MovieViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         goToMoviewSiteButton.snp.makeConstraints {
-            $0.height.equalTo(75)
+            $0.height.equalTo(85)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }

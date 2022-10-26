@@ -14,6 +14,9 @@ class MusicPageViewController: UIViewController {
     private let musicView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 41
+        $0.layer.shadowRadius = 15
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.3
     }
     private let musicImageView = UIImageView().then {
         $0.image = UIImage(systemName: "music.note.house")
@@ -72,9 +75,6 @@ class MusicPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray1
-        musicView.layer.shadowRadius = 15
-        musicView.layer.shadowColor = UIColor.black.cgColor
-        musicView.layer.shadowOpacity = 0.3
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation()
@@ -97,6 +97,7 @@ class MusicPageViewController: UIViewController {
     }
 }
 
+// MARK: - Layout
 extension MusicPageViewController {
     private func addSubviews() {
         view.addSubview(musicView)

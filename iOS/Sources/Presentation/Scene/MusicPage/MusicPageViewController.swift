@@ -6,6 +6,11 @@ import Then
 class MusicPageViewController: UIViewController {
 
     // MARK: - UI
+    private let situationLabel = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.text = "혼자 있고 싶을 때"
+        $0.textColor = .black
+    }
     private let musicView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 41
@@ -14,6 +19,26 @@ class MusicPageViewController: UIViewController {
         $0.image = UIImage(systemName: "music.note.house")
         $0.tintColor = .blue6
         $0.backgroundColor = .black
+    }
+    private let musicTitleLabel = UILabel().then {
+        $0.text = "After LIKE"
+        $0.font = .notoSansFont(ofSize: 20, family: .black)
+        $0.textColor = .black
+    }
+    private let musicComposerLabel = UILabel().then {
+        $0.text = "IVE - 아이브"
+        $0.font = .notoSansFont(ofSize: 16, family: .bold)
+        $0.textColor = .black
+    }
+    private let releaseDateLabel = UILabel().then {
+        $0.text = "발매일 : "
+        $0.font = .notoSansFont(ofSize: 16, family: .medium)
+        $0.textColor = .black
+    }
+    private let dateLabel = UILabel().then {
+        $0.text = "2022/08/22"
+        $0.font = .notoSansFont(ofSize: 16, family: .regular)
+        $0.textColor = .black
     }
     private let backwardView = UIImageView().then {
         $0.image = UIImage(systemName: "backward.end.fill")
@@ -33,6 +58,14 @@ class MusicPageViewController: UIViewController {
     private let playbarCircleView = UIImageView().then {
         $0.image = UIImage(systemName: "circle.fill")
         $0.tintColor = .black
+    }
+    private let goToMusicSiteButton = UIButton(type: .system).then {
+        $0.setTitle("노래 감상하러 가기", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.backgroundColor = .blue5
+        $0.layer.cornerRadius = 41
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 
     // MARK: - Life Cycle
@@ -67,10 +100,14 @@ class MusicPageViewController: UIViewController {
 extension MusicPageViewController {
     private func addSubviews() {
         view.addSubview(musicView)
-        [musicImageView].forEach { musicView.addSubview($0) }
-        [playView, backwardView, forwardView, playbarView, playbarCircleView].forEach { view.addSubview($0) }
+        [musicImageView, musicTitleLabel, musicComposerLabel, dateLabel, releaseDateLabel].forEach { musicView.addSubview($0) }
+        [situationLabel, playView, backwardView, forwardView, playbarView, playbarCircleView, goToMusicSiteButton].forEach { view.addSubview($0) }
     }
     private func makeSubviewConstraints() {
+        situationLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(100)
+            $0.centerX.equalToSuperview()
+        }
         musicView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(150)
             $0.leading.trailing.equalToSuperview()
@@ -80,6 +117,22 @@ extension MusicPageViewController {
             $0.top.equalToSuperview().inset(50)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(200)
+        }
+        musicTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(musicImageView.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        musicComposerLabel.snp.makeConstraints {
+            $0.top.equalTo(musicTitleLabel.snp.bottom).offset(1)
+            $0.centerX.equalToSuperview()
+        }
+        dateLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(30)
+        }
+        releaseDateLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
+            $0.trailing.equalTo(dateLabel.snp.leading).inset(1)
         }
         playView.snp.makeConstraints {
             $0.top.equalTo(musicView.snp.bottom).offset(70)
@@ -105,6 +158,10 @@ extension MusicPageViewController {
             $0.centerY.equalTo(playbarView)
             $0.leading.equalToSuperview().inset(75)
             $0.height.width.equalTo(13)
+        }
+        goToMusicSiteButton.snp.makeConstraints {
+            $0.height.equalTo(85)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

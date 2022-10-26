@@ -15,7 +15,7 @@ class WebtoonViewController: UIViewController {
     }
     private let ageLimitLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 16, family: .medium)
-        $0.textColor = .gray3
+        $0.textColor = .gray2
     }
     private let currentSituationLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 16, family: .medium)
@@ -29,10 +29,12 @@ class WebtoonViewController: UIViewController {
         $0.contentMode = .scaleToFill
     }
     private let writerLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 16, family: .medium)
+        $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.textAlignment = .center
     }
     private let genreLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 16, family: .medium)
+        $0.textAlignment = .center
     }
     private let contentView = UIView().then {
         $0.backgroundColor = .white
@@ -42,7 +44,7 @@ class WebtoonViewController: UIViewController {
         $0.layer.shadowOpacity = 0.2
     }
     private let contentTextView = UITextView().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.font = .notoSansFont(ofSize: 20, family: .regular)
     }
     private let moveWebtoonButton = UIButton(type: .system).then {
         $0.setTitle("웹툰 보러가기", for: .normal)
@@ -120,7 +122,7 @@ extension WebtoonViewController {
             $0.centerX.equalToSuperview()
         }
         genreLabel.snp.makeConstraints {
-            $0.top.equalTo(writerLabel.snp.bottom).offset(9)
+            $0.top.equalTo(writerLabel.snp.bottom).offset(3)
             $0.centerX.equalToSuperview()
         }
         contentView.snp.makeConstraints {

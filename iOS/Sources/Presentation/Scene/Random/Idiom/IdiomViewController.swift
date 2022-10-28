@@ -73,7 +73,6 @@ class IdiomViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray1
         setDemoData()
     }
     override func viewWillLayoutSubviews() {
@@ -85,13 +84,9 @@ class IdiomViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.meanTextView.isEditable = false
-        setNavigation()
+        setNavigation("오늘의 사자성어")
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 사자성어"
-    }
     private func setLayout() {
         [firstIdiomLabel, secondIdiomLabel, thirdIdiomLabel, fourthIdiomLabel,
         meanTextView, cafeCategoryView, quizCategoryView]

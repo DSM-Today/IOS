@@ -74,35 +74,26 @@ class MusicPageViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray1
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 노래")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
     }
-
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 노래"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
 }
 
 // MARK: - Layout
+// swiftlint:disable function_body_length
 extension MusicPageViewController {
     private func addSubviews() {
         view.addSubview(musicView)
-        [musicImageView, musicTitleLabel, musicComposerLabel, dateLabel, releaseDateLabel].forEach { musicView.addSubview($0) }
-        [situationLabel, playView, backwardView, forwardView, playbarView, playbarCircleView, goToMusicSiteButton].forEach { view.addSubview($0) }
+        [musicImageView, musicTitleLabel, musicComposerLabel, dateLabel, releaseDateLabel]
+            .forEach { musicView.addSubview($0) }
+        [situationLabel, playView, backwardView,
+         forwardView, playbarView, playbarCircleView, goToMusicSiteButton].forEach { view.addSubview($0) }
     }
     private func makeSubviewConstraints() {
         situationLabel.snp.makeConstraints {

@@ -35,7 +35,7 @@ class FortuneViewController: UIViewController {
         self.explainTextView.isEditable = false
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 운세")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -43,16 +43,6 @@ class FortuneViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 운세"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
     private func setDemoData() {
         self.fortuneImg.image = UIImage(systemName: "person.fill")
         self.fortuneName.text = "사람자리"

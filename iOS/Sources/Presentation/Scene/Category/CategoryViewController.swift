@@ -19,27 +19,15 @@ class CategoryViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray1
         self.categoryTableView.dataSource = self
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 랜덤")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
-    }
-
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 랜덤"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
     }
 }
 

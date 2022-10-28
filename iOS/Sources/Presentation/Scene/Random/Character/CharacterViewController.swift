@@ -54,7 +54,7 @@ class CharacterViewController: UIViewController {
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 인물")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -62,16 +62,6 @@ class CharacterViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 인물"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
     private func setDemoData() {
         self.userProfileImg.image = UIImage(systemName: "bolt.fill")
         self.userName.text = "김기영"

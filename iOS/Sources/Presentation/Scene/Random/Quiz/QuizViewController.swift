@@ -56,24 +56,13 @@ class QuizViewController: UIViewController {
         setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 퀴즈")
         resulText.isHidden = true
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
-    }
-
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 퀴즈"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
     }
 
     // MARK: - Button

@@ -56,7 +56,7 @@ class CafeMenuViewController: UIViewController {
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 카페 메뉴")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

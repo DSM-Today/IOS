@@ -65,11 +65,10 @@ class EditProfileViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray1
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("내 정보 수정")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -77,10 +76,6 @@ class EditProfileViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "내 정보 수정"
-    }
     private func setDemoData() {
         self.profileImgView.image = UIImage(systemName: "person.circle.fill")
     }

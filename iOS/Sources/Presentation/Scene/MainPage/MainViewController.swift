@@ -45,9 +45,9 @@ class MainViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .gray1
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
-        view.backgroundColor = .gray1
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

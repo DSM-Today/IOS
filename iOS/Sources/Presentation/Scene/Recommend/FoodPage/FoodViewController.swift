@@ -51,11 +51,10 @@ class FoodViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray1
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 음식")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -63,16 +62,6 @@ class FoodViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 음식"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
     private func setDemoData() {
         self.foodImage.backgroundColor = .black
         self.foodImage.image = UIImage(systemName: "square.fill")

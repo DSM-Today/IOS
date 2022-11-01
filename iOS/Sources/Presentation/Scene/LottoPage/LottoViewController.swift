@@ -69,34 +69,6 @@ class LottoViewController: UIViewController {
         $0.image = UIImage(systemName: "plus")
         $0.tintColor = .black
     }
-    private let redNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let orangeNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let yellowNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let blueNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let purpleNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let grayNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
-    private let plusNumberLabel = UILabel().then {
-        $0.text = "26"
-        $0.textColor = .black
-    }
     private let numberLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 22, family: .medium)
         $0.text = "1038회차"
@@ -111,31 +83,31 @@ class LottoViewController: UIViewController {
         $0.textColor = .primary
     }
     private let firstNumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
     private let secondNumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
     private let thirdNumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
     private let fourthNumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
     private let fifthNumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
-    private let NumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+    private let sixthNumberLabel = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
-    private let NumberLabel = UILabel().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .bold)
+    private let seventhNumberLabel = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 18, family: .bold)
         $0.text = "26"
     }
 
@@ -185,10 +157,18 @@ extension LottoViewController {
          yellowCircleView,
          blueCircleView,
          purpleCircleView,
+         grayCircleView,
          plusView,
          plusCircleView,
          numberLabel,
-         dateLabel
+         dateLabel,
+         firstNumberLabel,
+         secondNumberLabel,
+         thirdNumberLabel,
+         fourthNumberLabel,
+         fifthNumberLabel,
+         sixthNumberLabel,
+         seventhNumberLabel
         ].forEach { lottoElementView.addSubview($0) }
 
         lottoView.addSubview(lottoElementView)
@@ -225,7 +205,7 @@ extension LottoViewController {
         }
         redCircleView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview()
             $0.width.height.equalTo(34)
         }
         orangeCircleView.snp.makeConstraints {
@@ -248,15 +228,41 @@ extension LottoViewController {
             $0.leading.equalTo(blueCircleView.snp.trailing).offset(6)
             $0.width.height.equalTo(34)
         }
-        plusView.snp.makeConstraints {
-            $0.centerY.equalTo(purpleCircleView)
+        grayCircleView.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.equalTo(purpleCircleView.snp.trailing).offset(6)
+            $0.width.height.equalTo(34)
+        }
+        plusView.snp.makeConstraints {
+            $0.centerY.equalTo(grayCircleView)
+            $0.leading.equalTo(grayCircleView.snp.trailing).offset(6)
             $0.width.height.equalTo(15)
         }
         plusCircleView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalTo(plusView .snp.trailing).offset(6)
+            $0.leading.equalTo(plusView.snp.trailing).offset(6)
             $0.width.height.equalTo(34)
+        }
+        firstNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(redCircleView)
+        }
+        secondNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(orangeCircleView)
+        }
+        thirdNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(yellowCircleView)
+        }
+        fourthNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(blueCircleView)
+        }
+        fifthNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(purpleCircleView)
+        }
+        sixthNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(grayCircleView)
+        }
+        seventhNumberLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(plusCircleView)
         }
         numberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)

@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MovieBottomSheetViewController: UIViewController {
+class BookBottomSheetViewController: UIViewController {
 
     // MARK: - UI
     private let explainLabel = UILabel().then {
@@ -18,7 +18,7 @@ class MovieBottomSheetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        demoData()
+        setDemoData()
         self.contentTextView.isEditable = false
     }
     override func viewWillLayoutSubviews() {
@@ -27,33 +27,28 @@ class MovieBottomSheetViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func demoData() {
+    private func setDemoData() {
         self.contentTextView.text = """
-공조 이즈 백! 이번엔 삼각 공조다! 남한으로
- 숨어든 글로벌 범죄 조직을 잡기 위해 새로운
-공조 수사에 투입된 북한 형사 ‘림철령’(현빈).
- 수사 중의 실수로 사이버수사대로 전출됐던 남한
- 형사 ‘강진태’(유해진)는 광수대 복귀를 위해 모두가
- 기피하는 ‘철령’의 파트너를 자청한다. 이렇게 다시
-공조하게 된 ‘철령’과 ‘진태’! ‘철령’과 재회한
-‘민영’(임윤아)의 마음도 불타오르는 가운데, ‘철령’과
- ‘진태’는 여전히 서로의 속내를 의심하면서도 나름
- 그럴싸한 공조 수사를 펼친다. 드디어 범죄 조직
- 리더인 ‘장명준’(진선규)의 은신처를 찾아내려는 찰나,
- 미국에서 날아온 FBI 소속 ‘잭’(다니엘 헤니)이 그들
- 앞에 나타나는데…! 아직도 짠내 나는 남한 형사, 여전한
- 엘리트 북한 형사, 그리고 FBI 소속 해외파 형사까지!
- 각자의 목적으로 뭉친 그들의 짜릿한 공조 수사가 시작된다!
+세계화의 종말, 갈등과 분열, 그리고 전쟁. 수십 년간 이어져
+온 평화와 공존의 시대는 막을 내리고 엄청난 위기감 속에서
+사람들은 다가올 미래를 두려워한다. 자산시장 및 증시의 버블붕괴는
+마치 2008년 글로벌 경제위기의 데자뷔를 보는 듯하다. 제2의 외환위기 경고도 들려온다.
+매우부정적인 전망이 압도하는 2023년을 목전에 두고 있는 지금,
+소비 트렌드 전망에서 가장 중요한 것은 무엇이 반복되고 무엇이
+달라질 것인가를 구별하는 작업일 것이다. 즉, ‘불황기의 소비 패턴’을
+과거와 비교해보는 것이고, 또 하나는 ‘소비의 전형성’이 사라지는
+시대의 흐름을 분석하는 것이다. 이른바 ‘평균 실종’이 가장 첫 번째
+키워드인 이유다. 변화의 속도가 더욱 빨라지는 2023 대한민국.
+소비자들은 어떤 선택을 할 것인가?
 """
     }
 }
 
 // MARK: - Layout
-extension MovieBottomSheetViewController {
+extension BookBottomSheetViewController {
     private func addSubviews() {
         [explainLabel, contentTextView].forEach { view.addSubview($0) }
     }
-
     private func makeSubviewConstraints() {
         explainLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)

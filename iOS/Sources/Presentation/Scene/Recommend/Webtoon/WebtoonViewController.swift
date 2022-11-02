@@ -63,7 +63,7 @@ class WebtoonViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setNavigation()
+        setNavigation("오늘의 웹툰")
         self.contentTextView.isEditable = false
     }
     override func viewWillLayoutSubviews() {
@@ -72,10 +72,6 @@ class WebtoonViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 웹툰"
-    }
     private func setDemoData() {
         ageLimitLabel.text = "전체연령가"
         currentSituationLabel.text = "휴재"

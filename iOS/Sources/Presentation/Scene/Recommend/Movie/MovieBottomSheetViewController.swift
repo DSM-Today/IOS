@@ -10,7 +10,7 @@ class MovieBottomSheetViewController: UIViewController {
         $0.text = "설명"
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
     }
-    private let contentTextView = UITextView().then {
+    let contentTextView = UITextView().then {
         $0.font = .notoSansFont(ofSize: 20, family: .regular)
     }
 

@@ -56,7 +56,7 @@ class MyPageViewController: UIViewController {
         setTableView()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("마이페이지")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -68,11 +68,6 @@ class MyPageViewController: UIViewController {
     private func setTableView() {
         favoriteTableView.dataSource = self
         favoriteTableView.rowHeight = 110
-    }
-
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "마이페이지"
     }
 
     // MARK: - Button

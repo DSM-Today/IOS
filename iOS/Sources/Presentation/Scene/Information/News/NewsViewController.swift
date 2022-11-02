@@ -36,12 +36,11 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setDemoData()
-        view.backgroundColor = .gray1
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.contentTextView.isEditable = false
-        setNavigation()
+        setNavigation("뉴스")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -49,10 +48,6 @@ class NewsViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "뉴스"
-    }
     private func setDemoData() {
         self.titleLabel.text = "김기영 마이다스 해커톤 제출하지도 않아"
         self.newsImage.image = .init(systemName: "person")

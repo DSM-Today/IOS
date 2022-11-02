@@ -55,7 +55,7 @@ class FlowerViewController: UIViewController {
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("오늘의 꽃")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -63,16 +63,6 @@ class FlowerViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 꽃"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
     private func setDemoData() {
         self.flowerImg.image = UIImage(systemName: "snowflake")
         self.flowerName.text = "개나리"

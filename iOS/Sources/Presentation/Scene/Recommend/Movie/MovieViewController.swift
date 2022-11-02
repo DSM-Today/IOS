@@ -40,10 +40,12 @@ class MovieViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigation()
         setDemoData()
         setButton()
-        view.backgroundColor = .white
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation("오늘의 영화")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -51,10 +53,6 @@ class MovieViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "오늘의 영화"
-    }
     private func setButton() {
         explainButton.rx.tap
             .asObservable()

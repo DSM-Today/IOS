@@ -17,7 +17,8 @@ class LottoViewController: UIViewController {
         $0.layer.shadowOpacity = 0.1
         $0.layer.cornerRadius = 41
     }
-    private let lottoElementView = UIView().then {
+    private let lottoStackView = UIStackView().then {
+        $0.axis = .horizontal
         $0.backgroundColor = .white
     }
     private let categoryView = UIView().then {
@@ -37,88 +38,77 @@ class LottoViewController: UIViewController {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
     }
-    private let redCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .red1
-    }
-    private let orangeCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .orange1
-    }
-    private let yellowCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .yellow1
-    }
-    private let blueCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .blue7
-    }
-    private let purpleCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .purple1
-    }
-    private let grayCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .gray2
-    }
-    private let plusCircleView = UIImageView().then {
-        $0.image = UIImage(systemName: "circle")
-        $0.tintColor = .blue9
-    }
     private let plusView = UIImageView().then {
         $0.image = UIImage(systemName: "plus")
         $0.tintColor = .black
     }
     private let numberLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 22, family: .medium)
-        $0.text = "1038회차"
     }
     private let dateLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .regular)
-        $0.text = "2022.10.22"
     }
     private let moneyLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
-        $0.text = "2,868,856,209원"
         $0.textColor = .primary
     }
     private let firstNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.red1.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let secondNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.orange1.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let thirdNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.yellow1.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let fourthNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.blue7.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let fifthNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.purple1.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let sixthNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.layer.cornerRadius = 17
     }
     private let seventhNumberLabel = UILabel().then {
+        $0.textAlignment = .center
         $0.font = .notoSansFont(ofSize: 18, family: .bold)
-        $0.text = "26"
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.blue6.cgColor
+        $0.layer.cornerRadius = 17
     }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray1
         setDemoData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation()
+        setNavigation("로또")
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -126,18 +116,18 @@ class LottoViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    // MARK: - Navigation
-    private func setNavigation() {
-        self.title = "로또"
-        if  let navigationBar = navigationController?.navigationBar {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .clear
-            navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
     private func setDemoData() {
         self.cafeMenuCategoryImage.image = UIImage(systemName: "square.fill")
+        numberLabel.text = "1038회차"
+        dateLabel.text = "2022.10.22"
+        moneyLabel.text = "2,868,856,209원"
+        firstNumberLabel.text = "26"
+        secondNumberLabel.text = "26"
+        thirdNumberLabel.text = "26"
+        fourthNumberLabel.text = "26"
+        fifthNumberLabel.text = "26"
+        sixthNumberLabel.text = "26"
+        seventhNumberLabel.text = "26"
     }
 }
 
@@ -152,16 +142,7 @@ extension LottoViewController {
          moneyLabel
         ].forEach { view.addSubview($0) }
 
-        [redCircleView,
-         orangeCircleView,
-         yellowCircleView,
-         blueCircleView,
-         purpleCircleView,
-         grayCircleView,
-         plusView,
-         plusCircleView,
-         numberLabel,
-         dateLabel,
+        [plusView,
          firstNumberLabel,
          secondNumberLabel,
          thirdNumberLabel,
@@ -169,26 +150,25 @@ extension LottoViewController {
          fifthNumberLabel,
          sixthNumberLabel,
          seventhNumberLabel
-        ].forEach { lottoElementView.addSubview($0) }
+        ].forEach { lottoStackView.addSubview($0) }
 
-        lottoView.addSubview(lottoElementView)
+        [lottoStackView, numberLabel, dateLabel].forEach { lottoView.addSubview($0) }
     }
+    // swiftlint:disable function_body_length
     private func makeSubviewConstraints() {
         todayEatLabel.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(29)
             $0.centerX.equalToSuperview()
         }
-        lottoElementView.snp.makeConstraints {
+        lottoView.snp.makeConstraints {
+            $0.top.equalTo(todayEatLabel.snp.bottom).offset(38)
+            $0.leading.trailing.equalToSuperview().inset(19)
+            $0.height.equalTo(260)
+        }
+        lottoStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(27)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(34)
-            $0.width.equalTo(295)
-        }
-        lottoView.snp.makeConstraints {
-            $0.top.equalTo(todayEatLabel.snp.bottom).offset(38)
-            $0.height.equalTo(260)
-            $0.width.equalTo(330)
-            $0.centerX.equalToSuperview()
         }
         categoryView.snp.makeConstraints {
             $0.height.equalTo(150)
@@ -203,66 +183,45 @@ extension LottoViewController {
             $0.centerY.equalTo(cafeMenuCategoryImage)
             $0.leading.equalTo(cafeMenuCategoryImage.snp.trailing).offset(30)
         }
-        redCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+        firstNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.width.height.equalTo(34)
         }
-        orangeCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(redCircleView.snp.trailing).offset(6)
+        secondNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(firstNumberLabel.snp.trailing).offset(3)
             $0.width.height.equalTo(34)
         }
-        yellowCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(orangeCircleView.snp.trailing).offset(6)
+        thirdNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(secondNumberLabel.snp.trailing).offset(3)
             $0.width.height.equalTo(34)
         }
-        blueCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(yellowCircleView.snp.trailing).offset(6)
+        fourthNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(thirdNumberLabel.snp.trailing).offset(3)
             $0.width.height.equalTo(34)
         }
-        purpleCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(blueCircleView.snp.trailing).offset(6)
+        fifthNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(fourthNumberLabel.snp.trailing).offset(3)
             $0.width.height.equalTo(34)
         }
-        grayCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(purpleCircleView.snp.trailing).offset(6)
+        sixthNumberLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(fifthNumberLabel.snp.trailing).offset(3)
             $0.width.height.equalTo(34)
         }
         plusView.snp.makeConstraints {
-            $0.centerY.equalTo(grayCircleView)
-            $0.leading.equalTo(grayCircleView.snp.trailing).offset(6)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(sixthNumberLabel.snp.trailing).offset(6)
             $0.width.height.equalTo(15)
         }
-        plusCircleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(plusView.snp.trailing).offset(6)
-            $0.width.height.equalTo(34)
-        }
-        firstNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(redCircleView)
-        }
-        secondNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(orangeCircleView)
-        }
-        thirdNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(yellowCircleView)
-        }
-        fourthNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(blueCircleView)
-        }
-        fifthNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(purpleCircleView)
-        }
-        sixthNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(grayCircleView)
-        }
         seventhNumberLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(plusCircleView)
+            $0.centerY.trailing.equalToSuperview()
+            $0.leading.equalTo(plusView.snp.trailing).offset(3)
+            $0.width.height.equalTo(34)
         }
         numberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)

@@ -13,6 +13,7 @@ extension TargetDependency {
         public static let RxCocoa = TargetDependency.external(name: "RxCocoa")
         public static let RxMoya = TargetDependency.external(name: "RxMoya")
 
+        public static let KeychainSwift = TargetDependency.external(name: "KeychainSwift")
     }
 
 }

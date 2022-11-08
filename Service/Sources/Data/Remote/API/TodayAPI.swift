@@ -5,6 +5,7 @@ import Moya
 protocol TodayAPI: TargetType {
     var domain: Domain { get }
     var urlPath: String { get }
+    var erroerMapper: [Int: TodayError]? { get }
 }
 
 extension TodayAPI {

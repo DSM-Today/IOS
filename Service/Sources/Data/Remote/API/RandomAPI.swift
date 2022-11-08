@@ -7,7 +7,7 @@ enum RandomAPI {
     case fetchFlower
     case fetchLucky
     case fetchQuiz
-    case completeQuiz
+    case completeQuiz(_ answer: String)
     case fetchQuizAnswer
     case fetchIdiom
     case bookmarkFlower
@@ -58,5 +58,23 @@ extension RandomAPI: TodayAPI {
         default:
             return .post
         }
+    }
+
+    var task: Task {
+        switch self {
+        case .completeQuiz(let answer):
+            return .requestParameters(
+                parameters: [
+                    "answer": answer
+                ],
+                encoding: JSONEncoding.default
+            )
+        default:
+            return .requestPlain
+        }
+    }
+
+    var erroerMapper: [Int: TodayError]? {
+        return nil
     }
 }

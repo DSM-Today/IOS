@@ -13,6 +13,7 @@ enum InformationAPI {
 }
 
 extension InformationAPI: TodayAPI {
+
     var domain: Domain {
         return .information
     }
@@ -37,5 +38,9 @@ extension InformationAPI: TodayAPI {
         default:
             return .delete
         }
+    }
+
+    var erroerMapper: [Int: TodayError]? {
+        return nil
     }
 }

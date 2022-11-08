@@ -40,4 +40,8 @@ extension UserAPI: TodayAPI {
             return .requestPlain
         }
     }
+
+    var erroerMapper: [Int: TodayError]? {
+        return nil
+    }
 }

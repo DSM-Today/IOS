@@ -21,6 +21,11 @@ let depencies = Dependencies(
         .remote(
             url: "https://github.com/Moya/Moya.git",
             requirement: .upToNextMajor(from: "15.0.0")
+        ),
+        // KeychainSwift
+        .remote(
+            url: "https://github.com/evgenyneu/keychain-swift.git",
+            requirement: .upToNextMajor(from: "20.0.0")
         )
     ]),
     platforms: [.iOS]

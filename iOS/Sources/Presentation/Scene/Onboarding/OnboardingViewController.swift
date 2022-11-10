@@ -2,8 +2,17 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import GoogleSignIn
 
 class OnboardingViewController: UIViewController {
+    // MARK: ViewModel
+    var viewModel: OnboardingViewModel!
+
+    private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
+    private let idToken = PublishRelay<String>()
 
     // MARK: - UI
     private let logoImage = UIImageView().then {
@@ -48,11 +57,45 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue1
+        bind()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewAppear.accept(())
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
+    }
+
+    // MARK: - Bind
+    private func bind() {
+        let input = OnboardingViewModel.Input(
+            googleLoginButtonDidTap: googleLoginButton.rx.tap.asDriver(),
+            idToken: idToken.asDriver(onErrorJustReturn: "")
+        )
+
+        let output = viewModel.transform(input)
+
+        output.clientID
+            .subscribe(onNext: {
+                GIDSignIn.sharedInstance.signIn(
+                    with: .init(clientID: $0.clientID),
+                    presenting: self
+                ) { user, error in
+                    guard error == nil else { return }
+                    guard let user = user else { return }
+
+                    user.authentication.do { [self] authentication, error in
+                        guard error == nil else { return }
+                        guard let authentication = authentication else { return }
+
+                        self.idToken.accept(authentication.idToken ?? "")
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 

@@ -4,8 +4,6 @@ import RxSwift
 
 final class InformationRemoteDataSourceImpl: RemoteDataSource<InformationAPI>, InformationRemoteDataSource {
 
-    static let shared = InformationRemoteDataSourceImpl()
-
     func fetchInformationList() -> Single<[Subject]> {
         return request(.fetchInformationList)
             .map(SubjectInformationListResponse.self)

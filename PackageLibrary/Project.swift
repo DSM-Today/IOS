@@ -3,6 +3,9 @@ import ProjectDescriptionHelpers
 
 let project = Project.dynamicFramework(
     name: "PackageLibrary",
+    packages: [
+        .GoogleSignIn
+    ],
     platform: .iOS,
     dependencies: [
         .SPM.RxSwift,
@@ -11,6 +14,7 @@ let project = Project.dynamicFramework(
         .SPM.Moya,
         .SPM.SnapKit,
         .SPM.Then,
-        .SPM.KeychainSwift
+        .SPM.KeychainSwift,
+        .SPM.GoogleSignIn
     ]
 )

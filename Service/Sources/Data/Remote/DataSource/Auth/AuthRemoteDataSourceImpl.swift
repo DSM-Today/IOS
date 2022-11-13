@@ -10,14 +10,14 @@ final class AuthRemoteDataSourceImpl: RemoteDataSource<AuthAPI>, AuthRemoteDataS
             .map { $0.toDomain() }
     }
 
-    func googleLogin(idToken: String) -> Single<TokenResponse> {
+    func googleLogin(idToken: String) -> Single<LoginResponse> {
         return request(.googleLogin(idToken: idToken))
-            .map(TokenResponse.self)
+            .map(LoginResponse.self)
     }
 
-    func refreshToken() -> Single<TokenResponse> {
+    func refreshToken() -> Single<LoginResponse> {
         return request(.refreshToken)
-            .map(TokenResponse.self)
+            .map(LoginResponse.self)
     }
 
 }

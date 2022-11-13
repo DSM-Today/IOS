@@ -10,7 +10,7 @@ public struct UserDependency {
 
 public extension UserDependency {
 
-    func resolve() -> UserDependency {
+    static func resolve() -> UserDependency {
 
         let remoteDataSource = UserRemoteDataSourceImpl()
         let repository = UserRepositoryImpl(remoteDataSource: remoteDataSource)

@@ -14,7 +14,7 @@ public struct InformationDependency {
 
 public extension InformationDependency {
 
-    func resolve() -> InformationDependency {
+    static func resolve() -> InformationDependency {
         let remoteDataSource = InformationRemoteDataSourceImpl()
         let repository = InformationRepositoryImpl(remoteDataSource: remoteDataSource)
 

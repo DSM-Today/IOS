@@ -27,7 +27,7 @@ public struct SuggestDependency {
 
 public extension SuggestDependency {
 // swiftlint:disable function_body_length
-    func resolve() -> SuggestDependency {
+    static func resolve() -> SuggestDependency {
 
         let remoteDataSource = SuggestRemoteDataSourceImpl()
         let repository = SuggestRepositoryImpl(remoteDataSource: remoteDataSource)

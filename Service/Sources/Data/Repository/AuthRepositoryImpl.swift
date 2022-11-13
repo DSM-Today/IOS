@@ -15,13 +15,13 @@ class AuthRepositoryImpl: AuthRepository {
         return remoteDataSource.fetchClientID()
     }
 
-    func googleLogin(idToken: String) -> Completable {
+    func googleLogin(idToken: String) -> Single<LoginEntity> {
         return remoteDataSource.googleLogin(idToken: idToken)
             .map {
                 self.keychainTask.registerAccessToken($0.accessToken)
                 self.keychainTask.registerRefreshToken($0.refreshToken)
+                return $0.toDomain()
             }
-            .asCompletable()
     }
 
     func refreshToken() -> Completable {

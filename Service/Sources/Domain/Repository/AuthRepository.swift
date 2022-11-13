@@ -4,6 +4,6 @@ import RxSwift
 
 protocol AuthRepository {
     func fetchClientID() -> Single<ClientID>
-    func googleLogin(idToken: String) -> Completable
+    func googleLogin(idToken: String) -> Single<LoginEntity>
     func refreshToken() -> Completable
 }

@@ -10,7 +10,7 @@ public class GoogleLoginUseCase {
         self.repository = repository
     }
 
-    public func excute(idToken: String) -> Completable {
+    public func excute(idToken: String) -> Single<LoginEntity> {
         return repository.googleLogin(idToken: idToken)
     }
 

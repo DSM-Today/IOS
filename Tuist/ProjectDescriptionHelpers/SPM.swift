@@ -15,6 +15,8 @@ extension TargetDependency {
 
         public static let KeychainSwift = TargetDependency.external(name: "KeychainSwift")
         public static let GoogleSignIn = TargetDependency.package(product: "GoogleSignIn")
+
+        public static let RxFlow = TargetDependency.external(name: "RxFlow")
     }
 
 }

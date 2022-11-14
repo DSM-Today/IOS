@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MusicPageViewController: UIViewController {
+class MusicViewController: UIViewController {
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
@@ -87,7 +87,7 @@ class MusicPageViewController: UIViewController {
 
 // MARK: - Layout
 // swiftlint:disable function_body_length
-extension MusicPageViewController {
+extension MusicViewController {
     private func addSubviews() {
         view.addSubview(musicView)
         [musicImageView, musicTitleLabel, musicComposerLabel, dateLabel, releaseDateLabel]

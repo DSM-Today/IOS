@@ -1,8 +1,11 @@
 import UIKit
 
+import RxFlow
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coodintator = FlowCoordinator()
 
     func scene(
         _ scene: UIScene,
@@ -12,8 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = OnboardingViewController()
-        window?.makeKeyAndVisible()
+        let appFlow = AppFlow()
+        self.coodintator.coordinate(flow: appFlow)
+        Flows.use(appFlow, when: .created) { [weak self] root in
+            self?.window?.rootViewController = root
+            self?.window?.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -11,6 +11,7 @@ let project = Project.dynamicFramework(
         .SPM.Moya,
         .SPM.SnapKit,
         .SPM.Then,
-        .SPM.KeychainSwift
+        .SPM.KeychainSwift,
+        .SPM.RxFlow
     ]
 )

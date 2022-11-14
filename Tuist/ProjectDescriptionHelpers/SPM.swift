@@ -14,6 +14,7 @@ extension TargetDependency {
         public static let RxMoya = TargetDependency.external(name: "RxMoya")
 
         public static let KeychainSwift = TargetDependency.external(name: "KeychainSwift")
+        public static let RxFlow = TargetDependency.external(name: "RxFlow")
     }
 
 }

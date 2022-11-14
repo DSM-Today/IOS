@@ -47,7 +47,7 @@ class UserProfileViewController: UIViewController {
         $0.layer.cornerRadius = 5
     }
 
-    // MARK: - LifeCycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setButton()

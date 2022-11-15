@@ -27,21 +27,16 @@ class OnboardingViewModel: ViewModel, Stepper {
 
     struct Output {
         let clientID: PublishRelay<ClientID>
-        let loginEntity: PublishRelay<LoginEntity>
     }
 
     private var disposeBag = DisposeBag()
 
     func transform(_ input: Input) -> Output {
         let clientID = PublishRelay<ClientID>()
-        let loginEntity = PublishRelay<LoginEntity>()
-
         input.googleLoginButtonDidTap
             .asObservable()
             .flatMap { self.fetchClientIDUseCase.excute() }
             .subscribe(onNext: {
-                print("//////////////")
-                print($0)
                 clientID.accept($0)
             })
             .disposed(by: disposeBag)
@@ -49,14 +44,19 @@ class OnboardingViewModel: ViewModel, Stepper {
         input.idToken
             .asObservable()
             .flatMap { self.googleLoginUseCase.excute(idToken: $0) }
+            .map {
+                if $0.isBirthdayExist {
+                    return TodayStep.mainIsRequired
+                } else {
+                    return TodayStep.userProfileIsRequired
+                }
+            }
             .subscribe(onNext: {
-                print("!!!!!!")
-                print($0)
-                loginEntity.accept($0)
+                self.steps.accept($0)
             })
             .disposed(by: disposeBag)
 
-        return Output(clientID: clientID, loginEntity: loginEntity)
+        return Output(clientID: clientID)
     }
 
 }

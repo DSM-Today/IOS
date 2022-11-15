@@ -11,7 +11,6 @@ class OnboardingViewController: UIViewController {
     var viewModel: OnboardingViewModel!
 
     private var disposeBag = DisposeBag()
-    private let viewAppear = PublishRelay<Void>()
     private let idToken = PublishRelay<String>()
 
     // MARK: - UI
@@ -61,7 +60,6 @@ class OnboardingViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewAppear.accept(())
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

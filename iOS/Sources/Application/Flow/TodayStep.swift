@@ -15,6 +15,7 @@ enum TodayStep: Step {
     // Profile
     case editProfileIsRequired
     case myPageIsRequired
+    case userProfileIsRequired
 
     // Information
     case newsIsRequired
@@ -34,4 +35,7 @@ enum TodayStep: Step {
     case movieIsRequired
     case musicIsRequired
     case webtoonIsRequired
+
+    // none
+    case none
 }

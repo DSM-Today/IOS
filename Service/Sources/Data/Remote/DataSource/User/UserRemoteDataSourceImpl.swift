@@ -21,4 +21,8 @@ final class UserRemoteDataSourceImpl: RemoteDataSource<UserAPI>, UserRemoteDataS
             .map { $0.toDomain() }
     }
 
+    func initProfile(initProfileRequest: InitProfileRequest) -> Completable {
+        return request(.initProfile(initProfileRequest))
+            .asCompletable()
+    }
 }

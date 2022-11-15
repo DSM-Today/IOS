@@ -22,4 +22,8 @@ public class UserRepositoryImpl: UserRepository {
     func fetchProfile() -> Single<Profile> {
         return remoteDataSource.fetchProfile()
     }
+
+    func initProfile(initProfileRequest: InitProfileRequest) -> Completable {
+        return remoteDataSource.initProfile(initProfileRequest: initProfileRequest)
+    }
 }

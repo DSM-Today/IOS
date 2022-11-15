@@ -18,7 +18,7 @@ class OnboardingFlow: Flow {
         case .onboarindIsRequired:
             return navigateToOnboardingScreen()
         case .userProfileIsRequired:
-            return navigateToUserProeileScreen()
+            return navigateToUserProfileScreen()
         case .mainIsRequired:
             return navigateToMainScreen()
         default:
@@ -34,7 +34,7 @@ extension OnboardingFlow {
             withNextStepper: rootViewController.viewModel
         ))
     }
-    private func navigateToUserProeileScreen() -> FlowContributors {
+    private func navigateToUserProfileScreen() -> FlowContributors {
         let userProfileViewController = app.userProfileViewController
         let navigationUserProfileViewController = UINavigationController(rootViewController: userProfileViewController)
         navigationUserProfileViewController.modalPresentationStyle = .fullScreen
@@ -52,9 +52,12 @@ extension OnboardingFlow {
         let mainFlow = MainFlow()
 
         Flows.use(mainFlow, when: .created) { [weak self] root in
-            root.modalPresentationStyle = .fullScreen
-            root.modalTransitionStyle = .coverVertical
-            self?.rootViewController.present(root, animated: true)
+            let navigationController = UINavigationController(rootViewController: root)
+            let userProfileViewController = self?.app.userProfileViewController
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .coverVertical
+            userProfileViewController?.present(navigationController, animated: true)
+            self?.rootViewController.present(navigationController, animated: true)
         }
 
         return .one(flowContributor: .contribute(

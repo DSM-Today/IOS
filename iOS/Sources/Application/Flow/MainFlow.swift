@@ -10,7 +10,7 @@ class MainFlow: Flow {
         return rootViewController
     }
 
-    private lazy var rootViewController = UINavigationController()
+    private lazy var rootViewController = app.mainViewController
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? TodayStep else { return .none }
@@ -25,12 +25,9 @@ class MainFlow: Flow {
 
 extension MainFlow {
     private func moveToMainScreen() -> FlowContributors {
-        let mainViewController = app.mainViewController
-        rootViewController.pushViewController(mainViewController, animated: true)
-
         return .one(flowContributor: .contribute(
-            withNextPresentable: mainViewController,
-            withNextStepper: mainViewController.viewModel
+            withNextPresentable: rootViewController,
+            withNextStepper: rootViewController.viewModel
         ))
     }
 }

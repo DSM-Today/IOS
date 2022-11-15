@@ -21,6 +21,7 @@ struct AppDI {
     let movieViewController: MovieViewController
     let musicViewController: MusicViewController
     let webtoonViewController: WebtoonViewController
+    let userProfileViewController: UserProfileViewController
 }
 
 extension AppDI {
@@ -29,12 +30,17 @@ extension AppDI {
     static func resolve() -> AppDI {
         // MARK: Dependency
         let authDependency = AuthDependency.resolve()
+        let userDependency = UserDependency.resolve()
 
         // MARK: ViewModel
         let onboardingViewModel = OnboardingViewModel(
             fetchClientIDUseCase: authDependency.fetchClientIDUseCase,
             googleLoginUseCase: authDependency.googleLoginUseCase
         )
+        let userProfileViewModel = UserProfileViewModel(
+            initProfileStepUseCase: userDependency.initProfileUseCase
+        )
+        let mainViewModel = MainViewModel()
 
         // MARK: ViewController
         let onboardingViewController = OnboardingViewController().then {
@@ -43,11 +49,16 @@ extension AppDI {
 
         let categoryViewController = CategoryViewController()
         let editProfileViewController = EditProfileViewController()
+        let userProfileViewController = UserProfileViewController().then {
+            $0.viewModel = userProfileViewModel
+        }
 
         let newsViewController = NewsViewController()
         let lottoViewController = LottoViewController()
 
-        let mainViewController = MainViewController()
+        let mainViewController = MainViewController().then {
+            $0.viewModel = mainViewModel
+        }
 
         let myPageViewController = MyPageViewController()
         let bookViewController = BookViewController()
@@ -81,7 +92,8 @@ extension AppDI {
             foodViewController: foodViewController,
             movieViewController: movieViewController,
             musicViewController: musicViewController,
-            webtoonViewController: webtoonViewController
+            webtoonViewController: webtoonViewController,
+            userProfileViewController: userProfileViewController
         )
     }
 }

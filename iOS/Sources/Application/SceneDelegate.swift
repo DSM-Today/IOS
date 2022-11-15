@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         let appFlow = AppFlow()
-        self.coodintator.coordinate(flow: appFlow)
+        self.coodintator.coordinate(flow: appFlow, with: AppStepper())
         Flows.use(appFlow, when: .created) { [weak self] root in
             self?.window?.rootViewController = root
             self?.window?.makeKeyAndVisible()

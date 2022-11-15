@@ -14,7 +14,16 @@ extension TargetDependency {
         public static let RxMoya = TargetDependency.external(name: "RxMoya")
 
         public static let KeychainSwift = TargetDependency.external(name: "KeychainSwift")
+        public static let GoogleSignIn = TargetDependency.package(product: "GoogleSignIn")
+
         public static let RxFlow = TargetDependency.external(name: "RxFlow")
     }
 
+}
+
+public extension Package {
+    static let GoogleSignIn = Package.remote(
+        url: "https://github.com/google/GoogleSignIn-iOS",
+        requirement: .upToNextMajor(from: "6.2.4")
+    )
 }

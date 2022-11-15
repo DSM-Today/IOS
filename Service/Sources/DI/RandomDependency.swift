@@ -23,7 +23,7 @@ public struct RandomDependency {
 public extension RandomDependency {
 
     // swiftlint:disable function_body_length
-    func resolve() -> RandomDependency {
+    static func resolve() -> RandomDependency {
 
         let remoteDataSource = RandomRemoteDataSourceImpl()
         let repository = RandomRepositoryImpl(remoteDataSource: remoteDataSource)

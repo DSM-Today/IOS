@@ -17,6 +17,10 @@ class OnboardingFlow: Flow {
         switch step {
         case .onboarindIsRequired:
             return navigateToOnboardingScreen()
+        case .userProfileIsRequired:
+            return navigateToUserProfileScreen()
+        case .mainIsRequired:
+            return navigateToMainScreen()
         default:
             return .none
         }
@@ -25,6 +29,40 @@ class OnboardingFlow: Flow {
 
 extension OnboardingFlow {
     private func navigateToOnboardingScreen() -> FlowContributors {
-        return .one(flowContributor: .contribute(withNext: rootViewController))
+        return .one(flowContributor: .contribute(
+            withNextPresentable: rootViewController,
+            withNextStepper: rootViewController.viewModel
+        ))
+    }
+    private func navigateToUserProfileScreen() -> FlowContributors {
+        let userProfileViewController = app.userProfileViewController
+        let navigationUserProfileViewController = UINavigationController(rootViewController: userProfileViewController)
+        navigationUserProfileViewController.modalPresentationStyle = .fullScreen
+        navigationUserProfileViewController.modalTransitionStyle = .coverVertical
+        self.rootViewController.present(
+            navigationUserProfileViewController,
+            animated: true
+        )
+        return .one(flowContributor: .contribute(
+            withNextPresentable: userProfileViewController,
+            withNextStepper: userProfileViewController.viewModel
+        ))
+    }
+    private func navigateToMainScreen() -> FlowContributors {
+        let mainFlow = MainFlow()
+
+        Flows.use(mainFlow, when: .created) { [weak self] root in
+            let navigationController = UINavigationController(rootViewController: root)
+            let userProfileViewController = self?.app.userProfileViewController
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .coverVertical
+            userProfileViewController?.present(navigationController, animated: true)
+            self?.rootViewController.present(navigationController, animated: true)
+        }
+
+        return .one(flowContributor: .contribute(
+            withNextPresentable: mainFlow,
+            withNextStepper: OneStepper(withSingleStep: TodayStep.mainIsRequired)
+        ))
     }
 }

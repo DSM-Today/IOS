@@ -6,11 +6,12 @@ public struct UserDependency {
     public let fetchBookmarkListUseCase: FetchBookmarkListUseCase
     public let editProfileUseCase: EditProfileUseCase
     public let fetchProfileUseCase: FetchProfileUseCase
+    public let initProfileUseCase: InitProfileUseCase
 }
 
 public extension UserDependency {
 
-    func resolve() -> UserDependency {
+    static func resolve() -> UserDependency {
 
         let remoteDataSource = UserRemoteDataSourceImpl()
         let repository = UserRepositoryImpl(remoteDataSource: remoteDataSource)
@@ -24,11 +25,15 @@ public extension UserDependency {
         let fetchProfileUseCase = FetchProfileUseCase(
             repository: repository
         )
+        let initProfileUseCase = InitProfileUseCase(
+            repository: repository
+        )
 
         return UserDependency(
             fetchBookmarkListUseCase: fetchBookmarkListUseCase,
             editProfileUseCase: editProfileUseCase,
-            fetchProfileUseCase: fetchProfileUseCase
+            fetchProfileUseCase: fetchProfileUseCase,
+            initProfileUseCase: initProfileUseCase
         )
     }
 }

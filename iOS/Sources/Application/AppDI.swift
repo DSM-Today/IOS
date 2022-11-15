@@ -1,5 +1,7 @@
 import Foundation
 
+import Service
+
 struct AppDI {
     let onboardingViewController: OnboardingViewController
     let categoryViewController: CategoryViewController
@@ -19,19 +21,44 @@ struct AppDI {
     let movieViewController: MovieViewController
     let musicViewController: MusicViewController
     let webtoonViewController: WebtoonViewController
+    let userProfileViewController: UserProfileViewController
 }
 
 extension AppDI {
+
+    // swiftlint:disable function_body_length
     static func resolve() -> AppDI {
-        let onboardingViewController = OnboardingViewController()
+        // MARK: Dependency
+        let authDependency = AuthDependency.resolve()
+        let userDependency = UserDependency.resolve()
+
+        // MARK: ViewModel
+        let onboardingViewModel = OnboardingViewModel(
+            fetchClientIDUseCase: authDependency.fetchClientIDUseCase,
+            googleLoginUseCase: authDependency.googleLoginUseCase
+        )
+        let userProfileViewModel = UserProfileViewModel(
+            initProfileStepUseCase: userDependency.initProfileUseCase
+        )
+        let mainViewModel = MainViewModel()
+
+        // MARK: ViewController
+        let onboardingViewController = OnboardingViewController().then {
+            $0.viewModel = onboardingViewModel
+        }
 
         let categoryViewController = CategoryViewController()
         let editProfileViewController = EditProfileViewController()
+        let userProfileViewController = UserProfileViewController().then {
+            $0.viewModel = userProfileViewModel
+        }
 
         let newsViewController = NewsViewController()
         let lottoViewController = LottoViewController()
 
-        let mainViewController = MainViewController()
+        let mainViewController = MainViewController().then {
+            $0.viewModel = mainViewModel
+        }
 
         let myPageViewController = MyPageViewController()
         let bookViewController = BookViewController()
@@ -65,7 +92,8 @@ extension AppDI {
             foodViewController: foodViewController,
             movieViewController: movieViewController,
             musicViewController: musicViewController,
-            webtoonViewController: webtoonViewController
+            webtoonViewController: webtoonViewController,
+            userProfileViewController: userProfileViewController
         )
     }
 }

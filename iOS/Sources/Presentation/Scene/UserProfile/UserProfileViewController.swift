@@ -6,7 +6,11 @@ import RxSwift
 import RxCocoa
 
 class UserProfileViewController: UIViewController {
+
+    var viewModel: UserProfileViewModel!
     private var disposeBag = DisposeBag()
+
+    private let canPerson = PublishRelay<Bool>()
 
     // MARK: - UI
     private let introduceText = UILabel().then {
@@ -41,20 +45,23 @@ class UserProfileViewController: UIViewController {
     }
     private let completeButton = UIButton(type: .system).then {
         $0.setTitle("완료", for: .normal)
-        $0.backgroundColor = .primary
+        $0.setBackgroundColor(.primary, for: .normal)
+        $0.setBackgroundColor(.gray, for: .disabled)
         $0.titleLabel?.font = .notoSansFont(ofSize: 20, family: .regular)
         $0.setTitleColor(.white, for: .normal)
         $0.layer.cornerRadius = 5
+        $0.clipsToBounds = true
     }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setButton()
-        setDemoData()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("회원 정보")
+        self.completeButton.isEnabled = false
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -64,13 +71,32 @@ class UserProfileViewController: UIViewController {
 
     // MARK: - Button
     private func setButton() {
+        let info = Observable.combineLatest(
+            introduceTextField.rx.text.orEmpty,
+            birthPicker.rx.date,
+            canPerson
+        )
         agreeButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] in
                 self?.agreeButton.isSelected.toggle()
+                self?.canPerson.accept(self?.agreeButton.isSelected ?? false)
             }).disposed(by: disposeBag)
+
+        info
+            .map { $0.count > 0  && $1 < Date() && $2 }
+            .bind(to: completeButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
-    private func setDemoData() {
+    // MARK: - Bind
+    private func bind() {
+        let input = UserProfileViewModel.Input(
+            introduce: introduceTextField.rx.text.orEmpty.asDriver(),
+            birthDay: birthPicker.rx.date.asDriver(),
+            canPerson: canPerson.asDriver(onErrorJustReturn: false),
+            completeButtonDidTap: completeButton.rx.tap.asDriver()
+        )
+        _ = viewModel.transform(input)
     }
 }
 
@@ -114,6 +140,7 @@ extension UserProfileViewController {
         completeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(22)
+            $0.height.equalTo(50)
             $0.bottom.equalToSuperview().inset(35)
         }
     }

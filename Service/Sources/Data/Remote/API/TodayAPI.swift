@@ -10,7 +10,7 @@ protocol TodayAPI: TargetType {
 
 extension TodayAPI {
 
-    var baseURL: URL { URL(string: "http://3.38.110.184:8000")! }
+    var baseURL: URL { URL(string: "http://43.201.53.240:8000")! }
 
     var path: String {
         return domain.uri + urlPath

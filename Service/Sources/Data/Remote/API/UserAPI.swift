@@ -6,6 +6,7 @@ enum UserAPI {
     case fetchBookmarkList
     case editProfile(_ request: ProfileRequest)
     case fetchProfile
+    case initProfile(_ request: InitProfileRequest)
 }
 
 extension UserAPI: TodayAPI {
@@ -18,6 +19,8 @@ extension UserAPI: TodayAPI {
         switch self {
         case .fetchBookmarkList:
             return "/list"
+        case .initProfile:
+            return "/profile/init"
         default:
             return "/profile"
         }
@@ -25,7 +28,7 @@ extension UserAPI: TodayAPI {
 
     var method: Moya.Method {
         switch self {
-        case .editProfile:
+        case .editProfile, .initProfile:
             return .patch
         default:
             return .get
@@ -36,6 +39,8 @@ extension UserAPI: TodayAPI {
         switch self {
         case .editProfile(let request):
             return .requestJSONEncodable(request)
+        case .initProfile(let request):
+            return .requestJSONEncodable(request)
         default:
             return .requestPlain
         }
@@ -43,5 +48,10 @@ extension UserAPI: TodayAPI {
 
     var erroerMapper: [Int: TodayError]? {
         return nil
+    }
+
+    var headers: [String: String]? {
+        let accessToken = KeychainTask.shared.fetchAccessToken() ?? ""
+        return ["Authorization": "Bearer \(accessToken)"]
     }
 }

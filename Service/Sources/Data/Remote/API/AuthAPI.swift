@@ -23,6 +23,19 @@ extension AuthAPI: TodayAPI {
         }
     }
 
+    var task: Task {
+        switch self {
+        case .googleLogin(let idToken):
+            return .requestParameters(
+                parameters: [
+                    "id_token": idToken
+                ],
+                encoding: JSONEncoding.default
+            )
+        default:
+            return .requestPlain
+        }
+    }
     var erroerMapper: [Int: TodayError]? {
         return nil
     }
@@ -35,6 +48,16 @@ extension AuthAPI: TodayAPI {
             return .put
         default:
             return .post
+        }
+    }
+
+    var headers: [String: String]? {
+        let refreshToken = KeychainTask.shared.fetchRefreshToken() ?? ""
+        switch self {
+        case .refreshToken:
+            return ["X-Refresh-Token": "Bearer \(refreshToken)"]
+        default:
+            return nil
         }
     }
 }

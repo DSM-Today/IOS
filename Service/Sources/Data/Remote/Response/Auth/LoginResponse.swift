@@ -8,9 +8,9 @@ struct LoginResponse: Decodable {
         case accessToken = "access_token"
         case refreshToken = "refresh_token"
     }
-    let isBirthdayExist: Bool
-    let isCanPerson: Bool
-    let isIntroduceExist: Bool
+    let isBirthdayExist: Bool?
+    let isCanPerson: Bool?
+    let isIntroduceExist: Bool?
     let accessToken: String
     let refreshToken: String
 }
@@ -18,9 +18,9 @@ struct LoginResponse: Decodable {
 extension LoginResponse {
     func toDomain() -> LoginEntity {
         return .init(
-            isBirthdayExist: isBirthdayExist,
-            isCanPerson: isCanPerson,
-            isIntroduceExist: isBirthdayExist
+            isBirthdayExist: isBirthdayExist ?? true,
+            isCanPerson: isCanPerson ?? true,
+            isIntroduceExist: isBirthdayExist ?? true
         )
     }
 }

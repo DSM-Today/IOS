@@ -68,4 +68,9 @@ extension SuggestAPI: TodayAPI {
     var erroerMapper: [Int: TodayError]? {
         return nil
     }
+
+    var headers: [String: String]? {
+        let accessToken = KeychainTask.shared.fetchAccessToken() ?? ""
+        return ["Authorization": "Bearer \(accessToken)"]
+    }
 }

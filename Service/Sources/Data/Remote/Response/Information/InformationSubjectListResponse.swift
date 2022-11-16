@@ -1,13 +1,13 @@
 import Foundation
 
-class SubjectInformationListResponse: Decodable {
+class InformationSubjectListResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case list = "subject_information_list"
+        case list = "information_subject_list"
     }
     let list: [SubjectResponse]
 }
 
-extension SubjectInformationListResponse {
+extension InformationSubjectListResponse {
     func toDomain() -> [Subject] {
         return list.map { $0.toDomain() }
     }

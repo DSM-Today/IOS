@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class FoodViewController: UIViewController {
+class FoodViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let todayEatLabel = UILabel().then {

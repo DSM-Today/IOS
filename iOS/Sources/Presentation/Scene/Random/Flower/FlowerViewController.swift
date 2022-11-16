@@ -4,15 +4,18 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 import Kingfisher
 
-class FlowerViewController: UIViewController {
-    
+class FlowerViewController: UIViewController, Stepper {
+
     // MARK: - ViewModel
     var viewModel: FlowerViewModel!
-    
+
     private let disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let flowerImg = UIImageView().then {

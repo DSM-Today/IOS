@@ -6,7 +6,7 @@ final class RandomRemoteDataSourceImpl: RemoteDataSource<RandomAPI>, RandomRemot
 
     func fetchRandomList() -> Single<[Subject]> {
         return request(.fetchRandomList)
-            .map(SubjectRandomListResponse.self)
+            .map(RandomSubjectListResponse.self)
             .map { $0.toDomain() }
     }
 

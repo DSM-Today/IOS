@@ -2,10 +2,20 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxGesture
 
 class MainViewController: UIViewController {
 
+    // MARK: - ViewModel
     var viewModel: MainViewModel!
+
+    private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
+    private let randomViewDidTap = PublishRelay<Void>()
+    private let informationViewDidTap = PublishRelay<Void>()
+    private let recommendViewDidTap = PublishRelay<Void>()
 
     // MARK: - UI
     private let scrollView = UIScrollView().then {
@@ -47,9 +57,9 @@ class MainViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
+        viewDidTap()
         view.backgroundColor = .gray1
-        self.mainTableView.delegate = self
-        self.mainTableView.dataSource = self
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -58,6 +68,7 @@ class MainViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewAppear.accept(())
         setNavigation()
     }
 
@@ -74,6 +85,44 @@ class MainViewController: UIViewController {
             appearance.shadowColor = .clear
             navigationBar.scrollEdgeAppearance = appearance
         }
+    }
+    // MARK: - Bind
+    private func bind() {
+        let input = MainViewModel.Input(
+            viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
+            randomViewDidTap: randomViewDidTap.asDriver(onErrorJustReturn: ()),
+            informationViewDidTap: informationViewDidTap.asDriver(onErrorJustReturn: ()),
+            recommendViewDidTap: recommendViewDidTap.asDriver(onErrorJustReturn: ())
+        )
+        let output = viewModel.transform(input)
+
+        output.todoList.bind(to: mainTableView.rx.items(
+            cellIdentifier: "MainToDoTableViewCell",
+            cellType: MainToDoTableViewCell.self
+        )) { _, items, cell in
+            cell.toDoLabel.text = items.content
+        }
+        .disposed(by: disposeBag)
+    }
+    private func viewDidTap() {
+        self.randomCategoryView.rx.tapGesture()
+            .asObservable()
+            .subscribe(onNext: { _ in
+                self.randomViewDidTap.accept(())
+            })
+            .disposed(by: disposeBag)
+        self.informationCategoryView.rx.tapGesture()
+            .asObservable()
+            .subscribe(onNext: { _ in
+                self.informationViewDidTap.accept(())
+            })
+            .disposed(by: disposeBag)
+        self.recommendCategoryView.rx.tapGesture()
+            .asObservable()
+            .subscribe(onNext: { _ in
+                self.recommendViewDidTap.accept(())
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -132,19 +181,5 @@ extension MainViewController {
             $0.leading.trailing.equalToSuperview().inset(27)
             $0.bottom.equalToSuperview()
         }
-    }
-}
-
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainToDoTableViewCell", for: indexPath) as? MainToDoTableViewCell else { return UITableViewCell() }
-        cell.toDoLabel.text = "방 청소 하기"
-        return cell
     }
 }

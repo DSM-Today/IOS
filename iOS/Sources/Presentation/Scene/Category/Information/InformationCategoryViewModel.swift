@@ -29,9 +29,7 @@ class InformationCategoryViewModel: ViewModel, Stepper {
 
         input.viewAppear
             .asObservable()
-            .flatMap {
-                self.fetchSubjectInformationListUseCase.excute()
-            }
+            .flatMap { self.fetchSubjectInformationListUseCase.excute() }
             .subscribe(onNext: {
                 subjectList.accept($0)
             })

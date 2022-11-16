@@ -4,7 +4,9 @@ import Service
 
 struct AppDI {
     let onboardingViewController: OnboardingViewController
-    let categoryViewController: CategoryViewController
+    let informationCategoryViewController: InformationCategoryViewController
+    let randomCategoryViewController: RandomCategoryViewController
+    let recommendCategoryViewController: RecommendCategoryViewController
     let editProfileViewController: EditProfileViewController
     let newsViewController: NewsViewController
     let lottoViewController: LottoViewController
@@ -31,6 +33,9 @@ extension AppDI {
         // MARK: Dependency
         let authDependency = AuthDependency.resolve()
         let userDependency = UserDependency.resolve()
+        let suggestDependency = SuggestDependency.resolve()
+        let randomDependency = RandomDependency.resolve()
+        let informationDependency = InformationDependency.resolve()
 
         // MARK: ViewModel
         let onboardingViewModel = OnboardingViewModel(
@@ -40,6 +45,15 @@ extension AppDI {
         let userProfileViewModel = UserProfileViewModel(
             initProfileStepUseCase: userDependency.initProfileUseCase
         )
+        let informationCategoryViewModel = InformationCategoryViewModel(
+            fetchSubjectInformationListUseCase: informationDependency.fetchSubjectInformationListUseCase
+        )
+        let randomCategoryViewModel = RandomCategoryViewModel(
+            fetchSubjectRandomListUseCase: randomDependency.fetchSubjectRandomListUseCase
+        )
+        let recommendCategoryViewModel = RecommendCategoryViewModel(
+            fetchSubjectSuggestListUseCase: suggestDependency.fetchSubjectSuggestListUseCase
+        )
         let mainViewModel = MainViewModel()
 
         // MARK: ViewController
@@ -47,7 +61,16 @@ extension AppDI {
             $0.viewModel = onboardingViewModel
         }
 
-        let categoryViewController = CategoryViewController()
+        let informationCategoryViewController = InformationCategoryViewController().then {
+            $0.viewModel = informationCategoryViewModel
+        }
+        let randomCategoryViewController = RandomCategoryViewController().then {
+            $0.viewModel = randomCategoryViewModel
+        }
+        let recommendCategoryViewController = RecommendCategoryViewController().then {
+            $0.viewModel = recommendCategoryViewModel
+        }
+
         let editProfileViewController = EditProfileViewController()
         let userProfileViewController = UserProfileViewController().then {
             $0.viewModel = userProfileViewModel
@@ -76,7 +99,9 @@ extension AppDI {
 
         return .init(
             onboardingViewController: onboardingViewController,
-            categoryViewController: categoryViewController,
+            informationCategoryViewController: informationCategoryViewController,
+            randomCategoryViewController: randomCategoryViewController,
+            recommendCategoryViewController: recommendCategoryViewController,
             editProfileViewController: editProfileViewController,
             newsViewController: newsViewController,
             lottoViewController: lottoViewController,

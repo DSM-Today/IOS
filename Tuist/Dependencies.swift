@@ -36,6 +36,11 @@ let depencies = Dependencies(
         .remote(
             url: "https://github.com/DSM-Today/RxGesture.git",
             requirement: .branch("main")
+        ),
+        // Kingfisher
+        .remote(
+            url: "https://github.com/onevcat/Kingfisher.git",
+            requirement: .upToNextMajor(from: "7.4.1")
         )
     ]),
     platforms: [.iOS]

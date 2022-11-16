@@ -18,6 +18,8 @@ extension TargetDependency {
 
         public static let RxFlow = TargetDependency.external(name: "RxFlow")
         public static let RxGesture = TargetDependency.external(name: "RxGesture")
+
+        public static let Kingfisher = TargetDependency.external(name: "Kingfisher")
     }
 
 }

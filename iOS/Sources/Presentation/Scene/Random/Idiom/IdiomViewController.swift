@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class IdiomViewController: UIViewController {
+class IdiomViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let stackView = UIStackView().then {

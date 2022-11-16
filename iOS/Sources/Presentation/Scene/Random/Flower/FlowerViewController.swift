@@ -2,8 +2,16 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class FlowerViewController: UIViewController {
+    
+    // MARK: - ViewModel
+    var viewModel: FlowerViewModel!
+    
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let flowerImg = UIImageView().then {
@@ -52,7 +60,7 @@ class FlowerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
-        setDemoData()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 꽃")
@@ -63,16 +71,21 @@ class FlowerViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        self.flowerImg.image = UIImage(systemName: "snowflake")
-        self.flowerName.text = "개나리"
-        self.flowerLanguage.text = "희망, 조춘의 감격"
-        self.otherCategoryImg.image = UIImage(systemName: "person.fill")
-        self.otherCategoryTitle.text = "오늘의 인물"
-        self.anotherCategoryImg.image = UIImage(systemName: "person.fill")
-        self.anotherCategoryTitle.text = "오늘의 노래"
+    private func bind() {
+        let input = FlowerViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.flowerValue
+            .subscribe(onNext: { [weak self] in
+                self.
+            })
     }
 }
+
+//public let imageUrl: URL
+//public let name: String
+//public let fairyTale: String
 
 // MARK: - Layout
 extension FlowerViewController {

@@ -55,7 +55,7 @@ extension AuthAPI: TodayAPI {
         let refreshToken = KeychainTask.shared.fetchRefreshToken() ?? ""
         switch self {
         case .refreshToken:
-            return ["X-Refresh-Token": "Bearer \(refreshToken)"]
+            return ["REFRESH-TOKEN": "Bearer \(refreshToken)"]
         default:
             return nil
         }

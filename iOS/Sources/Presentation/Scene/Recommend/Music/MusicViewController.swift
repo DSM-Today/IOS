@@ -2,8 +2,16 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
 class MusicViewController: UIViewController {
+
+    var viewModel: MusicViewModel!
+    private var disposeBag = DisposeBag()
+    private let getData = PublishRelay<Void>()
+    private let date = Date()
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
@@ -74,6 +82,7 @@ class MusicViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 노래")
@@ -82,6 +91,23 @@ class MusicViewController: UIViewController {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
+    }
+
+    private func bindViewModel() {
+        let input = MusicViewModel.Input(
+            getData: getData.asDriver(onErrorJustReturn: ()),
+            goButtonDidTap: goToMusicSiteButton.rx.tap.asDriver()
+        )
+
+        let output = viewModel.transform(input)
+
+        output.music.asObservable().subscribe(onNext: {
+            self.situationLabel.text = $0.situation
+//            self.musicImageView.kf.setImage(with: $0.imageUrl)
+            self.musicTitleLabel.text = $0.title
+            self.musicComposerLabel.text = $0.writer
+            self.dateLabel.text = $0.publishedAt.toString()
+        }).disposed(by: disposeBag)
     }
 }
 

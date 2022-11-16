@@ -31,6 +31,11 @@ let depencies = Dependencies(
         .remote(
             url: "https://github.com/RxSwiftCommunity/RxFlow.git",
             requirement: .upToNextMajor(from: "2.13.0")
+        ),
+        // RxGesture
+        .remote(
+            url: "https://github.com/DSM-Today/RxGesture.git",
+            requirement: .branch("main")
         )
     ]),
     platforms: [.iOS]

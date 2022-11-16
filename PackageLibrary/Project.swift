@@ -16,6 +16,7 @@ let project = Project.dynamicFramework(
         .SPM.Then,
         .SPM.KeychainSwift,
         .SPM.GoogleSignIn,
-        .SPM.RxFlow
+        .SPM.RxFlow,
+        .SPM.RxGesture
     ]
 )

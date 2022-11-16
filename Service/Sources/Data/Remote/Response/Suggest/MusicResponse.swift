@@ -24,7 +24,7 @@ extension MusicResponse {
             situation: situation,
             title: title,
             writer: writer,
-            publishedAt: publishedAt.toDate(),
+            publishedAt: publishedAt.toDate(format: "yyyy-MM-dd"),
             directUrl: URL(string: directUrl)!
         )
     }

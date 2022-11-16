@@ -4,8 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class BookViewController: UIViewController {
+class BookViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
     let bookBottomSheetViewController = BookBottomSheetViewController()
     private var disposeBag = DisposeBag()
 

@@ -6,7 +6,7 @@ final class SuggestRemoteDataSourceImpl: RemoteDataSource<SuggestAPI>, SuggestRe
 
     func fetchSuggestList() -> Single<[Subject]> {
         return request(.fetchSuggestList)
-            .map(SubjectSuggestListResponse.self)
+            .map(SuggestSubjectListResponse.self)
             .map { $0.toDomain() }
     }
 

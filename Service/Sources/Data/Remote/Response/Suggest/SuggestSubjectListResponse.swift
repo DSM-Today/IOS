@@ -1,13 +1,13 @@
 import Foundation
 
-struct SubjectSuggestListResponse: Decodable {
+struct SuggestSubjectListResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case list = "subject_suggest_list"
+        case list = "suggest_subject_list"
     }
     let list: [SubjectResponse]
 }
 
-extension SubjectSuggestListResponse {
+extension SuggestSubjectListResponse {
     func toDomain() -> [Subject] {
         return list.map { $0.toDomain() }
     }

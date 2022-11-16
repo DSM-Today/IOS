@@ -5,8 +5,13 @@ import Then
 import RxSwift
 import RxCocoa
 
-class CategoryViewController: UIViewController {
+class RecommendCategoryViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: RecommendCategoryViewModel!
+
     private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let categoryTableView = UITableView().then {
@@ -19,20 +24,38 @@ class CategoryViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.categoryTableView.dataSource = self
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation("오늘의 랜덤")
+        setNavigation("오늘의 정보")
+        navigationController?.navigationBar.setBackButtonToArrow()
+        viewAppear.accept(())
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
     }
+
+    // MARK: - Bind
+    private func bind() {
+        let input = RecommendCategoryViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.subjectList.bind(to: categoryTableView.rx.items(
+            cellIdentifier: "cell",
+            cellType: CategoryTableViewCell.self
+        )) { _, items, cell in
+            cell.setData(items)
+        }
+        .disposed(by: disposeBag)
+
+    }
 }
 
 // MARK: - Layout
-extension CategoryViewController {
+extension RecommendCategoryViewController {
     private func addSubviews() {
         view.addSubview(categoryTableView)
     }
@@ -42,25 +65,5 @@ extension CategoryViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview()
         }
-    }
-}
-
-extension CategoryViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath)
-                as? CategoryTableViewCell else { return UITableViewCell() }
-        cell.categoryLabel.text = "오늘의 꽃"
-        cell.bookMarkTitle.text = "즐겨찾기 한 사람 : 3"
-        return cell
-    }
-}
-
-extension CategoryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("select \(indexPath.row)")
     }
 }

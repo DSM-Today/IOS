@@ -2,8 +2,20 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
+import Kingfisher
 
-class FlowerViewController: UIViewController {
+class FlowerViewController: UIViewController, Stepper {
+
+    // MARK: - ViewModel
+    var viewModel: FlowerViewModel!
+
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let flowerImg = UIImageView().then {
@@ -34,25 +46,29 @@ class FlowerViewController: UIViewController {
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
+        $0.image = .init(named: "Idiom")
     }
     private let otherCategoryTitle = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.text = "오늘의 사자성어"
     }
     private let anotherCategoryImg = UIImageView().then {
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
+        $0.image = .init(named: "Color")
     }
     private let anotherCategoryTitle = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.text = "오늘의 색"
     }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
-        setDemoData()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 꽃")
@@ -63,14 +79,18 @@ class FlowerViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        self.flowerImg.image = UIImage(systemName: "snowflake")
-        self.flowerName.text = "개나리"
-        self.flowerLanguage.text = "희망, 조춘의 감격"
-        self.otherCategoryImg.image = UIImage(systemName: "person.fill")
-        self.otherCategoryTitle.text = "오늘의 인물"
-        self.anotherCategoryImg.image = UIImage(systemName: "person.fill")
-        self.anotherCategoryTitle.text = "오늘의 노래"
+    private func bind() {
+        let input = FlowerViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.flowerValue
+            .subscribe(onNext: { [weak self] in
+                self?.flowerImg.kf.setImage(with: $0.imageUrl)
+                self?.flowerName.text = $0.name
+                self?.flowerLanguage.text = $0.fairyTale
+            })
+            .disposed(by: disposeBag)
     }
 }
 

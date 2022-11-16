@@ -20,8 +20,8 @@ extension LuckyResponse {
         return .init(
             imageUrl: URL(string: imagePath)!,
             luckyType: luckyType,
-            start: start.toDate(),
-            end: end.toDate(),
+            start: start.toDate(format: "yyyy-MM-dd"),
+            end: end.toDate(format: "yyyy-MM-dd"),
             content: content
         )
     }

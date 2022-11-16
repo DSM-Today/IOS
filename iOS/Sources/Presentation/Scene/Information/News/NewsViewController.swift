@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class NewsViewController: UIViewController {
+class NewsViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let titleLabel = UILabel().then {

@@ -4,11 +4,14 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class IdiomViewController: UIViewController {
+class IdiomViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - ViewModel
-    var viewModel : IdiomViewModel!
+    var viewModel: IdiomViewModel!
 
     private let disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()

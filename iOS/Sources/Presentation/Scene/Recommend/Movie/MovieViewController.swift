@@ -4,8 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class MovieViewController: UIViewController {
+class MovieViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
     let movieBottomSheetViewController = MovieBottomSheetViewController()
     private var disposeBag = DisposeBag()
 

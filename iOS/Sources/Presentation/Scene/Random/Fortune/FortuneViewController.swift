@@ -2,8 +2,19 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class FortuneViewController: UIViewController {
+class FortuneViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
+
+    // MARK: - ViewModel
+    var viewModel: FortuneViewModel!
+
+    private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let fortuneImg = UIImageView().then {
@@ -30,8 +41,8 @@ class FortuneViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         self.view.backgroundColor = .gray1
-        setDemoData()
         self.explainTextView.isEditable = false
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -43,23 +54,20 @@ class FortuneViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        self.fortuneImg.image = UIImage(systemName: "person.fill")
-        self.fortuneName.text = "사람자리"
-        self.birthDeadline.text = "01.01 ~ 12.31"
-        self.explainTextView.text = """
-    순조로운 하루가 예상됩니다. 들리면 반가
-    운 소식이요, 가는 곳마다 잔치이고, 하는
-    일마다 막힘이 없습니다. 다만, 즐겁고
-    기쁜 일이 끊이지 않으니 오히려 일상을
-    소홀히 할 수도 있겠습니다. 어쨌던
-    오랜만에 마음이 넉넉한 하루가 될 것입니
-    다. 이제까지 어려운 시기를 지나오느라
-    수고하셨으며 주변은 내내 넘치는 활기로
-    떠들썩하겠습니다. 연인은 프로포즈하기
-    좋은 날이며 물 관련 종사자는 더 없이
-    잘 풀리는 하루가 되겠습니다.
-    """
+    // MARK: - Bind
+    private func bind() {
+        let input = FortuneViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.luckyValue
+            .subscribe(onNext: { [weak self] in
+                self?.fortuneImg.image = $0.imageUrl.toImage()
+                self?.fortuneName.text = $0.luckyType
+                self?.birthDeadline.text = "\($0.start.toString(format: "MM.dd")) ~ \($0.end.toString(format: "MM.dd"))"
+                self?.explainTextView.text = $0.content
+            })
+            .disposed(by: disposeBag)
     }
 }
 

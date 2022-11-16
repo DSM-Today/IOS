@@ -1,6 +1,8 @@
 import Foundation
 
 public struct Subject: Equatable {
-    public let subject: String
-    public let bookmarkAmount: Int
+    public let name: String
+    public let title: String
+    public let amount: Int
+    public let isMarked: Bool
 }

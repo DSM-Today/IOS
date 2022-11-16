@@ -17,7 +17,7 @@ public class InitProfileUseCase {
     ) -> Completable {
         return repository.initProfile(initProfileRequest: .init(
             introduce: introduce,
-            birthDay: birthDay.toString(),
+            birthDay: birthDay.toString(format: "yyyy-MM-dd"),
             canPerson: canPerson
         ))
     }

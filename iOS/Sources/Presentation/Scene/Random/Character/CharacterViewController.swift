@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class CharacterViewController: UIViewController {
+class CharacterViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let userProfileImg = UIImageView().then {

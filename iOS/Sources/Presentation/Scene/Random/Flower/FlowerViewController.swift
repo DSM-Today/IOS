@@ -4,6 +4,7 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class FlowerViewController: UIViewController {
     
@@ -42,18 +43,22 @@ class FlowerViewController: UIViewController {
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
+        $0.image = .init(named: "Idiom")
     }
     private let otherCategoryTitle = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.text = "오늘의 사자성어"
     }
     private let anotherCategoryImg = UIImageView().then {
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
+        $0.image = .init(named: "Color")
     }
     private let anotherCategoryTitle = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.text = "오늘의 색"
     }
 
     // MARK: - Life Cycle
@@ -78,14 +83,13 @@ class FlowerViewController: UIViewController {
 
         output.flowerValue
             .subscribe(onNext: { [weak self] in
-                self.
+                self?.flowerImg.kf.setImage(with: $0.imageUrl)
+                self?.flowerName.text = $0.name
+                self?.flowerLanguage.text = $0.fairyTale
             })
+            .disposed(by: disposeBag)
     }
 }
-
-//public let imageUrl: URL
-//public let name: String
-//public let fairyTale: String
 
 // MARK: - Layout
 extension FlowerViewController {

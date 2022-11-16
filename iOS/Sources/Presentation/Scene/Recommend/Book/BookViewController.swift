@@ -4,13 +4,21 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 import RxFlow
+
 
 class BookViewController: UIViewController, Stepper {
 
     var steps = PublishRelay<Step>()
     let bookBottomSheetViewController = BookBottomSheetViewController()
+    private var url = URL(string: "")
+
+    // MARK: - ViewModel
+    var viewModel: BookViewModel!
     private var disposeBag = DisposeBag()
+
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let publisherText = UILabel().then {
@@ -64,7 +72,7 @@ class BookViewController: UIViewController, Stepper {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
-        setDemoData()
+        bind()
         setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -79,10 +87,15 @@ class BookViewController: UIViewController, Stepper {
     // MARK: - Button
     private func setButton() {
         explainButton.rx.tap
-            .asObservable()
             .subscribe(onNext: { [weak self] in
                 self?.presentModal()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        goToBookSiteButton.rx.tap
+            .subscribe(onNext: {
+                UIApplication.shared.open(self.url!)
+            })
+            .disposed(by: disposeBag)
     }
     private func presentModal() {
         bookBottomSheetViewController.modalPresentationStyle = .pageSheet
@@ -93,13 +106,24 @@ class BookViewController: UIViewController, Stepper {
         }
         self.present(bookBottomSheetViewController, animated: true)
     }
-    private func setDemoData() {
-        self.publisherText.text = "미래의 창"
-        self.bookImage.image = UIImage(systemName: "text.book.closed.fill")
-        self.bookNameText.text = "트렌드 코리아 2023"
-        self.authorText.text = "김난도 외"
-        self.ratingText.text = "8.8"
-        self.ratingCountText.text = "4"
+    // MARK: - Bind
+    private func bind() {
+        let input = BookViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.bookValue
+            .subscribe(onNext: { [weak self] in
+                self?.publisherText.text = $0.publisher
+                self?.bookImage.kf.setImage(with: $0.imageUrl)
+                self?.bookNameText.text = $0.title
+                self?.authorText.text = $0.writer
+                self?.ratingText.text = $0.score
+                self?.ratingCountText.text = $0.reviewAmount
+                self?.bookBottomSheetViewController.contentTextView.text = $0.comment
+                self?.url = $0.directUrl
+            })
+            .disposed(by: disposeBag)
     }
 }
 

@@ -19,7 +19,7 @@ extension AuthAPI: TodayAPI {
         case .googleLogin, .fetchClientID:
             return "/oauth/google"
         case .refreshToken:
-            return "/token"
+            return "/refresh"
         }
     }
 

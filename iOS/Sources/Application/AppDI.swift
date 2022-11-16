@@ -54,7 +54,9 @@ extension AppDI {
         let recommendCategoryViewModel = RecommendCategoryViewModel(
             fetchSubjectSuggestListUseCase: suggestDependency.fetchSubjectSuggestListUseCase
         )
-        let mainViewModel = MainViewModel()
+        let mainViewModel = MainViewModel(
+            fetchTodoListUseCase: suggestDependency.fetchTodoListUseCase
+        )
 
         // MARK: ViewController
         let onboardingViewController = OnboardingViewController().then {

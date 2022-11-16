@@ -2,11 +2,12 @@ import UIKit
 
 import SnapKit
 import Then
+import Service
 
 class CategoryTableViewCell: UITableViewCell {
 
     // MARK: - UI
-    static let identifier = "CategoryTableViewCell"
+    static let identifier = "cell"
 
     let categoryLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 15, family: .regular)
@@ -41,6 +42,7 @@ class CategoryTableViewCell: UITableViewCell {
         self.contentView.layer.shadowColor = UIColor.black.cgColor
         self.contentView.layer.shadowOpacity = 0.1
         self.contentView.layer.shadowOffset = .init(width: 0, height: 5)
+        self.selectionStyle = .none
     }
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +51,10 @@ class CategoryTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    func setData(_ data: Subject) {
+        self.categoryLabel.text = data.subject
+        self.bookMarkTitle.text = "즐겨찾기 한 사람: \(data.bookmarkAmount)"
+    }
 }
 
 // MARK: - Layout

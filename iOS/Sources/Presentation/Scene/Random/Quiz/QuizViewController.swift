@@ -4,8 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class QuizViewController: UIViewController {
+class QuizViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
     private var disposeBag = DisposeBag()
 
     // MARK: - UI

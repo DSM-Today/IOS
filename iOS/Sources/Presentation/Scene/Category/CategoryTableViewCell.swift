@@ -52,8 +52,8 @@ class CategoryTableViewCell: UITableViewCell {
     }
 
     func setData(_ data: Subject) {
-        self.categoryLabel.text = data.subject
-        self.bookMarkTitle.text = "즐겨찾기 한 사람: \(data.bookmarkAmount)"
+        self.categoryLabel.text = data.title
+        self.bookMarkTitle.text = "즐겨찾기 한 사람: \(data.amount)"
     }
 }
 

@@ -5,8 +5,12 @@ import Then
 import RxSwift
 import RxCocoa
 import Kingfisher
+import RxFlow
 
-class BookViewController: UIViewController {
+
+class BookViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
     let bookBottomSheetViewController = BookBottomSheetViewController()
     private var url = URL(string: "")
 

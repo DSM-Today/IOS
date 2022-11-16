@@ -2,18 +2,24 @@ import Foundation
 
 struct SubjectResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case subject
-        case bookmarkAmount = "bookmark_amount"
+        case name
+        case title
+        case amount
+        case isMarked = "is_marked"
     }
-    let subject: String
-    let bookmarkAmount: Int
+    let name: String
+    let title: String
+    let amount: Int
+    let isMarked: Int
 }
 
 extension SubjectResponse {
     func toDomain() -> Subject {
         return .init(
-            subject: subject,
-            bookmarkAmount: bookmarkAmount
+            name: name,
+            title: title,
+            amount: amount,
+            isMarked: isMarked == 1
         )
     }
 }

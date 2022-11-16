@@ -19,7 +19,7 @@ extension ProfileResponse {
             imageUrl: URL(string: imagePath)!,
             name: name,
             introduce: introduce,
-            birthDay: birthDay.toDate()
+            birthDay: birthDay.toDate(format: "yyyy-MM-dd")
         )
     }
 }

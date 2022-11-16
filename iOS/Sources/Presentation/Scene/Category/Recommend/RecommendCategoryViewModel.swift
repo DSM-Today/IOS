@@ -5,7 +5,7 @@ import RxCocoa
 import RxFlow
 import Service
 
-class RecommendCategoryViewModel: ViewModel {
+class RecommendCategoryViewModel: ViewModel, Stepper {
 
     private let fetchSubjectSuggestListUseCase: FetchSubjectSuggestListUseCase
 

@@ -1,13 +1,13 @@
 import Foundation
 
-struct SubjectRandomListResponse: Decodable {
+struct RandomSubjectListResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case list = "subject_random_list"
+        case list = "random_subject_list"
     }
     let list: [SubjectResponse]
 }
 
-extension SubjectRandomListResponse {
+extension RandomSubjectListResponse {
     func toDomain() -> [Subject] {
         return list.map { $0.toDomain() }
     }

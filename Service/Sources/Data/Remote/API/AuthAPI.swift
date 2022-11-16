@@ -19,7 +19,7 @@ extension AuthAPI: TodayAPI {
         case .googleLogin, .fetchClientID:
             return "/oauth/google"
         case .refreshToken:
-            return "/refresh"
+            return "/token"
         }
     }
 
@@ -55,7 +55,7 @@ extension AuthAPI: TodayAPI {
         let refreshToken = KeychainTask.shared.fetchRefreshToken() ?? ""
         switch self {
         case .refreshToken:
-            return ["X-Refresh-Token": "Bearer \(refreshToken)"]
+            return ["REFRESH-TOKEN": refreshToken]
         default:
             return nil
         }

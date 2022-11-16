@@ -4,8 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class FortuneViewController: UIViewController {
+class FortuneViewController: UIViewController, Stepper {
+
+    var steps = PublishRelay<Step>()
 
     // MARK: - ViewModel
     var viewModel: FortuneViewModel!

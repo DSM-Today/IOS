@@ -39,7 +39,7 @@ extension LottoResponse {
             seventh: seventh,
             prize: prize,
             round: round,
-            date: date.toDate(),
+            date: date.toDate(format: "yyyy-MM-dd"),
             winningAmount: winningAmount
         )
     }

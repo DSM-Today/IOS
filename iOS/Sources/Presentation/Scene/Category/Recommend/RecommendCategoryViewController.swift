@@ -28,6 +28,7 @@ class RecommendCategoryViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 정보")
+        navigationController?.navigationBar.setBackButtonToArrow()
         viewAppear.accept(())
     }
     override func viewWillLayoutSubviews() {

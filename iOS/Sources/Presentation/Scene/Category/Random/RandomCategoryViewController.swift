@@ -27,6 +27,7 @@ class RandomCategoryViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 랜덤")
+        navigationController?.navigationBar.setBackButtonToArrow()
         viewAppear.accept(())
     }
     override func viewWillLayoutSubviews() {

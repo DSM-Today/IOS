@@ -39,5 +39,4 @@ class FlowerViewModel: ViewModel, Stepper {
 
         return Output(flowerValue: flowerValue)
     }
-
 }

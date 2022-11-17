@@ -2,23 +2,23 @@ import Foundation
 
 struct MovieResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case title
+        case name
         case imagePath = "image_path"
-        case directUrl = "direct_url"
+        case url = "url"
         case content
     }
-    let title: String
+    let name: String
     let imagePath: String
-    let directUrl: String
+    let url: String
     let content: String
 }
 
 extension MovieResponse {
     func toDomain() -> Movie {
         return .init(
-            title: title,
+            title: name,
             imageUrl: URL(string: imagePath)!,
-            directUrl: URL(string: directUrl)!,
+            directUrl: URL(string: url)!,
             content: content
         )
     }

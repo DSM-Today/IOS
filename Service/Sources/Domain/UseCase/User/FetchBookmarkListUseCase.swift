@@ -10,7 +10,7 @@ public class FetchBookmarkListUseCase {
         self.repository = repository
     }
 
-    public func excute() -> Observable<[Subject]> {
+    public func excute() -> Observable<[BookmarkSubject]> {
         return repository.fetchBookmarkList()
     }
 

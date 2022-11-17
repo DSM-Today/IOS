@@ -4,11 +4,10 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class MusicViewController: UIViewController, Stepper {
+class MusicViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    var viewModel: MusicViewModel!
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
@@ -82,6 +81,7 @@ class MusicViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 노래")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

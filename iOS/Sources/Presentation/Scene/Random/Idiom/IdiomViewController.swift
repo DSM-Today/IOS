@@ -4,11 +4,8 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class IdiomViewController: UIViewController, Stepper {
-
-    var steps = PublishRelay<Step>()
+class IdiomViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: IdiomViewModel!
@@ -98,6 +95,7 @@ class IdiomViewController: UIViewController, Stepper {
         super.viewWillAppear(animated)
         self.meanTextView.isEditable = false
         setNavigation("오늘의 사자성어")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
 
     private func setLayout() {

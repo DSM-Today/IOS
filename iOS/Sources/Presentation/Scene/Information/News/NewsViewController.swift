@@ -4,11 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class NewsViewController: UIViewController, Stepper {
+class NewsViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: NewsViewModel!
 
     // MARK: - UI
     private let titleLabel = UILabel().then {
@@ -46,6 +46,7 @@ class NewsViewController: UIViewController, Stepper {
         super.viewWillAppear(animated)
         self.contentTextView.isEditable = false
         setNavigation("뉴스")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

@@ -4,11 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class CafeMenuViewController: UIViewController, Stepper {
+class CafeMenuViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: CafeMenuViewModel!
 
     // MARK: - UI
     private let todayDrinkLabel = UILabel().then {
@@ -62,6 +62,7 @@ class CafeMenuViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 카페 메뉴")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

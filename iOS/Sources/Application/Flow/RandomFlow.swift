@@ -10,7 +10,7 @@ class RandomFlow: Flow {
         return rootViewController
     }
 
-    private lazy var rootViewController = UINavigationController()
+    private lazy var rootViewController = app.randomCategoryViewController
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? TodayStep else { return .none }
@@ -35,37 +35,49 @@ class RandomFlow: Flow {
 
 extension RandomFlow {
     private func navigateToRandomCategoryScene() -> FlowContributors {
-        let randomCategoryViewController = app.randomCategoryViewController
-        self.rootViewController.pushViewController(randomCategoryViewController, animated: true)
-
         return .one(flowContributor: .contribute(
-            withNextPresentable: randomCategoryViewController,
-            withNextStepper: randomCategoryViewController.viewModel
+            withNextPresentable: self.rootViewController,
+            withNextStepper: self.rootViewController.viewModel
         ))
     }
     private func navigateToFlowrScene() -> FlowContributors {
         let flowerViewController = app.flowerViewController
-        self.rootViewController.pushViewController(flowerViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: flowerViewController))
+        self.rootViewController.navigationController?.pushViewController(flowerViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: flowerViewController,
+            withNextStepper: flowerViewController.viewModel
+        ))
     }
     private func navigateToIdiomScene() -> FlowContributors {
         let idiomViewController = app.idiomViewController
-        self.rootViewController.pushViewController(idiomViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: idiomViewController))
+        self.rootViewController.navigationController?.pushViewController(idiomViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: idiomViewController,
+            withNextStepper: idiomViewController.viewModel
+        ))
     }
     private func navigateToLuckyScene() -> FlowContributors {
         let fortuneViewController = app.fortuneViewController
-        self.rootViewController.pushViewController(fortuneViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: fortuneViewController))
+        self.rootViewController.navigationController?.pushViewController(fortuneViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: fortuneViewController,
+            withNextStepper: fortuneViewController.viewModel
+        ))
     }
     private func navigateToQuizScene() -> FlowContributors {
         let quizViewController = app.quizViewController
-        self.rootViewController.pushViewController(quizViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: quizViewController))
+        self.rootViewController.navigationController?.pushViewController(quizViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: quizViewController,
+            withNextStepper: quizViewController.viewModel
+        ))
     }
     private func navigateToCharacterScene() -> FlowContributors {
         let characterViewController = app.characterViewController
-        self.rootViewController.pushViewController(characterViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: characterViewController))
+        self.rootViewController.navigationController?.pushViewController(characterViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: characterViewController,
+            withNextStepper: characterViewController.viewModel
+        ))
     }
 }

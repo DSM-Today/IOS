@@ -6,6 +6,10 @@ import RxSwift
 import RxCocoa
 
 class MyPageViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: MyPageViewModel!
+
     private var disposeBag = DisposeBag()
 
     // MARK: - UI

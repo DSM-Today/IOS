@@ -21,8 +21,8 @@ class AppFlow: Flow {
         switch step {
         case .onboarindIsRequired:
             return navigateToOnboardinScreen()
-        case .mainIsRequired:
-            return navigateToMainScene()
+        case .tabsIsRequired:
+            return navigateToTabsScreen()
         default:
             return .none
         }
@@ -42,19 +42,18 @@ extension AppFlow {
             withNextStepper: OneStepper(withSingleStep: TodayStep.onboarindIsRequired))
         )
     }
-    private func navigateToMainScene() -> FlowContributors {
-        let mainFlow = MainFlow()
+    private func navigateToTabsScreen() -> FlowContributors {
+        let tabsFlow = TabsFlow()
 
-        Flows.use(mainFlow, when: .created) { [weak self] root in
-            let navigationController = UINavigationController(rootViewController: root)
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .coverVertical
-            self?.rootViewController.present(navigationController, animated: true)
+        Flows.use(tabsFlow, when: .created) { [weak self] root in
+            root.modalPresentationStyle = .fullScreen
+            root.modalTransitionStyle = .coverVertical
+            self?.rootViewController.present(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(
-            withNextPresentable: mainFlow,
-            withNextStepper: OneStepper(withSingleStep: TodayStep.mainIsRequired)
+            withNextPresentable: tabsFlow,
+            withNextStepper: OneStepper(withSingleStep: TodayStep.tabsIsRequired)
         ))
     }
 }

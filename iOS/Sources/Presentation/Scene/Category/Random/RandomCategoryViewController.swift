@@ -38,7 +38,10 @@ class RandomCategoryViewController: UIViewController {
 
     // MARK: - Bind
     private func bind() {
-        let input = RandomCategoryViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+        let input = RandomCategoryViewModel.Input(
+            viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
+            index: categoryTableView.rx.itemSelected.asDriver()
+        )
 
         let output = viewModel.transform(input)
 

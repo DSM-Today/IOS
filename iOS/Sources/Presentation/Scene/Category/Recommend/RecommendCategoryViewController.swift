@@ -27,7 +27,7 @@ class RecommendCategoryViewController: UIViewController {
         bind()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setNavigation("오늘의 정보")
+        setNavigation("오늘의 추천")
         navigationController?.navigationBar.setBackButtonToArrow()
         viewAppear.accept(())
     }
@@ -39,7 +39,10 @@ class RecommendCategoryViewController: UIViewController {
 
     // MARK: - Bind
     private func bind() {
-        let input = RecommendCategoryViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+        let input = RecommendCategoryViewModel.Input(
+            viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
+            index: categoryTableView.rx.itemSelected.asDriver()
+        )
 
         let output = viewModel.transform(input)
 

@@ -4,11 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class WebtoonViewController: UIViewController, Stepper {
+class WebtoonViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: WebtoonViewModel!
 
     // MARK: - UI
     private let webtoonInformationView = UIView().then {
@@ -70,6 +70,7 @@ class WebtoonViewController: UIViewController, Stepper {
         super.viewWillAppear(animated)
         setNavigation("오늘의 웹툰")
         self.contentTextView.isEditable = false
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

@@ -39,7 +39,10 @@ class InformationCategoryViewController: UIViewController {
 
     // MARK: - Bind
     private func bind() {
-        let input = InformationCategoryViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+        let input = InformationCategoryViewModel.Input(
+            viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
+            index: categoryTableView.rx.itemSelected.asDriver()
+        )
 
         let output = viewModel.transform(input)
 

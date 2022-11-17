@@ -4,11 +4,12 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class MovieViewController: UIViewController, Stepper {
+class MovieViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: MovieViewModel!
+
     let movieBottomSheetViewController = MovieBottomSheetViewController()
     private var disposeBag = DisposeBag()
 
@@ -49,6 +50,7 @@ class MovieViewController: UIViewController, Stepper {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigation("오늘의 영화")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

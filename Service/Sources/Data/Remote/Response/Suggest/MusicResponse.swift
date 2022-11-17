@@ -19,13 +19,14 @@ struct MusicResponse: Decodable {
 
 extension MusicResponse {
     func toDomain() -> Music {
+        let url = directUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return .init(
             imagePath: URL(string: imagePath)!,
             situation: situation,
             title: title,
             songWriter: songWriter,
             publishedAt: publishedAt.toDate(format: "yyyy-MM-dd"),
-            directUrl: URL(string: directUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)!
+            directUrl: URL(string: url)!
         )
     }
 }

@@ -10,7 +10,7 @@ class RecommendFlow: Flow {
         return rootViewController
     }
 
-    private lazy var rootViewController = UINavigationController()
+    private lazy var rootViewController = app.recommendCategoryViewController
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? TodayStep else { return .none }
@@ -38,41 +38,57 @@ class RecommendFlow: Flow {
 
 extension RecommendFlow {
     private func navigateToRecommendScene() -> FlowContributors {
-        let recommendCategoryViewController = app.recommendCategoryViewController
-        self.rootViewController.pushViewController(recommendCategoryViewController, animated: true)
         return .one(flowContributor: .contribute(
-            withNextPresentable: recommendCategoryViewController,
-            withNextStepper: recommendCategoryViewController.viewModel
+            withNextPresentable: self.rootViewController,
+            withNextStepper: self.rootViewController.viewModel
         ))
     }
     private func navigateToCafeMenuScene() -> FlowContributors {
         let cafeMenuViewController = app.cafeMenuViewController
-        self.rootViewController.pushViewController(cafeMenuViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: cafeMenuViewController))
+        self.rootViewController.navigationController?.pushViewController(cafeMenuViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: cafeMenuViewController,
+            withNextStepper: cafeMenuViewController.viewModel
+        ))
     }
     private func navigateToMovieScene() -> FlowContributors {
         let movieViewController = app.movieViewController
-        self.rootViewController.pushViewController(movieViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: movieViewController))
+        self.rootViewController.navigationController?.pushViewController(movieViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: movieViewController,
+            withNextStepper: movieViewController.viewModel
+        ))
     }
     private func navigateToMusicScene() -> FlowContributors {
         let musicViewController = app.musicViewController
-        self.rootViewController.pushViewController(musicViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: musicViewController))
+        self.rootViewController.navigationController?.pushViewController(musicViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: musicViewController,
+            withNextStepper: musicViewController.viewModel
+        ))
     }
     private func navigateToWebtoonScene() -> FlowContributors {
         let webtoonViewController = app.webtoonViewController
-        self.rootViewController.pushViewController(webtoonViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: webtoonViewController))
+        self.rootViewController.navigationController?.pushViewController(webtoonViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: webtoonViewController,
+            withNextStepper: webtoonViewController.viewModel
+        ))
     }
     private func navigateToFoodScene() -> FlowContributors {
         let foodViewController = app.foodViewController
-        self.rootViewController.pushViewController(foodViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: foodViewController))
+        self.rootViewController.navigationController?.pushViewController(foodViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: foodViewController,
+            withNextStepper: foodViewController.viewModel
+        ))
     }
     private func navigateToBookScene() -> FlowContributors {
         let bookViewController = app.bookViewController
-        self.rootViewController.pushViewController(bookViewController, animated: true)
-        return .one(flowContributor: .contribute(withNext: bookViewController))
+        self.rootViewController.navigationController?.pushViewController(bookViewController, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: bookViewController,
+            withNextStepper: bookViewController.viewModel
+        ))
     }
 }

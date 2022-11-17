@@ -78,7 +78,9 @@ extension AppDI {
         let idiomViewModel = IdiomViewModel(
             fetchIdiomUseCase: randomDependency.fetchIdiomUseCase
         )
-        let quizViewModel = QuizViewModel()
+        let quizViewModel = QuizViewModel(
+            fetchQuizUseCase: randomDependency.fetchQuizUseCase
+        )
 
         let cafeMenuViewModel = CafeMenuViewModel()
         let foodViewModel = FoodViewModel()

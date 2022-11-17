@@ -2,7 +2,7 @@ import Foundation
 
 struct IdiomResponse: Decodable {
     let korean: String
-    let chines: String
+    let chinese: String
     let describe: String
 }
 
@@ -10,7 +10,7 @@ extension IdiomResponse {
     func toDomain() -> Idiom {
         return .init(
             korean: korean,
-            chinese: chines,
+            chinese: chinese,
             describe: describe
         )
     }

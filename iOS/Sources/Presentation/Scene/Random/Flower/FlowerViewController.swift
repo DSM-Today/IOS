@@ -19,6 +19,7 @@ class FlowerViewController: UIViewController {
         $0.layer.cornerRadius = 200
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         $0.backgroundColor = .blue3
+        $0.clipsToBounds = true
     }
     private let flowerName = UILabel().then {
         $0.font = .notoSansFont(ofSize: 24, family: .medium)

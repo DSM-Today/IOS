@@ -63,6 +63,7 @@ class IdiomViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewAppear.accept(())
         self.meanTextView.isEditable = false
         setNavigation("오늘의 사자성어")
         navigationController?.navigationBar.setBackButtonToArrow()

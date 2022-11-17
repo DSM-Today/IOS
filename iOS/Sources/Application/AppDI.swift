@@ -88,7 +88,9 @@ extension AppDI {
             fetchMovieUseCase: suggestDependency.fetchMovieUseCase
         )
         let musicViewModel = MusicViewModel()
-        let webtoonViewModel = WebtoonViewModel()
+        let webtoonViewModel = WebtoonViewModel(
+            fetchWebtoonUseCase: suggestDependency.fetchWebtoonUseCase
+        )
 
         // MARK: ViewController
         let onboardingViewController = OnboardingViewController().then {

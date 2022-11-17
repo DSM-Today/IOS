@@ -10,7 +10,7 @@ class MainFlow: Flow {
         return rootViewController
     }
 
-    private lazy var rootViewController = app.mainViewController
+    private lazy var rootViewController = UINavigationController()
 
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? TodayStep else { return .none }
@@ -31,17 +31,18 @@ class MainFlow: Flow {
 
 extension MainFlow {
     private func navigateToMainScreen() -> FlowContributors {
+        let mainViewController = app.mainViewController
+        self.rootViewController.pushViewController(mainViewController, animated: false)
         return .one(flowContributor: .contribute(
-            withNextPresentable: rootViewController,
-            withNextStepper: rootViewController.viewModel
+            withNextPresentable: mainViewController,
+            withNextStepper: mainViewController.viewModel
         ))
     }
     private func navigateToRandomCategoryScene() -> FlowContributors {
         let randomFlow = RandomFlow()
-        let randomViewController = app.randomCategoryViewController
 
-        Flows.use(randomFlow, when: .created) { [weak self] _ in
-            self?.rootViewController.pushViewController(randomViewController)
+        Flows.use(randomFlow, when: .created) { [weak self] root in
+            self?.rootViewController.pushViewController(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(
@@ -51,10 +52,9 @@ extension MainFlow {
     }
     private func navigateToInformationCategoryScene() -> FlowContributors {
         let informationFlow = InformationFlow()
-        let informationViewController = app.informationCategoryViewController
 
-        Flows.use(informationFlow, when: .created) { [weak self] _ in
-            self?.rootViewController.pushViewController(informationViewController)
+        Flows.use(informationFlow, when: .created) { [weak self] root in
+            self?.rootViewController.pushViewController(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(
@@ -64,10 +64,9 @@ extension MainFlow {
     }
     private func navigateToRecommendCategoryScene() -> FlowContributors {
         let recommendFlow = RecommendFlow()
-        let recommendViewController = app.recommendCategoryViewController
 
-        Flows.use(recommendFlow, when: .created) { [weak self] _ in
-            self?.rootViewController.pushViewController(recommendViewController)
+        Flows.use(recommendFlow, when: .created) { [weak self] root in
+            self?.rootViewController.pushViewController(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(

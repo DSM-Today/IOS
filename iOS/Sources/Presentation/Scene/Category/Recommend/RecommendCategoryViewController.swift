@@ -30,11 +30,16 @@ class RecommendCategoryViewController: UIViewController {
         setNavigation("오늘의 추천")
         navigationController?.navigationBar.setBackButtonToArrow()
         viewAppear.accept(())
+        self.tabBarController?.tabBar.isHidden = true
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
 
     // MARK: - Bind

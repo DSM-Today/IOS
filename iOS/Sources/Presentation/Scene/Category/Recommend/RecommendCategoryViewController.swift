@@ -37,10 +37,6 @@ class RecommendCategoryViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-    }
 
     // MARK: - Bind
     private func bind() {

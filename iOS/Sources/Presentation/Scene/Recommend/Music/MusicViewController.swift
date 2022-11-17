@@ -77,6 +77,7 @@ class MusicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 노래")
@@ -101,8 +102,7 @@ class MusicViewController: UIViewController {
     // MARK: - Bind
     private func bindViewModel() {
         let input = MusicViewModel.Input(
-            getData: getData.asDriver(onErrorJustReturn: ()),
-            goButtonDidTap: goToMusicSiteButton.rx.tap.asDriver()
+            getData: getData.asDriver(onErrorJustReturn: ())
         )
 
         let output = viewModel.transform(input)
@@ -113,6 +113,7 @@ class MusicViewController: UIViewController {
             self.musicTitleLabel.text = $0.title
             self.musicComposerLabel.text = $0.songWriter
             self.dateLabel.text = $0.publishedAt.toString(format: "yyyy/MM/dd")
+            self.url = $0.directUrl
         }).disposed(by: disposeBag)
     }
 }

@@ -74,6 +74,7 @@ class BookViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 책")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -116,8 +117,8 @@ class BookViewController: UIViewController {
                 self?.bookImage.kf.setImage(with: $0.imageUrl)
                 self?.bookNameText.text = $0.title
                 self?.authorText.text = $0.writer
-                self?.ratingText.text = $0.score
-                self?.ratingCountText.text = $0.reviewAmount
+                self?.ratingText.text = String($0.score)
+                self?.ratingCountText.text = String($0.reviewAmount)
                 self?.bookBottomSheetViewController.contentTextView.text = $0.comment
                 self?.url = $0.directUrl
             })

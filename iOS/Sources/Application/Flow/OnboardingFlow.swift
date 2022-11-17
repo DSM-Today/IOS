@@ -19,8 +19,8 @@ class OnboardingFlow: Flow {
             return navigateToOnboardingScreen()
         case .userProfileIsRequired:
             return navigateToUserProfileScreen()
-        case .mainIsRequired:
-            return navigateToMainScreen()
+        case .tabsIsRequired:
+            return navigateToTabsScreen()
         default:
             return .none
         }
@@ -48,21 +48,18 @@ extension OnboardingFlow {
             withNextStepper: userProfileViewController.viewModel
         ))
     }
-    private func navigateToMainScreen() -> FlowContributors {
-        let mainFlow = MainFlow()
+    private func navigateToTabsScreen() -> FlowContributors {
+        let tabsFlow = TabsFlow()
 
-        Flows.use(mainFlow, when: .created) { [weak self] root in
-            let navigationController = UINavigationController(rootViewController: root)
-            let userProfileViewController = self?.app.userProfileViewController
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .coverVertical
-            userProfileViewController?.present(navigationController, animated: true)
-            self?.rootViewController.present(navigationController, animated: true)
+        Flows.use(tabsFlow, when: .created) { [weak self] root in
+            root.modalPresentationStyle = .fullScreen
+            root.modalTransitionStyle = .coverVertical
+            self?.rootViewController.present(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(
-            withNextPresentable: mainFlow,
-            withNextStepper: OneStepper(withSingleStep: TodayStep.mainIsRequired)
+            withNextPresentable: tabsFlow,
+            withNextStepper: OneStepper(withSingleStep: TodayStep.tabsIsRequired)
         ))
     }
 }

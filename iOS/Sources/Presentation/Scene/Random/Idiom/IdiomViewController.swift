@@ -49,36 +49,6 @@ class IdiomViewController: UIViewController {
         $0.textContainerInset = UIEdgeInsets(top: 13, left: 30, bottom: 13, right: 30)
         $0.layer.cornerRadius = 20
     }
-    private let underView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 41
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
-    private let otherCategoryLabel = UILabel().then {
-        $0.text = "다른 카테고리 보러가기"
-        $0.font = .notoSansFont(ofSize: 20, family: .regular)
-    }
-    private let categoryStackView = UIStackView().then {
-        $0.axis = .horizontal
-    }
-    private let cafeCategoryView = UIImageView().then {
-        $0.contentMode = .scaleToFill
-        $0.layer.cornerRadius = 20
-        $0.image = .init(named: "CafeMenu")
-    }
-    private let cafeCategoryLabel = UILabel().then {
-        $0.text = "오늘의 카페메뉴"
-        $0.font = .notoSansFont(ofSize: 20, family: .regular)
-    }
-    private let quizCategoryView = UIImageView().then {
-        $0.contentMode = .scaleToFill
-        $0.layer.cornerRadius = 20
-        $0.image = .init(named: "Quiz")
-    }
-    private let quizCategoryLabel = UILabel().then {
-        $0.text = "오늘의 퀴즈"
-        $0.font = .notoSansFont(ofSize: 20, family: .regular)
-    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -100,11 +70,8 @@ class IdiomViewController: UIViewController {
 
     private func setLayout() {
         [firstIdiomLabel, secondIdiomLabel, thirdIdiomLabel, fourthIdiomLabel,
-        meanTextView, cafeCategoryView, quizCategoryView]
+        meanTextView]
             .forEach { $0.clipsToBounds = true }
-        underView.layer.shadowColor = UIColor.black.cgColor
-        underView.layer.shadowOpacity = 0.1
-        underView.layer.shadowRadius = 41
     }
     // MARK: - Bind
     private func bind() {
@@ -126,18 +93,13 @@ class IdiomViewController: UIViewController {
     }
 }
 
-// swiftlint:disable function_body_length
 // MARK: - Layout
 extension IdiomViewController {
     private func addSubviews() {
-        [stackView, chineseCharacterLabel, meanTextView, underView]
+        [stackView, chineseCharacterLabel, meanTextView]
             .forEach { view.addSubview($0) }
         [firstIdiomLabel, secondIdiomLabel, thirdIdiomLabel, fourthIdiomLabel]
             .forEach { stackView.addSubview($0) }
-        [cafeCategoryView, quizCategoryView].forEach { categoryStackView.addSubview($0) }
-        [otherCategoryLabel, categoryStackView].forEach { underView.addSubview($0) }
-        cafeCategoryView.addSubview(cafeCategoryLabel)
-        quizCategoryView.addSubview(quizCategoryLabel)
     }
     private func makeSubviewConstraints() {
         stackView.snp.makeConstraints {
@@ -172,36 +134,6 @@ extension IdiomViewController {
             $0.top.equalTo(chineseCharacterLabel.snp.bottom).offset(47)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(150)
-        }
-        underView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(260)
-        }
-        otherCategoryLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(13)
-            $0.centerX.equalToSuperview()
-        }
-        categoryStackView.snp.makeConstraints {
-            $0.top.equalTo(otherCategoryLabel.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-        }
-        cafeCategoryView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.height.equalTo(165)
-        }
-        cafeCategoryLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(12)
-            $0.centerX.equalToSuperview()
-        }
-        quizCategoryView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(cafeCategoryView.snp.trailing).offset(20)
-            $0.trailing.equalToSuperview()
-            $0.width.height.equalTo(165)
-        }
-        quizCategoryLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(12)
-            $0.centerX.equalToSuperview()
         }
     }
 }

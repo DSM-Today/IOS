@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class CafeMenuViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: CafeMenuViewModel!
 
     // MARK: - UI
     private let todayDrinkLabel = UILabel().then {
@@ -57,6 +62,7 @@ class CafeMenuViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 카페 메뉴")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

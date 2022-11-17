@@ -4,14 +4,10 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
 class MusicViewController: UIViewController {
 
-//    var viewModel: MusicViewModel!
-//    private var disposeBag = DisposeBag()
-//    private let getData = PublishRelay<Void>()
-//    private let date = Date()
+    var viewModel: MusicViewModel!
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
@@ -86,6 +82,7 @@ class MusicViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 노래")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

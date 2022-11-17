@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class LottoViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: LottoViewModel!
 
     // MARK: - UI
     private let todayEatLabel = UILabel().then {
@@ -109,6 +114,7 @@ class LottoViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("로또")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

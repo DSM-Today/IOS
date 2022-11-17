@@ -2,8 +2,16 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class IdiomViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: IdiomViewModel!
+
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let stackView = UIStackView().then {
@@ -56,6 +64,7 @@ class IdiomViewController: UIViewController {
     private let cafeCategoryView = UIImageView().then {
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 20
+        $0.image = .init(named: "CafeMenu")
     }
     private let cafeCategoryLabel = UILabel().then {
         $0.text = "오늘의 카페메뉴"
@@ -64,6 +73,7 @@ class IdiomViewController: UIViewController {
     private let quizCategoryView = UIImageView().then {
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 20
+        $0.image = .init(named: "Quiz")
     }
     private let quizCategoryLabel = UILabel().then {
         $0.text = "오늘의 퀴즈"
@@ -73,7 +83,7 @@ class IdiomViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
+        bind()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -85,6 +95,7 @@ class IdiomViewController: UIViewController {
         super.viewWillAppear(animated)
         self.meanTextView.isEditable = false
         setNavigation("오늘의 사자성어")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
 
     private func setLayout() {
@@ -95,17 +106,23 @@ class IdiomViewController: UIViewController {
         underView.layer.shadowOpacity = 0.1
         underView.layer.shadowRadius = 41
     }
-    private func setDemoData() {
-        firstIdiomLabel.text = "전"
-        secondIdiomLabel.text = "화"
-        thirdIdiomLabel.text = "위"
-        fourthIdiomLabel.text = "복"
-        chineseCharacterLabel.text = "轉禍爲福"
-        meanTextView.text = "어떤 불행한 일이라도 끊임없는 노력과 강인한 의지로 힘쓰면 불행을 행복으로 바꾸어 놓을 수 있다는 말"
-        cafeCategoryView.image = UIImage(systemName: "person.fill")
-        cafeCategoryView.backgroundColor = .primary
-        quizCategoryView.image = UIImage(systemName: "person.fill")
-        quizCategoryView.backgroundColor = .primary
+    // MARK: - Bind
+    private func bind() {
+        let input = IdiomViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.idiomValue
+            .subscribe(onNext: { [weak self] in
+                let idiom = Array($0.korean)
+                self?.firstIdiomLabel.text = String(idiom[0])
+                self?.secondIdiomLabel.text = String(idiom[1])
+                self?.thirdIdiomLabel.text = String(idiom[2])
+                self?.fourthIdiomLabel.text = String(idiom[3])
+                self?.chineseCharacterLabel.text = $0.chinese
+                self?.meanTextView.text = $0.describe
+            })
+            .disposed(by: disposeBag)
     }
 }
 

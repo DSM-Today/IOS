@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class WebtoonViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: WebtoonViewModel!
 
     // MARK: - UI
     private let webtoonInformationView = UIView().then {
@@ -65,6 +70,7 @@ class WebtoonViewController: UIViewController {
         super.viewWillAppear(animated)
         setNavigation("오늘의 웹툰")
         self.contentTextView.isEditable = false
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

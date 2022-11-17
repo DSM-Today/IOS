@@ -4,8 +4,13 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxFlow
 
 class QuizViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: QuizViewModel!
+
     private var disposeBag = DisposeBag()
 
     // MARK: - UI
@@ -57,6 +62,7 @@ class QuizViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 퀴즈")
+        navigationController?.navigationBar.setBackButtonToArrow()
         resulText.isHidden = true
     }
     override func viewWillLayoutSubviews() {

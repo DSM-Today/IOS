@@ -6,6 +6,10 @@ import RxSwift
 import RxCocoa
 
 class MovieViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: MovieViewModel!
+
     let movieBottomSheetViewController = MovieBottomSheetViewController()
     private var disposeBag = DisposeBag()
 
@@ -46,6 +50,7 @@ class MovieViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigation("오늘의 영화")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

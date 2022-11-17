@@ -18,7 +18,7 @@ class AppStepper: Stepper {
 
     func readyToEmitSteps() {
         refreshTokenUseCase.excute()
-            .andThen(Single.just(TodayStep.mainIsRequired))
+            .andThen(Single.just(TodayStep.tabsIsRequired))
             .asObservable()
             .catchAndReturn(TodayStep.onboarindIsRequired)
             .bind(to: steps)

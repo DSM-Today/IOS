@@ -6,7 +6,7 @@ final class InformationRemoteDataSourceImpl: RemoteDataSource<InformationAPI>, I
 
     func fetchInformationList() -> Single<[Subject]> {
         return request(.fetchInformationList)
-            .map(SubjectInformationListResponse.self)
+            .map(InformationSubjectListResponse.self)
             .map { $0.toDomain() }
     }
 

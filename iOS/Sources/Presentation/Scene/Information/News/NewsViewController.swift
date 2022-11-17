@@ -2,8 +2,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class NewsViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: NewsViewModel!
 
     // MARK: - UI
     private let titleLabel = UILabel().then {
@@ -41,6 +46,7 @@ class NewsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.contentTextView.isEditable = false
         setNavigation("뉴스")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

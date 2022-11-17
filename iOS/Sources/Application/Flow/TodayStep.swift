@@ -3,6 +3,8 @@ import Foundation
 import RxFlow
 
 enum TodayStep: Step {
+    // Tabbar
+    case tabsIsRequired
     // Onboarding
     case onboarindIsRequired
 
@@ -18,10 +20,12 @@ enum TodayStep: Step {
     case userProfileIsRequired
 
     // Information
+    case informationCategoryIsRequired
     case newsIsRequired
     case lottoIsRequired
 
     // Random
+    case randomCategoryIsRequired
     case bookIsRequired
     case characterIsRequired
     case flowerIsRequired
@@ -30,11 +34,15 @@ enum TodayStep: Step {
     case quizIsRequired
 
     // Recommend
+    case recommendCategoryIsRequired
     case cafemenuIsRequired
     case foodIsRequired
     case movieIsRequired
     case musicIsRequired
     case webtoonIsRequired
+
+    // Chat
+    case chatISRequired
 
     // none
     case none

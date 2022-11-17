@@ -24,8 +24,11 @@ class MainToDoTableViewCell: UITableViewCell {
         self.contentView.backgroundColor = .white
         self.contentView.layer.cornerRadius = 5
         self.contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+        self.contentView.layer.shadowColor = UIColor.black.cgColor
+        self.contentView.layer.shadowOpacity = 0.1
+        self.contentView.layer.shadowOffset = .init(width: 0, height: 5)
+        self.selectionStyle = .none
     }
-
 }
 
 extension MainToDoTableViewCell {

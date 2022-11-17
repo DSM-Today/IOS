@@ -2,8 +2,14 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxFlow
 
 class CharacterViewController: UIViewController {
+
+    // MARK: - ViewModel
+    var viewModel: CharacterViewModel!
 
     // MARK: - UI
     private let userProfileImg = UIImageView().then {
@@ -55,6 +61,7 @@ class CharacterViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 인물")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

@@ -60,7 +60,7 @@ extension AppDI {
         )
         let chatViewModel = ChatViewModel()
         let myPageViewModel = MyPageViewModel()
-        let newsViewModel = NewsViewModel()
+        let newsViewModel = NewsViewModel(fetchNewsUseCase: informationDependency.fetchNewsUseCase)
         let lottoViewModel = LottoViewModel()
 
         let bookViewModel = BookViewModel(

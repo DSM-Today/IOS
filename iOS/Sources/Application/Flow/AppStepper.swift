@@ -13,7 +13,7 @@ class AppStepper: Stepper {
     private var disposeBag = DisposeBag()
 
     init() {
-        self.refreshTokenUseCase = AuthDependency.resolve().refreshTokenUseCase
+        self.refreshTokenUseCase = AuthServiceDependency.resolve().refreshTokenUseCase
     }
 
     func readyToEmitSteps() {

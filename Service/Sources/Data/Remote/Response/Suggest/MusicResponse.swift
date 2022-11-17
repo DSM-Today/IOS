@@ -25,7 +25,7 @@ extension MusicResponse {
             title: title,
             songWriter: songWriter,
             publishedAt: publishedAt.toDate(format: "yyyy-MM-dd"),
-            directUrl: URL(string: directUrl)!
+            directUrl: URL(string: directUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)!
         )
     }
 }

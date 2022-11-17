@@ -7,6 +7,9 @@ import RxCocoa
 
 class FoodViewController: UIViewController {
 
+    private var disposeBag = DisposeBag()
+    private let getData = PublishRelay<Void>()
+
     // MARK: - ViewModel
     var viewModel: FoodViewModel!
 
@@ -25,10 +28,11 @@ class FoodViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
+        bindViewModel()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 음식")
+        getData.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -37,10 +41,18 @@ class FoodViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        self.foodImage.backgroundColor = .black
-        self.foodImage.image = UIImage(systemName: "square.fill")
-        self.foodName.text = "감자전"
+    // MARK: - Bind
+    private func bindViewModel() {
+        let input = FoodViewModel.Input(
+            getData: getData.asDriver(onErrorJustReturn: ())
+        )
+
+        let output = viewModel.transform(input)
+
+        output.food.subscribe(onNext: {
+            self.foodImage.kf.setImage(with: $0.imageUrl)
+            self.foodName.text = $0.name
+        }).disposed(by: disposeBag)
     }
 }
 

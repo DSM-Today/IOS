@@ -4,11 +4,16 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class NewsViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: NewsViewModel!
+    private var url = URL(string: "")
+
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let titleLabel = UILabel().then {
@@ -40,12 +45,14 @@ class NewsViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
+        bind()
+        setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.contentTextView.isEditable = false
         setNavigation("뉴스")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -54,11 +61,29 @@ class NewsViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        self.titleLabel.text = "김기영 마이다스 해커톤 제출하지도 않아"
-        self.newsImage.image = .init(systemName: "person")
-        self.newsImage.backgroundColor = .blue
-        self.contentTextView.text = "김기영 머리 모자라서 해커톤에 제출하지도 않아 충격을 주었다. 김준호 꼴에 친구라고 같이 제출하지 않아...."
+    // MARK: - Button
+    private func setButton() {
+        moveToNewsButton.rx.tap
+            .asObservable()
+            .subscribe(onNext: {
+                UIApplication.shared.open(self.url!)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func bind() {
+        let input = NewsViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.newsValue
+            .subscribe(onNext: { [weak self] in
+                self?.titleLabel.text = $0.title
+                self?.newsImage.kf.setImage(with: $0.imageUrl)
+                self?.contentTextView.text = $0.content
+                self?.url = $0.directUrl
+            })
+            .disposed(by: disposeBag)
     }
 }
 

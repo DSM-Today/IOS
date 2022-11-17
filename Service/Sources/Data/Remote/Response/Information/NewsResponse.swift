@@ -5,12 +5,12 @@ struct NewsResponse: Decodable {
         case title
         case imagePath = "image_path"
         case content
-        case directUrlString = "direct_url"
+        case directUrl = "direct_url"
     }
     let title: String
     let imagePath: String
     let content: String
-    let directUrlString: String
+    let directUrl: String
 }
 
 extension NewsResponse {
@@ -19,7 +19,7 @@ extension NewsResponse {
             title: title,
             imageUrl: URL(string: imagePath)!,
             content: content,
-            directUrl: URL(string: directUrlString)!
+            directUrl: URL(string: directUrl)!
         )
     }
 }

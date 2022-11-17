@@ -36,6 +36,7 @@ class FlowerViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 꽃")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {

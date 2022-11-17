@@ -15,8 +15,8 @@ struct BookResponse: Decodable {
     let publisher: String
     let title: String
     let writer: String
-    let score: String
-    let reviewAmount: String
+    let score: Float
+    let reviewAmount: Int
     let directUrlString: String
     let comment: String
 }

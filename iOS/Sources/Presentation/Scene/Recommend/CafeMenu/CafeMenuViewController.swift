@@ -4,11 +4,15 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class CafeMenuViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: CafeMenuViewModel!
+
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let todayDrinkLabel = UILabel().then {
@@ -24,15 +28,19 @@ class CafeMenuViewController: UIViewController {
     private let cafeMenuName = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
     }
+    private let cafePrice = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 22, family: .regular)
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray1
-        setDemoData()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 카페 메뉴")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -51,11 +59,19 @@ class CafeMenuViewController: UIViewController {
             navigationBar.scrollEdgeAppearance = appearance
         }
     }
-    private func setDemoData() {
-        self.drinkImage.image = UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")
-        self.cafeName.text = "A Twosome Place"
-        self.cafeName.textColor = .red1
-        self.cafeMenuName.text = "스트로베리 초콜릿 라떼"
+    private func bind() {
+        let input = CafeMenuViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.cafeMenuValue
+            .subscribe(onNext: { [weak self] in
+                self?.drinkImage.kf.setImage(with: $0.imageUrl)
+                self?.cafeName.text = $0.brandName
+                self?.cafeMenuName.text = $0.name
+//                self?.cafePrice.text = $0.price
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -65,7 +81,8 @@ extension CafeMenuViewController {
         [todayDrinkLabel,
          drinkImage,
          cafeName,
-         cafeMenuName
+         cafeMenuName,
+         cafePrice
         ].forEach { view.addSubview($0) }
     }
     private func makeSubviewConstraints() {
@@ -86,6 +103,10 @@ extension CafeMenuViewController {
         cafeMenuName.snp.makeConstraints {
             $0.top.equalTo(cafeName.snp.bottom).offset(3)
             $0.centerX.equalToSuperview()
+        }
+        cafePrice.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(cafeMenuName.snp.bottom).offset(40)
         }
     }
 }

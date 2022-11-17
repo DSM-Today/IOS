@@ -5,27 +5,28 @@ struct MusicResponse: Decodable {
         case imagePath = "image_path"
         case situation
         case title
-        case writer
+        case songWriter = "song_writer"
         case publishedAt = "published_at"
         case directUrl = "direct_url"
     }
     let imagePath: String
     let situation: String
     let title: String
-    let writer: String
+    let songWriter: String
     let publishedAt: String
     let directUrl: String
 }
 
 extension MusicResponse {
     func toDomain() -> Music {
+        let url = directUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return .init(
-            imageUrl: URL(string: imagePath)!,
+            imagePath: URL(string: imagePath)!,
             situation: situation,
             title: title,
-            writer: writer,
+            songWriter: songWriter,
             publishedAt: publishedAt.toDate(format: "yyyy-MM-dd"),
-            directUrl: URL(string: directUrl)!
+            directUrl: URL(string: url)!
         )
     }
 }

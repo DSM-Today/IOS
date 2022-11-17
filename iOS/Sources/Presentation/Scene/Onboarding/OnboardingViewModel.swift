@@ -46,7 +46,7 @@ class OnboardingViewModel: ViewModel, Stepper {
             .flatMap { self.googleLoginUseCase.excute(idToken: $0) }
             .map {
                 if $0.isBirthdayExist {
-                    return TodayStep.mainIsRequired
+                    return TodayStep.tabsIsRequired
                 } else {
                     return TodayStep.userProfileIsRequired
                 }

@@ -8,11 +8,14 @@ import RxCocoa
 class MusicViewController: UIViewController {
 
     var viewModel: MusicViewModel!
+    private var disposeBag = DisposeBag()
+    private let getData = PublishRelay<Void>()
+    private let date = Date()
+    private var url = URL(string: "")
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
-        $0.text = "혼자 있고 싶을 때"
         $0.textColor = .black
     }
     private let musicView = UIView().then {
@@ -23,17 +26,13 @@ class MusicViewController: UIViewController {
         $0.layer.shadowOpacity = 0.3
     }
     private let musicImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "music.note.house")
         $0.tintColor = .blue6
-        $0.backgroundColor = .black
     }
     private let musicTitleLabel = UILabel().then {
-        $0.text = "After LIKE"
         $0.font = .notoSansFont(ofSize: 20, family: .black)
         $0.textColor = .black
     }
     private let musicComposerLabel = UILabel().then {
-        $0.text = "IVE - 아이브"
         $0.font = .notoSansFont(ofSize: 16, family: .bold)
         $0.textColor = .black
     }
@@ -43,7 +42,6 @@ class MusicViewController: UIViewController {
         $0.textColor = .black
     }
     private let dateLabel = UILabel().then {
-        $0.text = "2022/08/22"
         $0.font = .notoSansFont(ofSize: 16, family: .regular)
         $0.textColor = .black
     }
@@ -78,15 +76,45 @@ class MusicViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
+        setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 노래")
         navigationController?.navigationBar.setBackButtonToArrow()
+        getData.accept(())
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
+    }
+
+    // MARK: - Button
+    private func setButton() {
+        goToMusicSiteButton.rx.tap
+            .subscribe(onNext: {
+                UIApplication.shared.open(self.url!)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: - Bind
+    private func bindViewModel() {
+        let input = MusicViewModel.Input(
+            getData: getData.asDriver(onErrorJustReturn: ())
+        )
+
+        let output = viewModel.transform(input)
+
+        output.music.subscribe(onNext: {
+            self.situationLabel.text = $0.situation
+            self.musicImageView.kf.setImage(with: $0.imagePath)
+            self.musicTitleLabel.text = $0.title
+            self.musicComposerLabel.text = $0.songWriter
+            self.dateLabel.text = $0.publishedAt.toString(format: "yyyy/MM/dd")
+            self.url = $0.directUrl
+        }).disposed(by: disposeBag)
     }
 }
 

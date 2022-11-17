@@ -4,11 +4,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class LottoViewController: UIViewController, Stepper {
+class LottoViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: LottoViewModel!
 
     // MARK: - UI
     private let todayEatLabel = UILabel().then {
@@ -114,6 +114,7 @@ class LottoViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("로또")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

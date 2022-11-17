@@ -18,6 +18,9 @@ public struct RandomDependency {
     public let fetchIdiomUseCase: FetchIdiomUseCase
     public let bookmarkIdiomUseCase: BookmarkIdiomUseCase
     public let deleteBookmarkIdiomUseCase: DeleteBookmarkIdiomUseCase
+    public let fetchCharacterUseCase: FetchCharacterUseCase
+    public let bookmarkCharacterUseCase: BookmarkCharacterUseCase
+    public let deleteBookmarkCharacterUseCase: DeleteBookmarkCharacterUseCase
 }
 
 public extension RandomDependency {
@@ -73,6 +76,15 @@ public extension RandomDependency {
         let deleteBookmarkIdiomUseCase = DeleteBookmarkIdiomUseCase(
             repository: repository
         )
+        let fetchCharacterUseCase = FetchCharacterUseCase(
+            repository: repository
+        )
+        let bookmarkCharacterUseCase = BookmarkCharacterUseCase(
+            repository: repository
+        )
+        let deleteBookmarkCharacterUseCase = DeleteBookmarkCharacterUseCase(
+            repository: repository
+        )
 
         return RandomDependency(
             fetchSubjectRandomListUseCase: fetchSubjectRandomListUseCase,
@@ -89,7 +101,10 @@ public extension RandomDependency {
             fetchQuizAnswerUseCase: fetchQuizAnswerUseCase,
             fetchIdiomUseCase: fetchIdiomUseCase,
             bookmarkIdiomUseCase: bookmarkIdiomUseCase,
-            deleteBookmarkIdiomUseCase: deleteBookmarkIdiomUseCase
+            deleteBookmarkIdiomUseCase: deleteBookmarkIdiomUseCase,
+            fetchCharacterUseCase: fetchCharacterUseCase,
+            bookmarkCharacterUseCase: bookmarkCharacterUseCase,
+            deleteBookmarkCharacterUseCase: deleteBookmarkCharacterUseCase
         )
     }
 }

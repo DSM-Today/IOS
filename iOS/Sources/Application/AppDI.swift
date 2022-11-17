@@ -66,7 +66,9 @@ extension AppDI {
         let bookViewModel = BookViewModel(
             fetchBookUseCase: suggestDependency.fetchBookUseCase
         )
-        let characterViewModel = CharacterViewModel()
+        let characterViewModel = CharacterViewModel(
+            fetchCharacterUseCase: randomDependency.fetchCharacterUseCase
+        )
         let flowerViewModel = FlowerViewModel(
             fetchFlowerUseCase: randomDependency.fetchFlowerUseCase
         )
@@ -76,16 +78,22 @@ extension AppDI {
         let idiomViewModel = IdiomViewModel(
             fetchIdiomUseCase: randomDependency.fetchIdiomUseCase
         )
-        let quizViewModel = QuizViewModel()
+        let quizViewModel = QuizViewModel(
+            fetchQuizUseCase: randomDependency.fetchQuizUseCase
+        )
 
         let cafeMenuViewModel = CafeMenuViewModel()
         let foodViewModel = FoodViewModel()
-        let movieViewModel = MovieViewModel()
 
         let musicViewModel = MusicViewModel(
             fetchMusicUseCase: suggestDependency.fetchMuiscUseCase
         )
-        let webtoonViewModel = WebtoonViewModel()
+        let movieViewModel = MovieViewModel(
+            fetchMovieUseCase: suggestDependency.fetchMovieUseCase
+        )
+        let webtoonViewModel = WebtoonViewModel(
+            fetchWebtoonUseCase: suggestDependency.fetchWebtoonUseCase
+        )
 
         // MARK: ViewController
         let onboardingViewController = OnboardingViewController().then {

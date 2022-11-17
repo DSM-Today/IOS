@@ -28,6 +28,12 @@ final class RandomRemoteDataSourceImpl: RemoteDataSource<RandomAPI>, RandomRemot
             .map { $0.toDomain() }
     }
 
+    func fetchCharacter() -> Single<Character> {
+        return request(.fetchCharacter)
+            .map(CharacterResponse.self)
+            .map { $0.toDomain() }
+    }
+
     func completeQuiz(answer: String) -> Single<CompleteQuiz> {
         return request(.completeQuiz(answer))
             .map(CompleteQuizResponse.self)
@@ -66,6 +72,11 @@ final class RandomRemoteDataSourceImpl: RemoteDataSource<RandomAPI>, RandomRemot
             .asCompletable()
     }
 
+    func bookmarkCharacter() -> Completable {
+        return request(.bookmarkCharacter)
+            .asCompletable()
+    }
+
     func deleteBookmarkFlower() -> Completable {
         return request(.deleteBookmarkFlower)
             .asCompletable()
@@ -83,6 +94,11 @@ final class RandomRemoteDataSourceImpl: RemoteDataSource<RandomAPI>, RandomRemot
 
     func deleteBookmarkIdiom() -> Completable {
         return request(.deleteBookmarkIdiom)
+            .asCompletable()
+    }
+
+    func deleteBookmarkCharacter() -> Completable {
+        return request(.deleteBookmarkCharacter)
             .asCompletable()
     }
 

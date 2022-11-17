@@ -4,14 +4,17 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class MovieViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: MovieViewModel!
+    private var url = URL(string: "")
 
     let movieBottomSheetViewController = MovieBottomSheetViewController()
     private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let commentLabel = UILabel().then {
@@ -20,6 +23,9 @@ class MovieViewController: UIViewController {
     }
     private let movieImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
+    }
+    private let movieText = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 20, family: .medium)
     }
     private let explainButton = UIButton().then {
         $0.backgroundColor = .white
@@ -44,12 +50,13 @@ class MovieViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
         setButton()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigation("오늘의 영화")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -60,11 +67,14 @@ class MovieViewController: UIViewController {
 
     private func setButton() {
         explainButton.rx.tap
-            .asObservable()
             .subscribe(onNext: { [weak self] in
                 self?.presentModal()
             }).disposed(by: disposeBag)
-    }
+        goToMoviewSiteButton.rx.tap
+            .subscribe(onNext: {
+                UIApplication.shared.open(self.url!)
+            })
+            .disposed(by: disposeBag)    }
     private func presentModal() {
         movieBottomSheetViewController.modalPresentationStyle = .pageSheet
 
@@ -74,16 +84,30 @@ class MovieViewController: UIViewController {
         }
         self.present(movieBottomSheetViewController, animated: true)
     }
-    private func setDemoData() {
-        movieImageView.image = UIImage(systemName: "person.fill")
-        movieImageView.backgroundColor = .gray
+    private func bind() {
+        let input = MovieViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.movieValue
+            .subscribe(onNext: { [weak self] in
+                self?.movieImageView.kf.setImage(with: $0.imageUrl)
+                self?.movieText.text = $0.title
+                self?.movieBottomSheetViewController.contentTextView.text = $0.content
+                self?.url = $0.directUrl
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: Layout
 extension MovieViewController {
     private func addSubviews() {
-        [commentLabel, movieImageView, explainButton, goToMoviewSiteButton]
+        [commentLabel,
+         movieImageView,
+         movieText,
+         explainButton,
+         goToMoviewSiteButton]
             .forEach { view.addSubview($0) }
     }
     private func makeSubviewConstraints() {
@@ -97,8 +121,12 @@ extension MovieViewController {
             $0.height.equalTo(290)
             $0.width.equalTo(200)
         }
+        movieText.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(movieImageView.snp.bottom).offset(12)
+        }
         explainButton.snp.makeConstraints {
-            $0.height.equalTo(120)
+            $0.height.equalTo(140)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         goToMoviewSiteButton.snp.makeConstraints {

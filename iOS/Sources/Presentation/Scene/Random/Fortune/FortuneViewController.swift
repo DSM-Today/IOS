@@ -44,6 +44,7 @@ class FortuneViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 운세")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -60,7 +61,7 @@ class FortuneViewController: UIViewController {
 
         output.luckyValue
             .subscribe(onNext: { [weak self] in
-                self?.fortuneImg.image = $0.imageUrl.toImage()
+                self?.fortuneImg.kf.setImage(with: $0.imageUrl)
                 self?.fortuneName.text = $0.luckyType
                 self?.birthDeadline.text = "\($0.start.toString(format: "MM.dd")) ~ \($0.end.toString(format: "MM.dd"))"
                 self?.explainTextView.text = $0.content

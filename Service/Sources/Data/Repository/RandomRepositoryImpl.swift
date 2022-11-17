@@ -39,6 +39,10 @@ class RandomRepositoryImpl: RandomRepository {
         return remoteDataSource.fetchIdiom()
     }
 
+    func fetchCharacter() -> Single<Character> {
+        return remoteDataSource.fetchCharacter()
+    }
+
     func bookmarkFlower() -> Completable {
         return remoteDataSource.bookmarkFlower()
     }
@@ -55,6 +59,10 @@ class RandomRepositoryImpl: RandomRepository {
         return remoteDataSource.bookmarkIdiom()
     }
 
+    func bookmarkCharacter() -> Completable {
+        return remoteDataSource.bookmarkCharacter()
+    }
+
     func deleteBookmarkFlower() -> Completable {
         return remoteDataSource.deleteBookmarkFlower()
     }
@@ -69,6 +77,10 @@ class RandomRepositoryImpl: RandomRepository {
 
     func deleteBookmarkIdiom() -> Completable {
         return remoteDataSource.deleteBookmarkIdiom()
+    }
+
+    func deleteBookmarkCharacter() -> Completable {
+        return remoteDataSource.deleteBookmarkCharacter()
     }
 
 }

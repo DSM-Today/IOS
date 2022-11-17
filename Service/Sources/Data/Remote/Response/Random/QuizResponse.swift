@@ -1,11 +1,17 @@
 import Foundation
 
 struct QuizResponse: Decodable {
-    let title: String
+    let level: String
+    let question: String
+    let answer: String
 }
 
 extension QuizResponse {
     func toDomain() -> Quiz {
-        return .init(title: title)
+        return .init(
+            level: level,
+            question: question,
+            answer: answer
+        )
     }
 }

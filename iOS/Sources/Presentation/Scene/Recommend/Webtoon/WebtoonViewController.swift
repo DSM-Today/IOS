@@ -10,6 +10,10 @@ class WebtoonViewController: UIViewController {
     // MARK: - ViewModel
     var viewModel: WebtoonViewModel!
 
+    private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
+    private var url: URL? = URL(string: "")
+
     // MARK: - UI
     private let webtoonInformationView = UIView().then {
         $0.backgroundColor = .white
@@ -63,12 +67,13 @@ class WebtoonViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
-        view.backgroundColor = .gray1
+        bind()
+        setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigation("오늘의 웹툰")
+        viewAppear.accept(())
         self.contentTextView.isEditable = false
         navigationController?.navigationBar.setBackButtonToArrow()
     }
@@ -78,14 +83,30 @@ class WebtoonViewController: UIViewController {
         makeSubviewConstraints()
     }
 
-    private func setDemoData() {
-        ageLimitLabel.text = "전체연령가"
-        currentSituationLabel.text = "휴재"
-        webtoonImage.image = UIImage(systemName: "person")
-        webtoonImage.backgroundColor = .primary
-        writerLabel.text = "기무기영"
-        genreLabel.text = "호러물"
-        contentTextView.text = "집에서 거울을 보십시오 그게 엄청난 공포입니다. 여러분들 ><"
+    private func setButton() {
+        self.moveWebtoonButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                UIApplication.shared.open((self?.url)!)
+            })
+            .disposed(by: disposeBag)
+    }
+    // MARK: - Bind
+    private func bind() {
+        let input = WebtoonViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.webtoonValue
+            .subscribe(onNext: { [weak self] in
+                self?.ageLimitLabel.text = $0.isAdult
+                self?.currentSituationLabel.text = $0.isWorking
+                self?.webtoonImage.kf.setImage(with: $0.imageUrl)
+                self?.writerLabel.text = $0.writer
+                self?.genreLabel.text = $0.genre
+                self?.contentTextView.text = $0.comment
+                self?.url = $0.directUrl
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -100,7 +121,7 @@ extension WebtoonViewController {
 
     private func makeSubviewConstraints() {
         webtoonInformationView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(29)
+            $0.top.equalTo(view.snp.topMargin).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         ageLimitLabel.snp.makeConstraints {

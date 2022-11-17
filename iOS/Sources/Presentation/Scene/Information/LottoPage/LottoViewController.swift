@@ -26,23 +26,6 @@ class LottoViewController: UIViewController {
         $0.axis = .horizontal
         $0.backgroundColor = .white
     }
-    private let categoryView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOpacity = 0.1
-        $0.layer.cornerRadius = 41
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
-    private let goToOtherCategoryLabel = UILabel().then {
-        $0.text = "오늘의 뉴스 보러가기"
-        $0.font = .notoSansFont(ofSize: 18, family: .medium)
-    }
-    private let cafeMenuCategoryImage = UIImageView().then {
-        $0.contentMode = .scaleToFill
-        $0.layer.cornerRadius = 20
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.black.cgColor
-    }
     private let plusView = UIImageView().then {
         $0.image = UIImage(systemName: "plus")
         $0.tintColor = .black
@@ -123,7 +106,6 @@ class LottoViewController: UIViewController {
     }
 
     private func setDemoData() {
-        self.cafeMenuCategoryImage.image = UIImage(systemName: "square.fill")
         numberLabel.text = "1038회차"
         dateLabel.text = "2022.10.22"
         moneyLabel.text = "2,868,856,209원"
@@ -142,9 +124,6 @@ extension LottoViewController {
     private func addSubviews() {
         [todayEatLabel,
          lottoView,
-         categoryView,
-         goToOtherCategoryLabel,
-         cafeMenuCategoryImage,
          moneyLabel
         ].forEach { view.addSubview($0) }
 
@@ -175,19 +154,6 @@ extension LottoViewController {
             $0.top.equalToSuperview().inset(27)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(34)
-        }
-        categoryView.snp.makeConstraints {
-            $0.height.equalTo(150)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        cafeMenuCategoryImage.snp.makeConstraints {
-            $0.centerY.equalTo(categoryView)
-            $0.leading.equalToSuperview().inset(40)
-            $0.width.height.equalTo(100)
-        }
-        goToOtherCategoryLabel.snp.makeConstraints {
-            $0.centerY.equalTo(cafeMenuCategoryImage)
-            $0.leading.equalTo(cafeMenuCategoryImage.snp.trailing).offset(30)
         }
         firstNumberLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()

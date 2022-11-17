@@ -17,7 +17,6 @@ class MusicViewModel: ViewModel, Stepper {
 
     struct Input {
         let getData: Driver<Void>
-        let goButtonDidTap: Driver<Void>
     }
 
     struct Output {
@@ -34,11 +33,6 @@ class MusicViewModel: ViewModel, Stepper {
         }.subscribe(onNext: {
             music.accept($0)
         }).disposed(by: disposeBag)
-
-        input.goButtonDidTap.asObservable()
-            .map { TodayStep.musicIsRequired }
-            .bind(to: steps)
-            .disposed(by: disposeBag)
 
         return Output(
             music: music

@@ -4,11 +4,8 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 
-class FortuneViewController: UIViewController, Stepper {
-
-    var steps = PublishRelay<Step>()
+class FortuneViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: FortuneViewModel!
@@ -47,6 +44,7 @@ class FortuneViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 운세")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

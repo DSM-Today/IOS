@@ -5,12 +5,9 @@ import Then
 import RxSwift
 import RxCocoa
 import Kingfisher
-import RxFlow
 
+class BookViewController: UIViewController {
 
-class BookViewController: UIViewController, Stepper {
-
-    var steps = PublishRelay<Step>()
     let bookBottomSheetViewController = BookBottomSheetViewController()
     private var url = URL(string: "")
 
@@ -77,6 +74,7 @@ class BookViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 책")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

@@ -4,18 +4,15 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxFlow
 import Kingfisher
 
-class FlowerViewController: UIViewController, Stepper {
+class FlowerViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: FlowerViewModel!
 
     private let disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
-
-    var steps = PublishRelay<Step>()
 
     // MARK: - UI
     private let flowerImg = UIImageView().then {
@@ -72,6 +69,7 @@ class FlowerViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 꽃")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

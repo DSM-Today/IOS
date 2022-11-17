@@ -80,7 +80,9 @@ extension AppDI {
 
         let cafeMenuViewModel = CafeMenuViewModel()
         let foodViewModel = FoodViewModel()
-        let movieViewModel = MovieViewModel()
+        let movieViewModel = MovieViewModel(
+            fetchMovieUseCase: suggestDependency.fetchMovieUseCase
+        )
         let musicViewModel = MusicViewModel()
         let webtoonViewModel = WebtoonViewModel()
 

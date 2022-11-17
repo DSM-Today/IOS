@@ -66,7 +66,9 @@ extension AppDI {
         let bookViewModel = BookViewModel(
             fetchBookUseCase: suggestDependency.fetchBookUseCase
         )
-        let characterViewModel = CharacterViewModel()
+        let characterViewModel = CharacterViewModel(
+            fetchCharacterUseCase: randomDependency.fetchCharacterUseCase
+        )
         let flowerViewModel = FlowerViewModel(
             fetchFlowerUseCase: randomDependency.fetchFlowerUseCase
         )

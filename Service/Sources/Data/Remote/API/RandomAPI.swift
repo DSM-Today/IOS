@@ -7,6 +7,7 @@ enum RandomAPI {
     case fetchFlower
     case fetchLucky
     case fetchQuiz
+    case fetchCharacter
     case completeQuiz(_ answer: String)
     case fetchQuizAnswer
     case fetchIdiom
@@ -14,10 +15,12 @@ enum RandomAPI {
     case bookmarkLucky
     case bookmarkQuiz
     case bookmarkIdiom
+    case bookmarkCharacter
     case deleteBookmarkFlower
     case deleteBookmarkLucky
     case deleteBookmarkQuiz
     case deleteBookmarkIdiom
+    case deleteBookmarkCharacter
 }
 
 extension RandomAPI: TodayAPI {
@@ -40,6 +43,8 @@ extension RandomAPI: TodayAPI {
             return "/quiz"
         case .fetchQuizAnswer:
             return "/quiz/answer"
+        case .fetchCharacter, .bookmarkCharacter, .deleteBookmarkCharacter:
+            return "/person"
         default:
             return "/quiz/complete"
         }
@@ -48,12 +53,12 @@ extension RandomAPI: TodayAPI {
     var method: Moya.Method {
         switch self {
         case .fetchRandomList, .fetchFlower, .fetchLucky,
-                .fetchQuiz, .fetchQuizAnswer, .fetchIdiom:
+                .fetchQuiz, .fetchQuizAnswer, .fetchIdiom, .fetchCharacter:
             return .get
         case .completeQuiz:
             return .put
         case .deleteBookmarkFlower, .deleteBookmarkLucky,
-                .deleteBookmarkQuiz, .deleteBookmarkIdiom:
+                .deleteBookmarkQuiz, .deleteBookmarkIdiom, .deleteBookmarkCharacter:
             return .delete
         default:
             return .post

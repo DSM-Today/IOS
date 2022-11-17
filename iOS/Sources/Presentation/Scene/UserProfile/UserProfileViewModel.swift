@@ -33,7 +33,7 @@ class UserProfileViewModel: ViewModel, Stepper {
             .withLatestFrom(info.asObservable())
             .flatMap {
                 self.initProfileStepUseCase.excute(introduce: $0, birthDay: $1, canPerson: $2)
-                    .andThen(Single.just(TodayStep.mainIsRequired))
+                    .andThen(Single.just(TodayStep.tabsIsRequired))
             }
             .bind(to: steps)
             .disposed(by: disposeBag)

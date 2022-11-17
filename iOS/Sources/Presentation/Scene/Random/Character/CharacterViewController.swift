@@ -6,9 +6,10 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class CharacterViewController: UIViewController, Stepper {
+class CharacterViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: CharacterViewModel!
 
     // MARK: - UI
     private let userProfileImg = UIImageView().then {
@@ -60,6 +61,7 @@ class CharacterViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 인물")
+        navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

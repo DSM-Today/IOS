@@ -11,11 +11,11 @@ class MyPageViewController: UIViewController {
     var viewModel: MyPageViewModel!
 
     private var disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
-        $0.layer.cornerRadius = $0.frame.width / 2
     }
     private let userName = UILabel().then {
         $0.font = .notoSansFont(ofSize: 17, family: .medium)
@@ -33,6 +33,7 @@ class MyPageViewController: UIViewController {
     private let introduceText = UILabel().then {
         $0.font = .notoSansFont(ofSize: 15, family: .regular)
         $0.textAlignment = .center
+        $0.numberOfLines = 2
     }
     private let favoriteText = UILabel().then {
         $0.text = "즐겨찾기"
@@ -41,6 +42,7 @@ class MyPageViewController: UIViewController {
     }
     private let favoriteTableView = UITableView().then {
         $0.register(MyPageTableViewCell.self, forCellReuseIdentifier: MyPageTableViewCell.identifier)
+        $0.rowHeight = 110
     }
     private let logOutButton = UIButton(type: .system).then {
         $0.backgroundColor = .white
@@ -54,41 +56,51 @@ class MyPageViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray1
-        setButton()
-        setDemoData()
-        setTableView()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("마이페이지")
+        viewAppear.accept(())
+        self.tabBarController?.tabBar.isHidden = false
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        self.profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+        self.profileImageView.clipsToBounds = true
         addSubviews()
         makeSubviewConstraints()
     }
-
-    // MARK: - TableView
-    private func setTableView() {
-        favoriteTableView.dataSource = self
-        favoriteTableView.rowHeight = 110
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = true
     }
 
-    // MARK: - Button
-    private func setButton() {
-        editProfileButton.rx.tap
-            .asObservable()
+    // MARK: - Bind
+    private func bind() {
+        let input = MyPageViewModel.Input(
+            viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
+            moveToEditProfile: editProfileButton.rx.tap.asDriver(),
+            index: favoriteTableView.rx.itemSelected.asDriver()
+        )
+
+        let output = viewModel.transform(input)
+
+        output.profileValue
             .subscribe(onNext: { [weak self] in
-                self?.pushViewController(EditProfileViewController())
+                self?.profileImageView.kf.setImage(with: $0.imageUrl)
+                self?.userName.text = $0.name
+                self?.introduceText.text = $0.introduce
+                self?.birthText.text = $0.birthDay.toString(format: "yyyy.MM.dd")
             })
             .disposed(by: disposeBag)
-    }
-    private func setDemoData() {
-        self.profileImageView.image = UIImage(systemName: "person.fill")
-        self.userName.text = "김기영"
-        self.birthText.text = "2005.05.30"
-        self.introduceText.text = "THE MASTER OF  KIM  HERO\n심장을 공격하는 인천의 야수를 거느리는 남자"
-        self.introduceText.numberOfLines = 2
+
+        output.bookmarkList.bind(to: favoriteTableView.rx.items(
+            cellIdentifier: "MyPageTableViewCell",
+            cellType: MyPageTableViewCell.self
+        )) { _, items, cell in
+            cell.setData(items)
+        }
+        .disposed(by: disposeBag)
     }
 }
 
@@ -143,25 +155,5 @@ extension MyPageViewController {
             $0.height.equalTo(55)
             $0.leading.trailing.equalToSuperview()
         }
-    }
-}
-
-extension MyPageViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageTableViewCell", for: indexPath)
-                as? MyPageTableViewCell else { return UITableViewCell() }
-        cell.categorieTitle.text = "오늘의 꽃"
-        cell.favoriteCount.text = "3"
-        return cell
-    }
-}
-
-extension MyPageViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("select \(indexPath.row)")
     }
 }

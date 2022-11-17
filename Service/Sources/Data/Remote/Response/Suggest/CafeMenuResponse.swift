@@ -3,13 +3,13 @@ import Foundation
 struct CafeMenuResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
         case name
+        case brandName = "brand_name"
         case price
-        case reason
         case imagePath = "image_path"
     }
     let name: String
-    let price: String
-    let reason: String
+    let brandName: String
+    let price: String?
     let imagePath: String
 }
 
@@ -17,8 +17,8 @@ extension CafeMenuResponse {
     func toDomain() -> CafeMenu {
         return .init(
             name: name,
-            price: price,
-            reason: reason,
+            brandName: brandName,
+            price: price ?? "",
             imageUrl: URL(string: imagePath)!
         )
     }

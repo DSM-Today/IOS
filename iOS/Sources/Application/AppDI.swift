@@ -82,7 +82,7 @@ extension AppDI {
             fetchQuizUseCase: randomDependency.fetchQuizUseCase
         )
 
-        let cafeMenuViewModel = CafeMenuViewModel()
+        let cafeMenuViewModel = CafeMenuViewModel(fetchCafeMenuUseCase: suggestDependency.fetchCafeMenuUseCase)
         let foodViewModel = FoodViewModel()
         let movieViewModel = MovieViewModel(
             fetchMovieUseCase: suggestDependency.fetchMovieUseCase

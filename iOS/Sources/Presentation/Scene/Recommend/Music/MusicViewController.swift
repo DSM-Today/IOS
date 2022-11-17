@@ -11,11 +11,11 @@ class MusicViewController: UIViewController {
     private var disposeBag = DisposeBag()
     private let getData = PublishRelay<Void>()
     private let date = Date()
+    private var url = URL(string: "")
 
     // MARK: - UI
     private let situationLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
-        //        $0.text = "혼자 있고 싶을 때"
         $0.textColor = .black
     }
     private let musicView = UIView().then {
@@ -26,16 +26,13 @@ class MusicViewController: UIViewController {
         $0.layer.shadowOpacity = 0.3
     }
     private let musicImageView = UIImageView().then {
-        //        $0.image = UIImage(systemName: "music.note.house")
         $0.tintColor = .blue6
     }
     private let musicTitleLabel = UILabel().then {
-        //        $0.text = "After LIKE"
         $0.font = .notoSansFont(ofSize: 20, family: .black)
         $0.textColor = .black
     }
     private let musicComposerLabel = UILabel().then {
-        //        $0.text = "IVE - 아이브"
         $0.font = .notoSansFont(ofSize: 16, family: .bold)
         $0.textColor = .black
     }
@@ -45,7 +42,6 @@ class MusicViewController: UIViewController {
         $0.textColor = .black
     }
     private let dateLabel = UILabel().then {
-        //        $0.text = "2022/08/22"
         $0.font = .notoSansFont(ofSize: 16, family: .regular)
         $0.textColor = .black
     }
@@ -93,6 +89,16 @@ class MusicViewController: UIViewController {
         makeSubviewConstraints()
     }
 
+    // MARK: - Button
+    private func setButton() {
+        goToMusicSiteButton.rx.tap
+            .subscribe(onNext: {
+                UIApplication.shared.open(self.url!)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: - Bind
     private func bindViewModel() {
         let input = MusicViewModel.Input(
             getData: getData.asDriver(onErrorJustReturn: ()),

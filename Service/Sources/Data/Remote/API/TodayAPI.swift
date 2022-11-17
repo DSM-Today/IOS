@@ -35,6 +35,7 @@ enum Domain: String {
     case random
     case suggest
     case information
+    case images
 }
 
 extension Domain {

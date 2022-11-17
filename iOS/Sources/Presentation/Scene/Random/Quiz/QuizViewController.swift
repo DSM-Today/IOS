@@ -6,9 +6,11 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class QuizViewController: UIViewController, Stepper {
+class QuizViewController: UIViewController {
 
-    var steps = PublishRelay<Step>()
+    // MARK: - ViewModel
+    var viewModel: QuizViewModel!
+
     private var disposeBag = DisposeBag()
 
     // MARK: - UI
@@ -60,6 +62,7 @@ class QuizViewController: UIViewController, Stepper {
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("오늘의 퀴즈")
+        navigationController?.navigationBar.setBackButtonToArrow()
         resulText.isHidden = true
     }
     override func viewWillLayoutSubviews() {

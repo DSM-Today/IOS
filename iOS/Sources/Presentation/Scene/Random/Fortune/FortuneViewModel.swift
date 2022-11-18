@@ -6,7 +6,6 @@ import RxFlow
 import Service
 
 class FortuneViewModel: ViewModel, Stepper {
-
     private let fetchLuckyUseCase: FetchLuckyUseCase
 
     init(fetchLuckyUseCase: FetchLuckyUseCase) {
@@ -14,7 +13,7 @@ class FortuneViewModel: ViewModel, Stepper {
     }
 
     var steps = PublishRelay<Step>()
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
     struct Input {
         let viewAppear: Driver<Void>
@@ -39,5 +38,4 @@ class FortuneViewModel: ViewModel, Stepper {
 
         return Output(luckyValue: luckyValue)
     }
-
 }

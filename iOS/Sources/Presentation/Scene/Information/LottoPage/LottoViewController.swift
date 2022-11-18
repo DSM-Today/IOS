@@ -10,6 +10,9 @@ class LottoViewController: UIViewController {
     // MARK: - ViewModel
     var viewModel: LottoViewModel!
 
+    private let disposeBag = DisposeBag()
+    private let viewAppear = PublishRelay<Void>()
+
     // MARK: - UI
     private let todayEatLabel = UILabel().then {
         $0.text = "이번 주 로또 번호는?"
@@ -93,16 +96,39 @@ class LottoViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDemoData()
+        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("로또")
+        viewAppear.accept(())
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         addSubviews()
         makeSubviewConstraints()
+    }
+
+    // MARK: - Bind
+    private func bind() {
+        let input = LottoViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
+
+        let output = viewModel.transform(input)
+
+        output.lottoValue
+            .subscribe(onNext: { [weak self] in
+                self?.numberLabel.text = $0.round
+                self?.dateLabel.text = $0.date.toString(format: "yyyy-MM-dd")
+                self?.moneyLabel.text = $0.prize
+                self?.firstNumberLabel.text = $0.first
+                self?.secondNumberLabel.text = $0.second
+                self?.thirdNumberLabel.text = $0.third
+                self?.fourthNumberLabel.text = $0.fourth
+                self?.fifthNumberLabel.text = $0.fifth
+                self?.sixthNumberLabel.text = $0.sixth
+                self?.seventhNumberLabel.text = $0.seventh
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setDemoData() {

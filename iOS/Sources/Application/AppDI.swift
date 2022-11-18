@@ -65,7 +65,7 @@ extension AppDI {
             fetchBookmarkListUseCase: userDependency.fetchBookmarkListUseCase
         )
         let newsViewModel = NewsViewModel(fetchNewsUseCase: informationDependency.fetchNewsUseCase)
-        let lottoViewModel = LottoViewModel()
+        let lottoViewModel = LottoViewModel(fetchLottoUseCase: informationDependency.fetchLottoUseCase)
 
         let bookViewModel = BookViewModel(
             fetchBookUseCase: suggestDependency.fetchBookUseCase
@@ -87,7 +87,9 @@ extension AppDI {
         )
 
         let cafeMenuViewModel = CafeMenuViewModel(fetchCafeMenuUseCase: suggestDependency.fetchCafeMenuUseCase)
-        let foodViewModel = FoodViewModel()
+        let foodViewModel = FoodViewModel(
+            fetchFoodUseCase: suggestDependency.fetchFoodUseCase
+        )
 
         let musicViewModel = MusicViewModel(
             fetchMusicUseCase: suggestDependency.fetchMuiscUseCase

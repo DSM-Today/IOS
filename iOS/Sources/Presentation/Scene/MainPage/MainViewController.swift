@@ -66,9 +66,6 @@ class MainViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-    }
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         viewAppear.accept(())

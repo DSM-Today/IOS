@@ -46,6 +46,7 @@ class EditProfileViewModel: ViewModel, Stepper {
             .asObservable()
             .flatMap { self.fetchProfileUseCase.excute() }
             .subscribe(onNext: {
+                self.imageDataString = $0.imageUrl.absoluteString
                 profileValue.accept($0)
             })
             .disposed(by: disposeBag)

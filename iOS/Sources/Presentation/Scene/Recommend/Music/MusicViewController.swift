@@ -17,6 +17,8 @@ class MusicViewController: UIViewController {
     private let situationLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
         $0.textColor = .black
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     private let musicView = UIView().then {
         $0.backgroundColor = .white
@@ -31,10 +33,14 @@ class MusicViewController: UIViewController {
     private let musicTitleLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .black)
         $0.textColor = .black
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     private let musicComposerLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 16, family: .bold)
         $0.textColor = .black
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     private let releaseDateLabel = UILabel().then {
         $0.text = "발매일 : "
@@ -132,6 +138,7 @@ extension MusicViewController {
         situationLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         musicView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(150)
@@ -146,10 +153,12 @@ extension MusicViewController {
         musicTitleLabel.snp.makeConstraints {
             $0.top.equalTo(musicImageView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         musicComposerLabel.snp.makeConstraints {
             $0.top.equalTo(musicTitleLabel.snp.bottom).offset(1)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)

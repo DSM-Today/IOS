@@ -43,6 +43,7 @@ class MyPageViewController: UIViewController {
     private let favoriteTableView = UITableView().then {
         $0.register(MyPageTableViewCell.self, forCellReuseIdentifier: MyPageTableViewCell.identifier)
         $0.rowHeight = 110
+        $0.backgroundColor = .gray1
     }
     private let logOutButton = UIButton(type: .system).then {
         $0.backgroundColor = .white

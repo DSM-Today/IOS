@@ -26,6 +26,8 @@ class MovieViewController: UIViewController {
     }
     private let movieText = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     private let explainButton = UIButton().then {
         $0.backgroundColor = .white
@@ -124,6 +126,7 @@ extension MovieViewController {
         movieText.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(movieImageView.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         explainButton.snp.makeConstraints {
             $0.height.equalTo(140)

@@ -96,6 +96,7 @@ extension NewsViewController {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(25)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
         newsImage.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(67)

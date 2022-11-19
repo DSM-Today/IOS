@@ -1,9 +1,9 @@
 import Foundation
 
 public struct Lucky: Equatable {
+    public let name: String
     public let imageUrl: URL
-    public let luckyType: String
-    public let start: Date
-    public let end: Date
+    public let startAt: Date
+    public let endAt: Date
     public let content: String
 }

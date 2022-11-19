@@ -130,19 +130,6 @@ class LottoViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-
-    private func setDemoData() {
-        numberLabel.text = "1038회차"
-        dateLabel.text = "2022.10.22"
-        moneyLabel.text = "2,868,856,209원"
-        firstNumberLabel.text = "26"
-        secondNumberLabel.text = "26"
-        thirdNumberLabel.text = "26"
-        fourthNumberLabel.text = "26"
-        fifthNumberLabel.text = "26"
-        sixthNumberLabel.text = "26"
-        seventhNumberLabel.text = "26"
-    }
 }
 
 // MARK: - Layout

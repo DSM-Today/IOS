@@ -50,11 +50,13 @@ extension OnboardingFlow {
     }
     private func navigateToTabsScreen() -> FlowContributors {
         let tabsFlow = TabsFlow()
+        let userProfileViewController = app.userProfileViewController
 
         Flows.use(tabsFlow, when: .created) { [weak self] root in
             root.modalPresentationStyle = .fullScreen
             root.modalTransitionStyle = .coverVertical
             self?.rootViewController.present(root, animated: true)
+            userProfileViewController.present(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(

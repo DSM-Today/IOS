@@ -4,6 +4,7 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class FortuneViewController: UIViewController {
 
@@ -52,8 +53,6 @@ class FortuneViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
-
-    // MARK: - Bind
     private func bind() {
         let input = FortuneViewModel.Input(viewAppear: viewAppear.asDriver(onErrorJustReturn: ()))
 
@@ -62,8 +61,8 @@ class FortuneViewController: UIViewController {
         output.luckyValue
             .subscribe(onNext: { [weak self] in
                 self?.fortuneImg.kf.setImage(with: $0.imageUrl)
-                self?.fortuneName.text = $0.luckyType
-                self?.birthDeadline.text = "\($0.start.toString(format: "MM.dd")) ~ \($0.end.toString(format: "MM.dd"))"
+                self?.fortuneName.text = $0.name
+                self?.birthDeadline.text = "\($0.startAt.toString(format: "MM.dd")) ~ \($0.endAt.toString(format: "MM.dd"))"
                 self?.explainTextView.text = $0.content
             })
             .disposed(by: disposeBag)

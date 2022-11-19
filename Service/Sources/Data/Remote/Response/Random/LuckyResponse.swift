@@ -2,26 +2,26 @@ import Foundation
 
 struct LuckyResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
+        case name
         case imagePath = "image_path"
-        case luckyType = "lucky_type"
-        case start = "start_at"
-        case end = "end_at"
+        case startAt = "start_at"
+        case endAt = "end_at"
         case content
     }
+    let name: String
     let imagePath: String
-    let luckyType: String
-    let start: String
-    let end: String
+    let startAt: String
+    let endAt: String
     let content: String
 }
 
 extension LuckyResponse {
     func toDomain() -> Lucky {
         return .init(
+            name: name,
             imageUrl: URL(string: imagePath)!,
-            luckyType: luckyType,
-            start: start.toDate(format: "yyyy-MM-dd"),
-            end: end.toDate(format: "yyyy-MM-dd"),
+            startAt: startAt.toDate(format: "MM-dd"),
+            endAt: endAt.toDate(format: "MM-dd"),
             content: content
         )
     }

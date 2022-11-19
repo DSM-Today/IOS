@@ -28,7 +28,12 @@ extension ImageAPI: TodayAPI {
         switch self {
         case .postImage(let image):
             var multiformData = [MultipartFormData]()
-            multiformData.append(.init(provider: .data(image), name: "image/png", mimeType: "image.png"))
+            multiformData.append(.init(
+                provider: .data(image),
+                name: "file",
+                fileName: "file.jpg",
+                mimeType: "file/jpg"
+            ))
             return .uploadMultipart(multiformData)
         }
     }

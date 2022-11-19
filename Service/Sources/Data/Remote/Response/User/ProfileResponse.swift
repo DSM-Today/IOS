@@ -4,7 +4,7 @@ struct ProfileResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
         case imagePath = "image_path"
         case name
-        case introduce
+        case introduce = "introduction"
         case birthDay = "birth_day"
     }
     let imagePath: String

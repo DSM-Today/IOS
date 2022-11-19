@@ -2,7 +2,7 @@ import Foundation
 
 import RxSwift
 
-public struct SuggestDependency {
+public struct SuggestServiceDependency {
     public let fetchSubjectSuggestListUseCase: FetchSubjectSuggestListUseCase
     public let fetchTodoListUseCase: FetchTodoListUseCase
     public let fetchBookUseCase: FetchBookUseCase
@@ -25,9 +25,9 @@ public struct SuggestDependency {
     public let deleteBookmarkCafeMenuUseCase: DeleteBookmarkCafeMenuUseCase
 }
 
-public extension SuggestDependency {
+public extension SuggestServiceDependency {
 // swiftlint:disable function_body_length
-    static func resolve() -> SuggestDependency {
+    static func resolve() -> SuggestServiceDependency {
 
         let remoteDataSource = SuggestRemoteDataSourceImpl()
         let repository = SuggestRepositoryImpl(remoteDataSource: remoteDataSource)
@@ -93,7 +93,7 @@ public extension SuggestDependency {
             repository: repository
         )
 
-        return SuggestDependency(
+        return SuggestServiceDependency(
             fetchSubjectSuggestListUseCase: fetchSubjectSuggestListUseCase,
             fetchTodoListUseCase: fetchTodoListUseCase,
             fetchBookUseCase: fetchBookUseCase,

@@ -10,7 +10,7 @@ public class UserRepositoryImpl: UserRepository {
         self.remoteDataSource = remoteDataSource
     }
 
-    func fetchBookmarkList() -> Observable<[Subject]> {
+    func fetchBookmarkList() -> Observable<[BookmarkSubject]> {
         return remoteDataSource.fetchBookmarkList()
             .asObservable()
     }

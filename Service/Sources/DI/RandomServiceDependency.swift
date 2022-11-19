@@ -2,7 +2,7 @@ import Foundation
 
 import RxSwift
 
-public struct RandomDependency {
+public struct RandomServiceDependency {
     public let fetchSubjectRandomListUseCase: FetchSubjectRandomListUseCase
     public let fetchFlowerUseCase: FetchFlowerUseCase
     public let bookmarkFlowerUseCase: BookmarkFlowerUseCase
@@ -23,10 +23,10 @@ public struct RandomDependency {
     public let deleteBookmarkCharacterUseCase: DeleteBookmarkCharacterUseCase
 }
 
-public extension RandomDependency {
+public extension RandomServiceDependency {
 
     // swiftlint:disable function_body_length
-    static func resolve() -> RandomDependency {
+    static func resolve() -> RandomServiceDependency {
 
         let remoteDataSource = RandomRemoteDataSourceImpl()
         let repository = RandomRepositoryImpl(remoteDataSource: remoteDataSource)
@@ -86,7 +86,7 @@ public extension RandomDependency {
             repository: repository
         )
 
-        return RandomDependency(
+        return RandomServiceDependency(
             fetchSubjectRandomListUseCase: fetchSubjectRandomListUseCase,
             fetchFlowerUseCase: fetchFlowerUseCase,
             bookmarkFlowerUseCase: bookmarkFlowerUseCase,

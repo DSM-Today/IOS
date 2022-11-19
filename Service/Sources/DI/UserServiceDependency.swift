@@ -2,16 +2,16 @@ import Foundation
 
 import RxSwift
 
-public struct UserDependency {
+public struct UserServiceDependency {
     public let fetchBookmarkListUseCase: FetchBookmarkListUseCase
     public let editProfileUseCase: EditProfileUseCase
     public let fetchProfileUseCase: FetchProfileUseCase
     public let initProfileUseCase: InitProfileUseCase
 }
 
-public extension UserDependency {
+public extension UserServiceDependency {
 
-    static func resolve() -> UserDependency {
+    static func resolve() -> UserServiceDependency {
 
         let remoteDataSource = UserRemoteDataSourceImpl()
         let repository = UserRepositoryImpl(remoteDataSource: remoteDataSource)
@@ -29,7 +29,7 @@ public extension UserDependency {
             repository: repository
         )
 
-        return UserDependency(
+        return UserServiceDependency(
             fetchBookmarkListUseCase: fetchBookmarkListUseCase,
             editProfileUseCase: editProfileUseCase,
             fetchProfileUseCase: fetchProfileUseCase,

@@ -4,7 +4,7 @@ import RxSwift
 
 final class UserRemoteDataSourceImpl: RemoteDataSource<UserAPI>, UserRemoteDataSource {
 
-    func fetchBookmarkList() -> Single<[Subject]> {
+    func fetchBookmarkList() -> Single<[BookmarkSubject]> {
         return request(.fetchBookmarkList)
             .map(BookmarkListResponse.self)
             .map { $0.toDomain() }

@@ -2,7 +2,7 @@ import Foundation
 
 import RxSwift
 
-public struct InformationDependency {
+public struct InformationServiceDependency {
     public let fetchSubjectInformationListUseCase: FetchSubjectInformationListuseCase
     public let fetchNewsUseCase: FetchNewsUseCase
     public let fetchLottoUseCase: FetchLottoUseCase
@@ -12,9 +12,9 @@ public struct InformationDependency {
     public let deleteBookmarkLottoUseCase: DeleteBookmarkLottoUseCase
 }
 
-public extension InformationDependency {
+public extension InformationServiceDependency {
 
-    static func resolve() -> InformationDependency {
+    static func resolve() -> InformationServiceDependency {
         let remoteDataSource = InformationRemoteDataSourceImpl()
         let repository = InformationRepositoryImpl(remoteDataSource: remoteDataSource)
 
@@ -40,7 +40,7 @@ public extension InformationDependency {
             repository: repository
         )
 
-        return InformationDependency(
+        return InformationServiceDependency(
             fetchSubjectInformationListUseCase: fetchSubjectInformatinoListUseCase,
             fetchNewsUseCase: fetchNewsUseCase,
             fetchLottoUseCase: fetchLottoUseCase,

@@ -1,12 +1,12 @@
 import Foundation
 
-public struct AuthDependency {
+public struct AuthServiceDependency {
     public let fetchClientIDUseCase: FetchClientIDUseCase
     public let googleLoginUseCase: GoogleLoginUseCase
     public let refreshTokenUseCase: RefreshTokenUseCase
 }
 
-public extension AuthDependency {
+public extension AuthServiceDependency {
 
     static func resolve() -> Self {
 
@@ -23,7 +23,7 @@ public extension AuthDependency {
             repository: repostiroy
         )
 
-        return AuthDependency(
+        return AuthServiceDependency(
             fetchClientIDUseCase: fetchClientIDUseCase,
             googleLoginUseCase: googleLoginUseCase,
             refreshTokenUseCase: refreshTokenUseCase

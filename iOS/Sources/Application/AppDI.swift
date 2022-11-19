@@ -32,11 +32,12 @@ extension AppDI {
     // swiftlint:disable function_body_length
     static func resolve() -> AppDI {
         // MARK: Dependency
-        let authDependency = AuthDependency.resolve()
-        let userDependency = UserDependency.resolve()
-        let suggestDependency = SuggestDependency.resolve()
-        let randomDependency = RandomDependency.resolve()
-        let informationDependency = InformationDependency.resolve()
+        let authDependency = AuthServiceDependency.resolve()
+        let userDependency = UserServiceDependency.resolve()
+        let suggestDependency = SuggestServiceDependency.resolve()
+        let randomDependency = RandomServiceDependency.resolve()
+        let informationDependency = InformationServiceDependency.resolve()
+        let imageDependency = ImageServiceDependency.resolve()
 
         // MARK: ViewModel
         let onboardingViewModel = OnboardingViewModel(
@@ -59,7 +60,10 @@ extension AppDI {
             fetchTodoListUseCase: suggestDependency.fetchTodoListUseCase
         )
         let chatViewModel = ChatViewModel()
-        let myPageViewModel = MyPageViewModel()
+        let myPageViewModel = MyPageViewModel(
+            fetchProfileUseCase: userDependency.fetchProfileUseCase,
+            fetchBookmarkListUseCase: userDependency.fetchBookmarkListUseCase
+        )
         let newsViewModel = NewsViewModel(fetchNewsUseCase: informationDependency.fetchNewsUseCase)
         let lottoViewModel = LottoViewModel(fetchLottoUseCase: informationDependency.fetchLottoUseCase)
 
@@ -96,6 +100,11 @@ extension AppDI {
         let webtoonViewModel = WebtoonViewModel(
             fetchWebtoonUseCase: suggestDependency.fetchWebtoonUseCase
         )
+        let editProfileViewModel = EditProfileViewModel(
+            fetchProfileUseCase: userDependency.fetchProfileUseCase,
+            editProfileUseCase: userDependency.editProfileUseCase,
+            postImageUseCase: imageDependency.postImageUseCase
+        )
 
         // MARK: ViewController
         let onboardingViewController = OnboardingViewController().then {
@@ -112,7 +121,9 @@ extension AppDI {
             $0.viewModel = recommendCategoryViewModel
         }
 
-        let editProfileViewController = EditProfileViewController()
+        let editProfileViewController = EditProfileViewController().then {
+            $0.viewModel = editProfileViewModel
+        }
         let userProfileViewController = UserProfileViewController().then {
             $0.viewModel = userProfileViewModel
         }

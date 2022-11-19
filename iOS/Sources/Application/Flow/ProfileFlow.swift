@@ -176,11 +176,7 @@ extension ProfileFlow {
         ))
     }
     private func navigateToBackScene() -> FlowContributors {
-        let myPageViewController = app.myPageViewController
         self.rootViewController.popViewController(animated: true)
-        return .one(flowContributor: .contribute(
-            withNextPresentable: myPageViewController,
-            withNextStepper: myPageViewController.viewModel
-        ))
+        return .none
     }
 }

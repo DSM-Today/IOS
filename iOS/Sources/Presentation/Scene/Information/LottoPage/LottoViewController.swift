@@ -14,7 +14,7 @@ class LottoViewController: UIViewController {
     private let viewAppear = PublishRelay<Void>()
 
     // MARK: - UI
-    private let todayEatLabel = UILabel().then {
+    private let todayLottoLabel = UILabel().then {
         $0.text = "이번 주 로또 번호는?"
         $0.font = .notoSansFont(ofSize: 22, family: .bold)
     }
@@ -38,6 +38,10 @@ class LottoViewController: UIViewController {
     }
     private let dateLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .regular)
+    }
+    private let moneyTitleLabel = UILabel().then {
+        $0.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.text = "당첨금액"
     }
     private let moneyLabel = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
@@ -135,8 +139,9 @@ class LottoViewController: UIViewController {
 // MARK: - Layout
 extension LottoViewController {
     private func addSubviews() {
-        [todayEatLabel,
+        [todayLottoLabel,
          lottoView,
+         moneyTitleLabel,
          moneyLabel
         ].forEach { view.addSubview($0) }
 
@@ -154,12 +159,12 @@ extension LottoViewController {
     }
     // swiftlint:disable function_body_length
     private func makeSubviewConstraints() {
-        todayEatLabel.snp.makeConstraints {
+        todayLottoLabel.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(29)
             $0.centerX.equalToSuperview()
         }
         lottoView.snp.makeConstraints {
-            $0.top.equalTo(todayEatLabel.snp.bottom).offset(38)
+            $0.top.equalTo(todayLottoLabel.snp.bottom).offset(38)
             $0.leading.trailing.equalToSuperview().inset(19)
             $0.height.equalTo(260)
         }
@@ -216,8 +221,12 @@ extension LottoViewController {
             $0.top.equalTo(numberLabel.snp.bottom).offset(1)
             $0.centerX.equalToSuperview()
         }
+        moneyTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(lottoView.snp.bottom).offset(80)
+            $0.centerX.equalToSuperview()
+        }
         moneyLabel.snp.makeConstraints {
-            $0.top.equalTo(lottoView.snp.bottom).offset(50)
+            $0.top.equalTo(moneyTitleLabel.snp.bottom)
             $0.centerX.equalToSuperview()
         }
     }

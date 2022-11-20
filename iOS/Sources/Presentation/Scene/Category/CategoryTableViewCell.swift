@@ -2,10 +2,12 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
 import Service
 
 class CategoryTableViewCell: UITableViewCell {
 
+    var disposeBag = DisposeBag()
     // MARK: - UI
     static let identifier = "cell"
 
@@ -24,7 +26,8 @@ class CategoryTableViewCell: UITableViewCell {
         $0.setTitle("즐겨찾기", for: .normal)
         $0.setTitleColor(.blue9, for: .normal)
         $0.titleLabel?.font = .notoSansFont(ofSize: 8, family: .regular)
-        $0.backgroundColor = .blue8
+        $0.setBackgroundColor(.gray1, for: .normal)
+        $0.setBackgroundColor(.blue8, for: .selected)
         $0.layer.cornerRadius = 8
     }
 
@@ -54,6 +57,7 @@ class CategoryTableViewCell: UITableViewCell {
     func setData(_ data: Subject) {
         self.categoryLabel.text = data.title
         self.bookMarkTitle.text = "즐겨찾기 한 사람: \(data.amount)"
+        self.bookMarkButton.isSelected = data.isMarked
     }
 }
 

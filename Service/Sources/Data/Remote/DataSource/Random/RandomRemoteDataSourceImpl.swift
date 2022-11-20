@@ -34,72 +34,10 @@ final class RandomRemoteDataSourceImpl: RemoteDataSource<RandomAPI>, RandomRemot
             .map { $0.toDomain() }
     }
 
-    func completeQuiz(answer: String) -> Single<CompleteQuiz> {
-        return request(.completeQuiz(answer))
-            .map(CompleteQuizResponse.self)
-            .map { $0.toDomain() }
-    }
-
-    func fetchQuizAnswer() -> Single<QuizAnswer> {
-        return request(.fetchQuizAnswer)
-            .map(QuizAnswerResponse.self)
-            .map { $0.toDomain() }
-    }
-
     func fetchIdiom() -> Single<Idiom> {
         return request(.fetchIdiom)
             .map(IdiomResponse.self)
             .map { $0.toDomain() }
-    }
-
-    func bookmarkFlower() -> Completable {
-        return request(.bookmarkFlower)
-            .asCompletable()
-    }
-
-    func bookmarkLucky() -> Completable {
-        return request(.bookmarkLucky)
-            .asCompletable()
-    }
-
-    func bookmarkQuiz() -> Completable {
-        return request(.bookmarkQuiz)
-            .asCompletable()
-    }
-
-    func bookmarkIdiom() -> Completable {
-        return request(.bookmarkIdiom)
-            .asCompletable()
-    }
-
-    func bookmarkCharacter() -> Completable {
-        return request(.bookmarkCharacter)
-            .asCompletable()
-    }
-
-    func deleteBookmarkFlower() -> Completable {
-        return request(.deleteBookmarkFlower)
-            .asCompletable()
-    }
-
-    func deleteBookmarkLucky() -> Completable {
-        return request(.deleteBookmarkLucky)
-            .asCompletable()
-    }
-
-    func deleteBookmarkQuiz() -> Completable {
-        return request(.deleteBookmarkQuiz)
-            .asCompletable()
-    }
-
-    func deleteBookmarkIdiom() -> Completable {
-        return request(.deleteBookmarkIdiom)
-            .asCompletable()
-    }
-
-    func deleteBookmarkCharacter() -> Completable {
-        return request(.deleteBookmarkCharacter)
-            .asCompletable()
     }
 
 }

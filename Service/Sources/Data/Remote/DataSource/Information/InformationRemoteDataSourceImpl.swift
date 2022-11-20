@@ -22,23 +22,4 @@ final class InformationRemoteDataSourceImpl: RemoteDataSource<InformationAPI>, I
             .map { $0.toDomain() }
     }
 
-    func bookmarkNews() -> Completable {
-        return request(.bookmarkNews)
-            .asCompletable()
-    }
-
-    func bookmarkLotto() -> Completable {
-        return request(.bookmarkLotto)
-            .asCompletable()
-    }
-
-    func deleteBookmarkNews() -> Completable {
-        return request(.deleteBookmarkNews)
-            .asCompletable()
-    }
-
-    func deleteBookmarkLotto() -> Completable {
-        return request(.deleteBookmarkLotto)
-            .asCompletable()
-    }
 }

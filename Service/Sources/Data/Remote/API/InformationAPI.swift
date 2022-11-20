@@ -6,10 +6,6 @@ enum InformationAPI {
     case fetchInformationList
     case fetchNews
     case fetchLotto
-    case bookmarkNews
-    case bookmarkLotto
-    case deleteBookmarkNews
-    case deleteBookmarkLotto
 }
 
 extension InformationAPI: TodayAPI {
@@ -22,7 +18,7 @@ extension InformationAPI: TodayAPI {
         switch self {
         case .fetchInformationList:
             return "/list"
-        case .fetchNews, .bookmarkNews, .deleteBookmarkNews:
+        case .fetchNews:
             return "/news"
         default:
             return "/lotto"
@@ -30,14 +26,7 @@ extension InformationAPI: TodayAPI {
     }
 
     var method: Moya.Method {
-        switch self {
-        case .fetchInformationList, .fetchNews, .fetchLotto:
-            return .get
-        case .bookmarkNews, .bookmarkLotto:
-            return .post
-        default:
-            return .delete
-        }
+        return .get
     }
 
     var erroerMapper: [Int: TodayError]? {

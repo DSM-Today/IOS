@@ -26,6 +26,7 @@ class CategoryTableViewCell: UITableViewCell {
         $0.setTitle("즐겨찾기", for: .normal)
         $0.setTitleColor(.blue9, for: .normal)
         $0.titleLabel?.font = .notoSansFont(ofSize: 8, family: .regular)
+        $0.layer.masksToBounds = true
         $0.setBackgroundColor(.gray1, for: .normal)
         $0.setBackgroundColor(.blue8, for: .selected)
         $0.layer.cornerRadius = 8

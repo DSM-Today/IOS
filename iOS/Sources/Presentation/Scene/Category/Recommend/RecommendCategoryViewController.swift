@@ -12,6 +12,7 @@ class RecommendCategoryViewController: UIViewController {
 
     private var disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
+    private let bookmark = PublishRelay<Int>()
 
     // MARK: - UI
     private let categoryTableView = UITableView().then {
@@ -42,7 +43,8 @@ class RecommendCategoryViewController: UIViewController {
     private func bind() {
         let input = RecommendCategoryViewModel.Input(
             viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
-            index: categoryTableView.rx.itemSelected.asDriver()
+            index: categoryTableView.rx.itemSelected.asDriver(),
+            bookmark: bookmark.asDriver(onErrorJustReturn: 0)
         )
 
         let output = viewModel.transform(input)
@@ -50,11 +52,25 @@ class RecommendCategoryViewController: UIViewController {
         output.subjectList.bind(to: categoryTableView.rx.items(
             cellIdentifier: "cell",
             cellType: CategoryTableViewCell.self
-        )) { _, items, cell in
+        )) { row, items, cell in
             cell.setData(items)
+            var amount = items.amount
+
+            cell.bookMarkButton.rx.tap
+                .subscribe(onNext: {
+                    self.bookmark.accept(row)
+                    cell.bookMarkButton.isSelected.toggle()
+                    if cell.bookMarkButton.isSelected {
+                        amount += 1
+                        cell.bookMarkTitle.text = "즐겨찾기 한 사람: \(amount)"
+                    } else {
+                        amount -= 1
+                        cell.bookMarkTitle.text = "즐겨찾기 한 사람: \(amount)"
+                    }
+                })
+                .disposed(by: cell.disposeBag)
         }
         .disposed(by: disposeBag)
-
     }
 }
 

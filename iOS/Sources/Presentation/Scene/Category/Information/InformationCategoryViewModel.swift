@@ -8,9 +8,17 @@ import Service
 class InformationCategoryViewModel: ViewModel, Stepper {
 
     private let fetchSubjectInformationListUseCase: FetchSubjectInformationListuseCase
+    private let postBookmarkUseCase: PostBookmarkUseCase
+    private let deleteBookmarkUseCase: DeleteBookmarkUseCase
 
-    init(fetchSubjectInformationListUseCase: FetchSubjectInformationListuseCase) {
+    init(
+        fetchSubjectInformationListUseCase: FetchSubjectInformationListuseCase,
+        postBookmarkUseCase: PostBookmarkUseCase,
+        deleteBookmarkUseCase: DeleteBookmarkUseCase
+    ) {
         self.fetchSubjectInformationListUseCase = fetchSubjectInformationListUseCase
+        self.postBookmarkUseCase = postBookmarkUseCase
+        self.deleteBookmarkUseCase = deleteBookmarkUseCase
     }
 
     var steps = PublishRelay<Step>()
@@ -19,6 +27,7 @@ class InformationCategoryViewModel: ViewModel, Stepper {
     struct Input {
         let viewAppear: Driver<Void>
         let index: Driver<IndexPath>
+        let bookmark: Driver<Int>
     }
 
     struct Output {
@@ -43,6 +52,28 @@ class InformationCategoryViewModel: ViewModel, Stepper {
                 return value[index.row].title.toTodayStep()
             }
             .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.bookmark
+            .asObservable()
+            .flatMap { row in
+                let subject = subjectList.value[row]
+                if subject.isMarked {
+                    return self.deleteBookmarkUseCase.excute(
+                        name: subject.name,
+                        title: subject.title,
+                        kind: "INFORMATION"
+                    )
+                } else {
+                    return self.postBookmarkUseCase.excute(
+                        name: subject.name,
+                        title: subject.title,
+                        kind: "INFORMATION"
+                    )
+                }
+            }
+            .subscribe(onNext: { _ in
+            })
             .disposed(by: disposeBag)
 
         return Output(subjectList: subjectList)

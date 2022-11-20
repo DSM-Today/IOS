@@ -8,9 +8,17 @@ import Service
 class RecommendCategoryViewModel: ViewModel, Stepper {
 
     private let fetchSubjectSuggestListUseCase: FetchSubjectSuggestListUseCase
+    private let postBookmarkUseCase: PostBookmarkUseCase
+    private let deleteBookmarkUseCase: DeleteBookmarkUseCase
 
-    init(fetchSubjectSuggestListUseCase: FetchSubjectSuggestListUseCase) {
+    init(
+        fetchSubjectSuggestListUseCase: FetchSubjectSuggestListUseCase,
+        postBookmarkUseCase: PostBookmarkUseCase,
+        deleteBookmarkUseCase: DeleteBookmarkUseCase
+    ) {
         self.fetchSubjectSuggestListUseCase = fetchSubjectSuggestListUseCase
+        self.postBookmarkUseCase = postBookmarkUseCase
+        self.deleteBookmarkUseCase = deleteBookmarkUseCase
     }
 
     var steps = PublishRelay<Step>()
@@ -19,6 +27,7 @@ class RecommendCategoryViewModel: ViewModel, Stepper {
     struct Input {
         let viewAppear: Driver<Void>
         let index: Driver<IndexPath>
+        let bookmark: Driver<Int>
     }
 
     struct Output {
@@ -45,6 +54,28 @@ class RecommendCategoryViewModel: ViewModel, Stepper {
                 return value[index.row].title.toTodayStep()
             }
             .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.bookmark
+            .asObservable()
+            .flatMap { row in
+                let subject = subjectList.value[row]
+                if subject.isMarked {
+                    return self.deleteBookmarkUseCase.excute(
+                        name: subject.name,
+                        title: subject.title,
+                        kind: "SUGGEST"
+                    )
+                } else {
+                    return self.postBookmarkUseCase.excute(
+                        name: subject.name,
+                        title: subject.title,
+                        kind: "SUGGEST"
+                    )
+                }
+            }
+            .subscribe(onNext: { _ in
+            })
             .disposed(by: disposeBag)
 
         return Output(subjectList: subjectList)

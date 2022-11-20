@@ -41,6 +41,11 @@ let depencies = Dependencies(
         .remote(
             url: "https://github.com/onevcat/Kingfisher.git",
             requirement: .upToNextMajor(from: "7.4.1")
+        ),
+        // Socket.io
+        .remote(
+            url: "https://github.com/socketio/socket.io-client-swift.git",
+            requirement: .upToNextMajor(from: "16.0.1")
         )
     ]),
     platforms: [.iOS]

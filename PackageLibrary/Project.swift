@@ -18,6 +18,7 @@ let project = Project.dynamicFramework(
         .SPM.GoogleSignIn,
         .SPM.RxFlow,
         .SPM.RxGesture,
-        .SPM.Kingfisher
+        .SPM.Kingfisher,
+        .SPM.SocketIO
     ]
 )

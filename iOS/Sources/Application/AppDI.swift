@@ -38,6 +38,7 @@ extension AppDI {
         let randomDependency = RandomServiceDependency.resolve()
         let informationDependency = InformationServiceDependency.resolve()
         let imageDependency = ImageServiceDependency.resolve()
+        let bookmarkDependency = BookmarkServiceDependency.resolve()
 
         // MARK: ViewModel
         let onboardingViewModel = OnboardingViewModel(
@@ -48,13 +49,19 @@ extension AppDI {
             initProfileStepUseCase: userDependency.initProfileUseCase
         )
         let informationCategoryViewModel = InformationCategoryViewModel(
-            fetchSubjectInformationListUseCase: informationDependency.fetchSubjectInformationListUseCase
+            fetchSubjectInformationListUseCase: informationDependency.fetchSubjectInformationListUseCase,
+            postBookmarkUseCase: bookmarkDependency.postBookmarkUseCase,
+            deleteBookmarkUseCase: bookmarkDependency.deleteBookmarkUseCase
         )
         let randomCategoryViewModel = RandomCategoryViewModel(
-            fetchSubjectRandomListUseCase: randomDependency.fetchSubjectRandomListUseCase
+            fetchSubjectRandomListUseCase: randomDependency.fetchSubjectRandomListUseCase,
+            postBookmarkUseCase: bookmarkDependency.postBookmarkUseCase,
+            deleteBookmarkUseCase: bookmarkDependency.deleteBookmarkUseCase
         )
         let recommendCategoryViewModel = RecommendCategoryViewModel(
-            fetchSubjectSuggestListUseCase: suggestDependency.fetchSubjectSuggestListUseCase
+            fetchSubjectSuggestListUseCase: suggestDependency.fetchSubjectSuggestListUseCase,
+            postBookmarkUseCase: bookmarkDependency.postBookmarkUseCase,
+            deleteBookmarkUseCase: bookmarkDependency.deleteBookmarkUseCase
         )
         let mainViewModel = MainViewModel(
             fetchTodoListUseCase: suggestDependency.fetchTodoListUseCase

@@ -207,8 +207,6 @@ extension EditProfileViewController {
         birthPicker.snp.makeConstraints {
             $0.centerY.equalTo(birthText)
             $0.leading.equalTo(nicknameTextField.snp.leading)
-            $0.height.equalTo(32)
-            $0.width.equalTo(100)
         }
         completeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()

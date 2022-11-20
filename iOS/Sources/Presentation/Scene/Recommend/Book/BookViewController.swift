@@ -27,6 +27,8 @@ class BookViewController: UIViewController {
     }
     private let bookNameText = UILabel().then {
         $0.font = .notoSansFont(ofSize: 20, family: .bold)
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     private let authorText = UILabel().then {
         $0.font = .notoSansFont(ofSize: 19, family: .regular)
@@ -153,6 +155,7 @@ extension BookViewController {
         }
         bookNameText.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         authorText.snp.makeConstraints {
             $0.top.equalTo(bookNameText.snp.bottom)
@@ -160,7 +163,7 @@ extension BookViewController {
         }
         starImage.snp.makeConstraints {
             $0.top.equalTo(authorText.snp.bottom).offset(111)
-            $0.leading.equalToSuperview().inset(168)
+            $0.leading.equalToSuperview().inset(150)
             $0.width.equalTo(30)
             $0.height.equalTo(25)
         }

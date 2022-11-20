@@ -23,20 +23,4 @@ class InformationRepositoryImpl: InformationRepository {
         return remoteDataSource.fetchLotto()
     }
 
-    func bookmarkNews() -> Completable {
-        return remoteDataSource.bookmarkNews()
-    }
-
-    func bookmarkLotto() -> Completable {
-        return remoteDataSource.bookmarkLotto()
-    }
-
-    func deleteBookmarkNews() -> Completable {
-        return remoteDataSource.deleteBookmarkNews()
-    }
-
-    func deleteBookmarkLotto() -> Completable {
-        return remoteDataSource.deleteBookmarkLotto()
-    }
-
 }

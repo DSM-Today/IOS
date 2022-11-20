@@ -6,23 +6,11 @@ enum SuggestAPI {
     case fetchSuggestList
     case fetchTodoList
     case fetchBook
-    case bookmarkBook
-    case deleteBookmarkBook
     case fetchMovie
-    case bookmarkMovie
-    case deleteBookmarkMovie
     case fetchMusic
-    case bookmarkMusic
-    case deleteBookmarkMusic
     case fetchWebtoon
-    case bookmarkWebtoon
-    case deleteBookmarkWebtoon
     case fetchFood
-    case bookmarkFood
-    case deleteBookmarkFood
     case fetchCafeMenu
-    case bookmarkCafeMenu
-    case deleteBookmarkCafeMenu
 }
 
 extension SuggestAPI: TodayAPI {
@@ -37,15 +25,15 @@ extension SuggestAPI: TodayAPI {
             return "/list"
         case .fetchTodoList:
             return "/todo/list"
-        case .fetchFood, .bookmarkFood, .deleteBookmarkFood:
+        case .fetchFood:
             return "/food"
-        case .fetchMovie, .bookmarkMovie, .deleteBookmarkMovie:
+        case .fetchMovie:
             return "/movie"
-        case .fetchMusic, .bookmarkMusic, .deleteBookmarkMusic:
+        case .fetchMusic:
             return "/music"
-        case .fetchWebtoon, .bookmarkWebtoon, .deleteBookmarkWebtoon:
+        case .fetchWebtoon:
             return "/webtoon"
-        case .fetchCafeMenu, .bookmarkCafeMenu, .deleteBookmarkCafeMenu:
+        case .fetchCafeMenu:
             return "/menu"
         default:
             return "/book"
@@ -53,16 +41,7 @@ extension SuggestAPI: TodayAPI {
     }
 
     var method: Moya.Method {
-        switch self {
-        case .bookmarkBook, .bookmarkMusic,
-                .bookmarkMovie, .bookmarkFood, .bookmarkWebtoon, .bookmarkCafeMenu:
-            return .post
-        case .deleteBookmarkBook, .deleteBookmarkMusic, .deleteBookmarkMovie,
-                .deleteBookmarkWebtoon, .deleteBookmarkFood, .deleteBookmarkCafeMenu:
-            return .delete
-        default:
-            return .get
-        }
+        return .get
     }
 
     var erroerMapper: [Int: TodayError]? {

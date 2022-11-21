@@ -66,10 +66,12 @@ class MainViewController: UIViewController {
         addSubviews()
         makeSubviewConstraints()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
+    override func viewWillAppear(_ animated: Bool) {
         viewAppear.accept(())
         setNavigation()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
     }
 
     // MARK: - Navigation

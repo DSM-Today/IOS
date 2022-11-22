@@ -9,7 +9,7 @@ class ChatTextField: UIView {
 
     let chatTextField = UITextField().then {
         $0.placeholder = "내용을 입력하세요."
-        $0.font = .notoSansFont(ofSize: 18, family: .regular)
+        $0.font = .notoSansFont(ofSize: 12, family: .regular)
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 0.5
         $0.layer.borderColor = UIColor.gray2.cgColor
@@ -38,9 +38,9 @@ extension ChatTextField {
     }
     private func makeSubviewConstraints() {
         chatTextField.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(11)
+            $0.leading.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(6)
-            $0.height.equalTo(45)
+            $0.height.equalTo(38)
         }
         sendButton.snp.makeConstraints {
             $0.centerY.equalTo(chatTextField)

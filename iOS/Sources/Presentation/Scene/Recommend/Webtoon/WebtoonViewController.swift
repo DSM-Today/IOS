@@ -59,7 +59,7 @@ class WebtoonViewController: UIViewController {
         $0.setTitle("웹툰 보러가기", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = .notoSansFont(ofSize: 20, family: .medium)
-        $0.layer.cornerRadius = 41
+        $0.layer.cornerRadius = 30
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.backgroundColor = .blue5
     }
@@ -153,13 +153,13 @@ extension WebtoonViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         contentTextView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
-            $0.leading.trailing.equalToSuperview().inset(54)
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(40)
             $0.bottom.equalToSuperview()
         }
         moveWebtoonButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(85)
+            $0.height.equalTo(65)
         }
     }
 }

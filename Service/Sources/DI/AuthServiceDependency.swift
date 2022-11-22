@@ -4,6 +4,7 @@ public struct AuthServiceDependency {
     public let fetchClientIDUseCase: FetchClientIDUseCase
     public let googleLoginUseCase: GoogleLoginUseCase
     public let refreshTokenUseCase: RefreshTokenUseCase
+    public let logoutUseCase: LogOutUseCase
 }
 
 public extension AuthServiceDependency {
@@ -22,11 +23,15 @@ public extension AuthServiceDependency {
         let refreshTokenUseCase = RefreshTokenUseCase(
             repository: repostiroy
         )
+        let logoutUseCase = LogOutUseCase(
+            repository: repostiroy
+        )
 
         return AuthServiceDependency(
             fetchClientIDUseCase: fetchClientIDUseCase,
             googleLoginUseCase: googleLoginUseCase,
-            refreshTokenUseCase: refreshTokenUseCase
+            refreshTokenUseCase: refreshTokenUseCase,
+            logoutUseCase: logoutUseCase
         )
     }
 }

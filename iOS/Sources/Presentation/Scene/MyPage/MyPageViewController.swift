@@ -12,6 +12,7 @@ class MyPageViewController: UIViewController {
 
     private var disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
+    private let logOutButtonDidTap = PublishRelay<Void>()
 
     // MARK: - UI
     private let profileImageView = UIImageView().then {
@@ -58,6 +59,7 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        setButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         setNavigation("마이페이지")
@@ -81,7 +83,8 @@ class MyPageViewController: UIViewController {
         let input = MyPageViewModel.Input(
             viewAppear: viewAppear.asDriver(onErrorJustReturn: ()),
             moveToEditProfile: editProfileButton.rx.tap.asDriver(),
-            index: favoriteTableView.rx.itemSelected.asDriver()
+            index: favoriteTableView.rx.itemSelected.asDriver(),
+            logoutButtonDidTap: logOutButtonDidTap.asDriver(onErrorJustReturn: ())
         )
 
         let output = viewModel.transform(input)
@@ -102,6 +105,16 @@ class MyPageViewController: UIViewController {
             cell.setData(items)
         }
         .disposed(by: disposeBag)
+    }
+    // MARK: - Button
+    private func setButton() {
+        logOutButton.rx.tap
+            .subscribe(onNext: {
+                self.alert(title: "로그아웃 하시겠습니까?") { _ in
+                    self.logOutButtonDidTap.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -151,8 +164,7 @@ extension MyPageViewController {
             $0.bottom.equalToSuperview()
         }
         logOutButton.snp.makeConstraints {
-            $0.bottomMargin.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.snp.bottomMargin)
             $0.height.equalTo(55)
             $0.leading.trailing.equalToSuperview()
         }

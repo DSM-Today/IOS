@@ -9,13 +9,16 @@ class MyPageViewModel: ViewModel, Stepper {
 
     private let fetchProfileUseCase: FetchProfileUseCase
     private let fetchBookmarkListUseCase: FetchBookmarkListUseCase
+    private let logoutUseCase: LogOutUseCase
 
     init(
         fetchProfileUseCase: FetchProfileUseCase,
-        fetchBookmarkListUseCase: FetchBookmarkListUseCase
+        fetchBookmarkListUseCase: FetchBookmarkListUseCase,
+        logoutUseCase: LogOutUseCase
     ) {
         self.fetchProfileUseCase = fetchProfileUseCase
         self.fetchBookmarkListUseCase = fetchBookmarkListUseCase
+        self.logoutUseCase = logoutUseCase
     }
 
     var steps = PublishRelay<Step>()
@@ -25,6 +28,7 @@ class MyPageViewModel: ViewModel, Stepper {
         let viewAppear: Driver<Void>
         let moveToEditProfile: Driver<Void>
         let index: Driver<IndexPath>
+        let logoutButtonDidTap: Driver<Void>
     }
 
     struct Output {
@@ -63,6 +67,15 @@ class MyPageViewModel: ViewModel, Stepper {
             .map {
                 let value = bookmarkList.value[$0.row]
                 return value.title.toTodayStep()
+            }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.logoutButtonDidTap
+            .asObservable()
+            .flatMap {
+                self.logoutUseCase.excute()
+                    .andThen(Single.just(TodayStep.onboarindIsRequired))
             }
             .bind(to: steps)
             .disposed(by: disposeBag)

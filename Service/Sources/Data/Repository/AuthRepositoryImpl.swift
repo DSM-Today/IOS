@@ -33,4 +33,8 @@ class AuthRepositoryImpl: AuthRepository {
             .asCompletable()
     }
 
+    func logout() -> Completable {
+        return Single.just(self.keychainTask.deleteToken())
+            .asCompletable()
+    }
 }

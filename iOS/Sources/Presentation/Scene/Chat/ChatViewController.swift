@@ -14,6 +14,9 @@ class ChatViewController: UIViewController {
 
     // MARK: - UI
     private let inputBar = ChatTextField()
+    private let chatTableView = UITableView().then {
+        $0.separatorStyle = .none
+    }
     private let backButton = UIBarButtonItem(
         image: .init(systemName: "arrow.backward"),
         style: .plain,
@@ -75,7 +78,7 @@ class ChatViewController: UIViewController {
     // MARK: - Keyboard
     @objc func keyboardWillAppear(note: Notification) {
         if let keyboardSize = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            view.frame.origin.y = inputBar.chatTextField.frame.height - keyboardSize.height - 20
+            view.frame.origin.y = inputBar.chatTextField.frame.height - keyboardSize.height - 10
         }
     }
     @objc func keyboardWillDisappear(note: Notification) {
@@ -86,9 +89,14 @@ class ChatViewController: UIViewController {
 // MARK: - Layout
 extension ChatViewController {
     private func addSubviews() {
-        [inputBar].forEach { view.addSubview($0) }
+        [chatTableView, inputBar].forEach { view.addSubview($0) }
     }
     private func makeSubviewConstraints() {
+        chatTableView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(inputBar.snp.top)
+        }
         inputBar.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(80)

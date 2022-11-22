@@ -48,6 +48,8 @@ class ProfileFlow: Flow {
             return navigateToBookScene()
         case .moveToBackIsRequired:
             return navigateToBackScene()
+        case .onboarindIsRequired:
+            return logout()
         default:
             return .none
         }
@@ -178,5 +180,17 @@ extension ProfileFlow {
     private func navigateToBackScene() -> FlowContributors {
         self.rootViewController.popViewController(animated: true)
         return .none
+    }
+    private func logout() -> FlowContributors {
+        let onboardingFlow = OnboardingFlow()
+
+        Flows.use(onboardingFlow, when: .created) { root in
+            root.modalPresentationStyle = .fullScreen
+            self.rootViewController.present(root, animated: true)
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: onboardingFlow,
+            withNextStepper: OneStepper(withSingleStep: TodayStep.onboarindIsRequired))
+        )
     }
 }

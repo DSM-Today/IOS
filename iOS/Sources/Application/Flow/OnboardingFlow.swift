@@ -35,28 +35,26 @@ extension OnboardingFlow {
         ))
     }
     private func navigateToUserProfileScreen() -> FlowContributors {
-        let userProfileViewController = app.userProfileViewController
-        let navigationUserProfileViewController = UINavigationController(rootViewController: userProfileViewController)
-        navigationUserProfileViewController.modalPresentationStyle = .fullScreen
-        navigationUserProfileViewController.modalTransitionStyle = .coverVertical
-        self.rootViewController.present(
-            navigationUserProfileViewController,
-            animated: true
-        )
+        let userProfileFlow = UserProfileFlow()
+
+        Flows.use(userProfileFlow, when: .created) { [weak self] root in
+            root.modalPresentationStyle = .fullScreen
+            root.modalTransitionStyle = .coverVertical
+            self?.rootViewController.present(root, animated: true)
+        }
+
         return .one(flowContributor: .contribute(
-            withNextPresentable: userProfileViewController,
-            withNextStepper: userProfileViewController.viewModel
+            withNextPresentable: userProfileFlow,
+            withNextStepper: OneStepper(withSingleStep: TodayStep.userProfileIsRequired)
         ))
     }
     private func navigateToTabsScreen() -> FlowContributors {
         let tabsFlow = TabsFlow()
-        let userProfileViewController = app.userProfileViewController
 
         Flows.use(tabsFlow, when: .created) { [weak self] root in
             root.modalPresentationStyle = .fullScreen
             root.modalTransitionStyle = .coverVertical
             self?.rootViewController.present(root, animated: true)
-            userProfileViewController.present(root, animated: true)
         }
 
         return .one(flowContributor: .contribute(

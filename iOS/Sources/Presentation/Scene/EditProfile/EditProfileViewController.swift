@@ -45,7 +45,7 @@ class EditProfileViewController: UIViewController {
         $0.font = .notoSansFont(ofSize: 15, family: .regular)
     }
     private let introduceTextField = UITextField().then {
-        $0.backgroundColor = .gray3
+        $0.backgroundColor = .gray4
         $0.layer.borderColor = UIColor.black.cgColor
         $0.layer.borderWidth = 0.5
         $0.layer.cornerRadius = 5

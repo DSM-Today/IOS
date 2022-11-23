@@ -27,7 +27,10 @@ class MainViewController: UIViewController {
     private let contentView = UIView()
 
     private let circleImage = UIImageView().then {
-        $0.image = UIImage(named: "Main")
+        $0.image = UIImage(named: "Main2")
+    }
+    private let secondCircleImage = UIImageView().then {
+        $0.image = UIImage(named: "Main3")
     }
     private let todayLabel = UILabel().then {
         $0.text = "오늘의 할일"
@@ -40,12 +43,15 @@ class MainViewController: UIViewController {
     }
     private let recommendCategoryView = CategoryView().then {
         $0.categoryLabel.text = "추\n천"
+        $0.categoryLabel.font = .notoSansFont(ofSize: 25, family: .medium)
     }
     private let randomCategoryView = CategoryView().then {
         $0.categoryLabel.text = "랜\n덤"
+        $0.categoryLabel.font = .notoSansFont(ofSize: 25, family: .medium)
     }
     private let informationCategoryView = CategoryView().then {
         $0.categoryLabel.text = "정\n보"
+        $0.categoryLabel.font = .notoSansFont(ofSize: 25, family: .medium)
     }
     private let mainTableView = UITableView().then {
         $0.register(MainToDoTableViewCell.self, forCellReuseIdentifier: "MainToDoTableViewCell")
@@ -131,7 +137,7 @@ class MainViewController: UIViewController {
 // MARK: - Layout
 extension MainViewController {
     func addSubviews() {
-        [circleImage, todayLabel, calendarImage, scrollView, mainTableView].forEach { view.addSubview($0) }
+        [secondCircleImage, circleImage, todayLabel, calendarImage, scrollView, mainTableView].forEach { view.addSubview($0) }
         scrollView.addSubview(contentView)
         contentView.addSubview(stackView)
         [recommendCategoryView, randomCategoryView, informationCategoryView].forEach { stackView.addSubview($0) }
@@ -166,8 +172,16 @@ extension MainViewController {
             $0.trailing.equalToSuperview().inset(20)
         }
         circleImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(-70)
+            $0.leading.equalToSuperview().inset(-30)
+            $0.width.equalTo(500)
+            $0.height.equalTo(400)
+        }
+        secondCircleImage.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(480)
+            $0.height.equalTo(337)
         }
         todayLabel.snp.makeConstraints {
             $0.top.equalTo(circleImage.snp.bottom).offset(31)

@@ -9,6 +9,8 @@ class CategoryView: UIView {
     private let contentView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 15
+        $0.layer.shadowOpacity = 0.3
+        $0.layer.shadowOffset = CGSize(width: 5, height: 5)
     }
     let categoryLabel = UILabel().then {
         $0.textColor = .black

@@ -4,12 +4,14 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class WebtoonViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: WebtoonViewModel!
-
+    
+    let webtoonBottomSheetViewController = WebtoonBottomSheetViewController()
     private var disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
     private var url: URL? = URL(string: "")
@@ -45,15 +47,16 @@ class WebtoonViewController: UIViewController {
         $0.font = .notoSansFont(ofSize: 16, family: .medium)
         $0.textAlignment = .center
     }
-    private let contentView = UIView().then {
+    private let explainButton = UIButton().then {
         $0.backgroundColor = .white
+        $0.setTitle("설명", for: .normal)
+        $0.titleLabel?.font = .notoSansFont(ofSize: 20, family: .medium)
+        $0.setTitleColor(.black, for: .normal)
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+        $0.layer.shadowOpacity = 0.3
         $0.layer.cornerRadius = 41
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOpacity = 0.2
-    }
-    private let contentTextView = UITextView().then {
-        $0.font = .notoSansFont(ofSize: 20, family: .regular)
     }
     private let moveWebtoonButton = UIButton(type: .system).then {
         $0.setTitle("웹툰 보러가기", for: .normal)
@@ -74,7 +77,6 @@ class WebtoonViewController: UIViewController {
         super.viewWillAppear(animated)
         setNavigation("오늘의 웹툰")
         viewAppear.accept(())
-        self.contentTextView.isEditable = false
         navigationController?.navigationBar.setBackButtonToArrow()
     }
     override func viewWillLayoutSubviews() {
@@ -89,6 +91,20 @@ class WebtoonViewController: UIViewController {
                 UIApplication.shared.open((self?.url)!)
             })
             .disposed(by: disposeBag)
+        explainButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.presentModal()
+            }).disposed(by: disposeBag)
+    }
+    
+    private func presentModal() {
+        webtoonBottomSheetViewController.modalPresentationStyle = .pageSheet
+
+        if let sheet = webtoonBottomSheetViewController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.preferredCornerRadius = 41
+        }
+        self.present(webtoonBottomSheetViewController, animated: true)
     }
     // MARK: - Bind
     private func bind() {
@@ -103,7 +119,7 @@ class WebtoonViewController: UIViewController {
                 self?.webtoonImage.kf.setImage(with: $0.imageUrl)
                 self?.writerLabel.text = $0.writer
                 self?.genreLabel.text = $0.genre
-                self?.contentTextView.text = $0.comment
+                self?.webtoonBottomSheetViewController.contentTextView.text = $0.comment
                 self?.url = $0.directUrl
             })
             .disposed(by: disposeBag)
@@ -113,10 +129,9 @@ class WebtoonViewController: UIViewController {
 // MARK: - Layout
 extension WebtoonViewController {
     private func addSubviews() {
-        [webtoonInformationView, contentView, moveWebtoonButton].forEach { view.addSubview($0) }
+        [webtoonInformationView, explainButton, moveWebtoonButton].forEach { view.addSubview($0) }
         [ageLimitLabel, currentSituationLabel, webtoonImage, writerLabel, genreLabel]
             .forEach { webtoonInformationView.addSubview($0) }
-        contentView.addSubview(contentTextView)
     }
 
     private func makeSubviewConstraints() {
@@ -148,14 +163,9 @@ extension WebtoonViewController {
             $0.top.equalTo(writerLabel.snp.bottom).offset(3)
             $0.centerX.equalToSuperview()
         }
-        contentView.snp.makeConstraints {
-            $0.top.equalTo(genreLabel.snp.bottom).offset(15)
+        explainButton.snp.makeConstraints {
+            $0.height.equalTo(120)
             $0.leading.trailing.bottom.equalToSuperview()
-        }
-        contentTextView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(40)
-            $0.bottom.equalToSuperview()
         }
         moveWebtoonButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()

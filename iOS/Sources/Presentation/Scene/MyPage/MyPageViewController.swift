@@ -132,13 +132,13 @@ extension MyPageViewController {
     }
     private func makeSubviewConstraints() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
+            $0.top.equalToSuperview().inset(115)
             $0.leading.equalToSuperview().inset(18)
             $0.width.height.equalTo(62)
         }
         userName.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(108)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(6.75)
+            $0.top.equalToSuperview().inset(123)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(10)
         }
         birthText.snp.makeConstraints {
             $0.centerY.equalTo(userName.snp.centerY)

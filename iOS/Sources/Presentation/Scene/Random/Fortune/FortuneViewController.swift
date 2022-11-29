@@ -58,6 +58,7 @@ class FortuneViewController: UIViewController {
 
         let output = viewModel.transform(input)
 
+        // swiftlint:disable line_length
         output.luckyValue
             .subscribe(onNext: { [weak self] in
                 self?.fortuneImg.kf.setImage(with: $0.imageUrl)

@@ -58,12 +58,6 @@ class ChatViewModel: ViewModel, Stepper {
             .asObservable()
             .subscribe(onNext: {
                 self.leaveUseCase.excute()
-            })
-            .disposed(by: disposeBag)
-
-        input.leaveRoom
-            .asObservable()
-            .subscribe(onNext: {
                 self.socketIoManager.closeConnection()
             })
             .disposed(by: disposeBag)

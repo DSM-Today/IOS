@@ -5,9 +5,10 @@ import RxSwift
 
 class ChatRemoteDataSourceImpl: RemoteDataSource<ChatAPI>, ChatRemoteDataSource {
 
-    func fetchChatMessage(roomId: Int) -> Single<String> {
+    func fetchChatMessage(roomId: String) -> Single<[Chat]> {
         return request(.fetchChatMessage(roomId: roomId))
-            .map { _ in return "" }
+            .map(ChatListResponse.self)
+            .map { $0.toDomain() }
     }
 
 }

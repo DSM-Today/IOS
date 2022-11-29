@@ -3,7 +3,7 @@ import Foundation
 import Moya
 
 enum ChatAPI {
-    case fetchChatMessage(roomId: Int)
+    case fetchChatMessage(roomId: String)
 }
 
 extension ChatAPI: TodayAPI {

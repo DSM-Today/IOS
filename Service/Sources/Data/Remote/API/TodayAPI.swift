@@ -37,6 +37,7 @@ enum Domain: String {
     case information
     case images
     case bookmarks
+    case chat
 }
 
 extension Domain {

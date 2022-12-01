@@ -72,7 +72,8 @@ extension AppDI {
             fetchRoomIdUseCase: chatDependency.fetchRoomIdUseCase,
             sendMessageUseCase: chatDependency.sendMessageUsecase,
             messageUseCase: chatDependency.messageUseCase,
-            leaveUseCase: chatDependency.leaveUseCase
+            leaveUseCase: chatDependency.leaveUseCase,
+            fetchProfileUseCase: userDependency.fetchProfileUseCase
         )
         let myPageViewModel = MyPageViewModel(
             fetchProfileUseCase: userDependency.fetchProfileUseCase,

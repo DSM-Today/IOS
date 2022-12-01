@@ -12,19 +12,22 @@ class ChatViewModel: ViewModel, Stepper {
     private let sendMessageUseCase: SendMessageUseCase
     private let messageUseCase: MessageUseCase
     private let leaveUseCase: LeaveUseCase
+    private let fetchProfileUseCase: FetchProfileUseCase
 
     init(
         fetchChatListUseCase: FetchChatListUseCase,
         fetchRoomIdUseCase: FetchRoomIdUseCase,
         sendMessageUseCase: SendMessageUseCase,
         messageUseCase: MessageUseCase,
-        leaveUseCase: LeaveUseCase
+        leaveUseCase: LeaveUseCase,
+        fetchProfileUseCase: FetchProfileUseCase
     ) {
         self.fetchChatListUseCase = fetchChatListUseCase
         self.fetchRoomIdUseCase = fetchRoomIdUseCase
         self.sendMessageUseCase = sendMessageUseCase
         self.messageUseCase = messageUseCase
         self.leaveUseCase = leaveUseCase
+        self.fetchProfileUseCase = fetchProfileUseCase
     }
 
     var steps = PublishRelay<Step>()
@@ -40,17 +43,29 @@ class ChatViewModel: ViewModel, Stepper {
 
     struct Output {
         let chatList: BehaviorRelay<[Chat]>
+        let myName: String
     }
 
+    // swiftlint:disable function_body_length
     func transform(_ input: Input) -> Output {
+
         let chatList = BehaviorRelay<[Chat]>(value: [])
         let roomId = PublishRelay<String>()
         let messageInfo = Driver.combineLatest(roomId.asDriver(onErrorJustReturn: ""), input.message)
+        var name: String = ""
 
         input.viewAppear
             .asObservable()
             .subscribe(onNext: {
                 self.socketIoManager.establishConnection()
+            })
+            .disposed(by: disposeBag)
+
+        input.viewAppear
+            .asObservable()
+            .flatMap { self.fetchProfileUseCase.excute() }
+            .subscribe(onNext: {
+                name = $0.name
             })
             .disposed(by: disposeBag)
 
@@ -91,6 +106,6 @@ class ChatViewModel: ViewModel, Stepper {
             })
             .disposed(by: disposeBag)
 
-        return Output(chatList: chatList)
+        return Output(chatList: chatList, myName: name)
     }
 }

@@ -10,7 +10,7 @@ class WebtoonViewController: UIViewController {
 
     // MARK: - ViewModel
     var viewModel: WebtoonViewModel!
-    
+
     let webtoonBottomSheetViewController = WebtoonBottomSheetViewController()
     private var disposeBag = DisposeBag()
     private let viewAppear = PublishRelay<Void>()
@@ -96,7 +96,7 @@ class WebtoonViewController: UIViewController {
                 self?.presentModal()
             }).disposed(by: disposeBag)
     }
-    
+
     private func presentModal() {
         webtoonBottomSheetViewController.modalPresentationStyle = .pageSheet
 

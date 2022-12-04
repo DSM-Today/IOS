@@ -61,13 +61,8 @@ class InformationCategoryViewController: UIViewController {
                 .subscribe(onNext: {
                     self.bookmark.accept(row)
                     cell.bookMarkButton.isSelected.toggle()
-                    if cell.bookMarkButton.isSelected {
-                        amount += 1
-                        cell.bookMarkTitle.text = "즐겨찾기 한 사람: \(amount)"
-                    } else {
-                        amount -= 1
-                        cell.bookMarkTitle.text = "즐겨찾기 한 사람: \(amount)"
-                    }
+                    amount += cell.bookMarkButton.isSelected ? 1 : -1
+                    cell.bookMarkTitle.text = "즐겨찾기 한 사람: \(amount)"
                 })
                 .disposed(by: cell.disposeBag)
         }

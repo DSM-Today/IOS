@@ -39,6 +39,7 @@ extension AppDI {
         let informationDependency = InformationServiceDependency.resolve()
         let imageDependency = ImageServiceDependency.resolve()
         let bookmarkDependency = BookmarkServiceDependency.resolve()
+        let chatDependency = ChatServiceDependency.resolve()
 
         // MARK: ViewModel
         let onboardingViewModel = OnboardingViewModel(
@@ -66,7 +67,14 @@ extension AppDI {
         let mainViewModel = MainViewModel(
             fetchTodoListUseCase: suggestDependency.fetchTodoListUseCase
         )
-        let chatViewModel = ChatViewModel()
+        let chatViewModel = ChatViewModel(
+            fetchChatListUseCase: chatDependency.fetchChatListUseCase,
+            fetchRoomIdUseCase: chatDependency.fetchRoomIdUseCase,
+            sendMessageUseCase: chatDependency.sendMessageUsecase,
+            messageUseCase: chatDependency.messageUseCase,
+            leaveUseCase: chatDependency.leaveUseCase,
+            fetchProfileUseCase: userDependency.fetchProfileUseCase
+        )
         let myPageViewModel = MyPageViewModel(
             fetchProfileUseCase: userDependency.fetchProfileUseCase,
             fetchBookmarkListUseCase: userDependency.fetchBookmarkListUseCase,

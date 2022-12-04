@@ -137,12 +137,14 @@ class MainViewController: UIViewController {
 // MARK: - Layout
 extension MainViewController {
     func addSubviews() {
-        [secondCircleImage, circleImage, todayLabel, calendarImage, scrollView, mainTableView].forEach { view.addSubview($0) }
+        [secondCircleImage, circleImage, todayLabel,
+         calendarImage, scrollView, mainTableView].forEach { view.addSubview($0) }
         scrollView.addSubview(contentView)
         contentView.addSubview(stackView)
         [recommendCategoryView, randomCategoryView, informationCategoryView].forEach { stackView.addSubview($0) }
     }
 
+    // swiftlint:disable function_body_length
     func makeSubviewConstraints() {
         scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)

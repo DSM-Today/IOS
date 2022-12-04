@@ -20,6 +20,8 @@ extension TargetDependency {
         public static let RxGesture = TargetDependency.external(name: "RxGesture")
 
         public static let Kingfisher = TargetDependency.external(name: "Kingfisher")
+
+        public static let SocketIO = TargetDependency.external(name: "SocketIO")
     }
 
 }

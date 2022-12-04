@@ -36,6 +36,7 @@ extension AuthAPI: TodayAPI {
             return .requestPlain
         }
     }
+
     var erroerMapper: [Int: TodayError]? {
         return nil
     }

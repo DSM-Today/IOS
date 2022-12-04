@@ -52,12 +52,14 @@ class ChatViewModel: ViewModel, Stepper {
         let chatList = BehaviorRelay<[Chat]>(value: [])
         let roomId = PublishRelay<String>()
         let messageInfo = Driver.combineLatest(roomId.asDriver(onErrorJustReturn: ""), input.message)
+        let connectSucces = PublishRelay<Void>()
         var name: String = ""
 
         input.viewAppear
             .asObservable()
             .subscribe(onNext: {
                 self.socketIoManager.establishConnection()
+                connectSucces.accept(())
             })
             .disposed(by: disposeBag)
 
@@ -77,12 +79,6 @@ class ChatViewModel: ViewModel, Stepper {
             })
             .disposed(by: disposeBag)
 
-        self.fetchRoomIdUseCase.excute()
-            .subscribe(onNext: {
-                roomId.accept($0)
-            })
-            .disposed(by: disposeBag)
-
         roomId.asObservable()
             .flatMap { self.fetchChatListUseCase.excute(roomId: $0) }
             .subscribe(onNext: {
@@ -98,11 +94,19 @@ class ChatViewModel: ViewModel, Stepper {
             })
             .disposed(by: disposeBag)
 
-        self.messageUseCase.excute()
+        connectSucces
+            .flatMap { self.messageUseCase.excute() }
             .subscribe(onNext: {
                 var values = chatList.value
                 values.append($0)
                 chatList.accept(values)
+            })
+            .disposed(by: disposeBag)
+
+        connectSucces
+            .flatMap { self.fetchRoomIdUseCase.excute() }
+            .subscribe(onNext: {
+                roomId.accept($0)
             })
             .disposed(by: disposeBag)
 
